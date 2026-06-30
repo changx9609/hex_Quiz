@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hex.coach — 六维科学竞技</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 720px;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #13131f 0%, #1a1a2e 100%);
+      border: 1px solid #2a2a4a;
+      border-radius: 1.25rem;
+      padding: 2rem;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 40px rgba(99,102,241,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(99,102,241,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Progress bar */
+    .timer-track {
+      width: 100%;
+      height: 6px;
+      background: #1e1e3a;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .timer-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+
+    .timer-fill.warning { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+    /* Dimension badge */
+    .dimension-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #a5b4fc;
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .progress-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #64748b;
+      text-align: right;
+      margin-bottom: 0.75rem;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: #f1f5f9;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.85rem 1.1rem;
+      background: rgba(30,30,60,0.6);
+      border: 1px solid #2a2a4a;
+      border-radius: 0.7rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .option-btn:hover:not(.disabled) {
+      background: rgba(99,102,241,0.12);
+      border-color: #6366f1;
+      color: #e2e8f0;
+    }
+
+    .option-btn .label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(99,102,241,0.15);
+      color: #818cf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .option-btn.correct {
+      background: rgba(34,197,94,0.15);
+      border-color: #22c55e;
+      color: #86efac;
+    }
+    .option-btn.correct .label { background: #22c55e; color: #052e16; }
+
+    .option-btn.wrong {
+      background: rgba(239,68,68,0.15);
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+    .option-btn.wrong .label { background: #ef4444; color: #450a0a; }
+
+    .option-btn.reveal-correct {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.3);
+    }
+
+    .option-btn.disabled { cursor: default; opacity: 0.85; }
+
+    /* Explanation overlay */
+    .explanation-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,10,20,0.92);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      border-radius: 1.25rem;
+      z-index: 10;
+    }
+
+    .explanation-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .explanation-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .explanation-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .explanation-title.correct-title { color: #22c55e; }
+    .explanation-title.wrong-title { color: #ef4444; }
+
+    .explanation-text {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      text-align: center;
+      max-width: 500px;
+    }
+
+    /* Start screen */
+    #startScreen {
+      text-align: center;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .dimension-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .dimension-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(99,102,241,0.08);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: #a5b4fc;
+    }
+
+    .start-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 2.5rem;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 0.75rem;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+    }
+
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(99,102,241,0.45);
+    }
+
+    .start-btn:active { transform: translateY(0); }
+
+    /* Results screen */
+    #resultScreen {
+      text-align: center;
+    }
+
+    .result-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0.5rem 0;
+    }
+
+    .result-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .result-dim-item {
+      background: rgba(30,30,60,0.5);
+      border: 1px solid #2a2a4a;
+      border-radius: 0.6rem;
+      padding: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .result-dim-item .dim-name { color: #94a3b8; }
+    .result-dim-item .dim-score { font-weight: 700; color: #a5b4fc; }
+
+    .restart-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 0.75rem 2rem;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid #6366f1;
+      border-radius: 0.75rem;
+      color: #a5b4fc;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .restart-btn:hover {
+      background: rgba(99,102,241,0.25);
+    }
+
+    .hidden { display: none; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: #334155;
+      letter-spacing: 0.05em;
+    }
+
+    .footer a { color: #334155; text-decoration: none; }
+    .footer a:hover { color: #475569; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- START SCREEN -->
+  <div id="startScreen" class="card">
+    <div class="logo">hex.coach</div>
+    <div class="subtitle">六维智商 · 科学竞技</div>
+    <div class="dimension-list" id="dimensionTags"></div>
+    <button class="start-btn" onclick="startQuiz()">[ 开始挑战 ]</button>
+    <div class="footer">每个维度随机 3 题 · 共 18 题 · 每题 15 秒</div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quizScreen" class="card hidden" style="position:relative;">
+    <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span class="dimension-badge" id="dimensionBadge">🌊 深海</span>
+      <span class="progress-text" id="progressText">1 / 18</span>
+    </div>
+    <div class="question-text" id="questionText">题目加载中...</div>
+    <div class="options-grid" id="optionsContainer"></div>
+
+    <!-- Explanation Overlay -->
+    <div class="explanation-overlay" id="explanationOverlay">
+      <div class="explanation-icon" id="explanationIcon">✅</div>
+      <div class="explanation-title" id="explanationTitle">回答正确！</div>
+      <div class="explanation-text" id="explanationText"></div>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="resultScreen" class="card hidden">
+    <div style="font-size:0.85rem;color:#64748b;margin-bottom:0.25rem;">最终成绩</div>
+    <div class="result-score" id="finalScore">0/18</div>
+    <div style="font-size:0.8rem;color:#64748b;margin-bottom:1rem;" id="scorePercent">0%</div>
+    <div class="result-details" id="resultDetails"></div>
+    <button class="restart-btn" onclick="restartQuiz()">[ 再来一次 ]</button>
+  </div>
+</div>
+
+<script>
+// ─── quiz_data loaded from external JSON ──────────────────────────────
+let QUIZ_DATA = null;
+let quiz = [];             // flattened question array (18 items)
+let currentIndex = 0;
+let timer = null;
+let timeLeft = 15;
+let isAnswered = false;
+let correctCount = 0;
+let dimensionResults = {}; // {dimName: {correct, total}}
+
+const LABELS = ['A', 'B', 'C', 'D'];
+
+// ─── Utility ──────────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function pickRandom(arr, n) {
+  const copy = [...arr];
+  shuffle(copy);
+  return copy.slice(0, n);
+}
+
+// ─── Load data & init ────────────────────────────────────────────────
+async function loadQuizData() {
+  const resp = await fetch('quiz_data.json');
+  QUIZ_DATA = await resp.json();
+  // Render dimension tags on start screen
+  const tagsContainer = document.getElementById('dimensionTags');
+  tagsContainer.innerHTML = QUIZ_DATA.dimensions.map(d =>
+    `<span class="dimension-tag">${d.emoji} ${d.name}</span>`
+  ).join('');
+}
+
+// ─── Build quiz: pick 3 random per dimension ────────────────────────
+function buildQuiz() {
+  quiz = [];
+  dimensionResults = {};
+  for (const dim of QUIZ_DATA.dimensions) {
+    const picked = pickRandom(dim.questions, 3);
+    for (const q of picked) {
+      quiz.push({ ...q, dimensionName: dim.name, dimensionEmoji: dim.emoji });
+    }
+    dimensionResults[dim.name] = { correct: 0, total: 3, emoji: dim.emoji };
+  }
+  shuffle(quiz);
+}
+
+// ─── Start ────────────────────────────────────────────────────────────
+function startQuiz() {
+  correctCount = 0;
+  currentIndex = 0;
+  buildQuiz();
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  showQuestion();
+}
+
+function restartQuiz() {
+  document.getElementById('resultScreen').classList.add('hidden');
+  document.getElementById('startScreen').classList.remove('hidden');
+}
+
+// ─── Show question ────────────────────────────────────────────────────
+function showQuestion() {
+  if (currentIndex >= quiz.length) {
+    showResult();
+    return;
+  }
+
+  isAnswered = false;
+  timeLeft = 15;
+  document.getElementById('explanationOverlay').classList.remove('active');
+
+  const q = quiz[currentIndex];
+  document.getElementById('dimensionBadge').textContent =
+    `${q.dimensionEmoji} ${q.dimensionName}`;
+  document.getElementById('progressText').textContent =
+    `${currentIndex + 1} / ${quiz.length}`;
+  document.getElementById('questionText').textContent = q.question;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="label">${LABELS[i]}</span>${opt}`;
+    btn.dataset.index = i;
+    btn.addEventListener('click', () => handleAnswer(i));
+    container.appendChild(btn);
+  });
+
+  // Reset timer
+  const fill = document.getElementById('timerFill');
+  fill.style.width = '100%';
+  fill.classList.remove('warning');
+  startTimer();
+}
+
+// ─── Timer ────────────────────────────────────────────────────────────
+function startTimer() {
+  clearInterval(timer);
+  const fill = document.getElementById('timerFill');
+  const startTime = Date.now();
+  const duration = 15 * 1000;
+
+  timer = setInterval(() => {
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, duration - elapsed);
+    const pct = (remaining / duration) * 100;
+    fill.style.width = pct + '%';
+    fill.classList.toggle('warning', pct < 35);
+
+    if (remaining <= 0) {
+      clearInterval(timer);
+      if (!isAnswered) handleTimeout();
+    }
+  }, 50);
+}
+
+// ─── Handle timeout ───────────────────────────────────────────────────
+function handleTimeout() {
+  if (isAnswered) return;
+  isAnswered = true;
+  const q = quiz[currentIndex];
+  const buttons = document.querySelectorAll('.option-btn');
+  buttons.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.answer) btn.classList.add('reveal-correct');
+  });
+
+  showExplanation(false, q);
+  dimensionResults[q.dimensionName].correct += 0;
+  advanceAfterDelay();
+}
+
+// ─── Handle answer ────────────────────────────────────────────────────
+function handleAnswer(selected) {
+  if (isAnswered) return;
+  isAnswered = true;
+  clearInterval(timer);
+
+  const q = quiz[currentIndex];
+  const buttons = document.querySelectorAll('.option-btn');
+  const isCorrect = selected === q.answer;
+
+  buttons.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.answer) btn.classList.add('correct');
+    else if (i === selected && !isCorrect) btn.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    correctCount++;
+    dimensionResults[q.dimensionName].correct++;
+  }
+
+  showExplanation(isCorrect, q);
+  advanceAfterDelay();
+}
+
+// ─── Explanation overlay ──────────────────────────────────────────────
+function showExplanation(isCorrect, q) {
+  const overlay = document.getElementById('explanationOverlay');
+  const icon = document.getElementById('explanationIcon');
+  const title = document.getElementById('explanationTitle');
+  const text = document.getElementById('explanationText');
+
+  if (isCorrect) {
+    icon.textContent = '✅';
+    title.textContent = '✓ 回答正确！';
+    title.className = 'explanation-title correct-title';
+  } else {
+    icon.textContent = '💡';
+    title.textContent = '✗ 回答错误';
+    title.className = 'explanation-title wrong-title';
+  }
+
+  // Highlight correct answer in explanation
+  const answerLetter = LABELS[q.answer];
+  const answerText = q.options[q.answer];
+  text.textContent = `正确答案：${answerLetter}. ${answerText}`;
+
+  // Show explanation text below
+  setTimeout(() => {
+    text.textContent = `💡 ${q.explanation}`;
+  }, 100);
+
+  overlay.classList.add('active');
+}
+
+function advanceAfterDelay() {
+  setTimeout(() => {
+    currentIndex++;
+    showQuestion();
+  }, 1800);
+}
+
+// ─── Results ──────────────────────────────────────────────────────────
+function showResult() {
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.remove('hidden');
+
+  document.getElementById('finalScore').textContent = `${correctCount}/${quiz.length}`;
+  const pct = Math.round((correctCount / quiz.length) * 100);
+  document.getElementById('scorePercent').textContent = `正确率 ${pct}%`;
+
+  const container = document.getElementById('resultDetails');
+  container.innerHTML = '';
+  for (const [name, data] of Object.entries(dimensionResults)) {
+    const div = document.createElement('div');
+    div.className = 'result-dim-item';
+    div.innerHTML = `
+      <span class="dim-name">${data.emoji} ${name}</span>
+      <span class="dim-score">${data.correct} / ${data.total}</span>
+    `;
+    container.appendChild(div);
+  }
+}
+
+// ─── Init on page load ───────────────────────────────────────────────
+loadQuizData();
+</script>
+</body>
+</html>
