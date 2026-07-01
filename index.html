@@ -6,6 +6,7 @@
   <title>hex.coach — 六维对话竞技</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -373,6 +374,109 @@
 
     /* ─── Empty spacer for scroll anchor ─────── */
     #scrollAnchor { height: 1px; flex-shrink: 0; }
+
+    /* ─── Share Card (screenshot target) ─────── */
+    #shareCard {
+      background: linear-gradient(145deg, #13131f, #1a1a2e);
+      border: 1px solid #2a2a4a;
+      border-radius: 1rem;
+      padding: 1.2rem;
+    }
+
+    /* ─── Golden Quote (top-dimension highlight) ─ */
+    .golden-quote {
+      position: relative;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 0.75rem;
+      padding: 0.8rem 1rem;
+      margin-top: 0.6rem;
+    }
+    .golden-quote::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 2.5px;
+      background: linear-gradient(90deg, transparent, #a855f7, #f97316, transparent);
+      border-radius: 2px;
+    }
+    .golden-quote .gq-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #f97316;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .golden-quote .gq-text {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    /* ─── Watermark ──────────────────────────── */
+    .watermark {
+      font-size: 0.55rem;
+      color: #475569;
+      text-align: center;
+      padding-top: 0.6rem;
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ─── Button row (outside shareCard) ─────── */
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+    .btn-row .restart-btn {
+      width: auto;
+      flex: 1;
+      padding: 0.65rem 1rem;
+    }
+    .btn-row .screenshot-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      flex: 1;
+      padding: 0.65rem 1rem;
+      background: rgba(30,30,60,0.6);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 0.7rem;
+      color: #c4b5fd;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-row .screenshot-btn:active {
+      transform: scale(0.96);
+      background: rgba(99,102,241,0.15);
+    }
+    .btn-row .screenshot-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+    }
+
+    /* ─── Canvas parent fix for screenshots ──── */
+    #shareCard .relative {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+      margin: 0.75rem auto;
+    }
+    #shareCard .relative canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -713,6 +817,35 @@ function showResult() {
     titleText = '万象均衡 · 全能基石';
   }
 
+  // ─── Find top dimension for golden quote ──────
+  const topDimName = topDims[0] || dimOrder[0];
+  const topDimData = dimensionResults[topDimName];
+  const topTier = topDimData ? getInterpTier(topDimData.correct) : 'mid';
+  const topQuoteText = DIM_INTERP[topDimName] ? DIM_INTERP[topDimName][topTier] : '';
+  const topEmoji = topDimData ? topDimData.emoji : '🔥';
+
+  // ─── Build shareCard content (screenshot target) ──
+  const shareCardHtml = `
+    <div id="shareCard">
+      <div class="rank-display">${rankName}</div>
+      <div class="rank-sub">${rankSub}</div>
+      <div class="title-display">${titleText}</div>
+      <div style="text-align:center;color:#64748b;font-size:0.75rem;margin-bottom:0.3rem;">战力总分 ${totalPower} / 6000</div>
+      <div class="relative" style="width:100%;max-width:280px;margin:0.75rem auto;">
+        <canvas id="radarChart" style="display:block;width:100%;height:auto;aspect-ratio:1/1;"></canvas>
+      </div>
+
+      <div class="golden-quote">
+        <div class="gq-header">
+          <span>🔥 ${topEmoji} ${topDimName} · 巅峰金句</span>
+        </div>
+        <div class="gq-text">${topQuoteText}</div>
+      </div>
+
+      <div class="watermark">⚡ HEX.COACH | 赛博特工战力评估</div>
+    </div>
+  `;
+
   // ─── Build swipeable interpretation cards ────
   let cardsHtml = '';
   for (const name of dimOrder) {
@@ -739,23 +872,22 @@ function showResult() {
     dotsHtml += `<span class="dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`;
   }
 
-  addAiBubble(`
-    <div class="result-card">
-      <div class="rank-display">${rankName}</div>
-      <div class="rank-sub">${rankSub}</div>
-      <div class="title-display">${titleText}</div>
-      <div style="text-align:center;color:#64748b;font-size:0.75rem;margin-bottom:0.3rem;">战力总分 ${totalPower} / 6000</div>
-      <div class="relative w-full max-w-[280px] mx-auto my-3 aspect-square">
-        <canvas id="radarChart"></canvas>
-      </div>
-
-      <div class="snap-scroll" id="cardScroller">
-        ${cardsHtml}
-      </div>
-      <div class="dots-wrap" id="cardDots">${dotsHtml}</div>
-
+  // ─── Button row ────────────────────────────
+  const buttonsHtml = `
+    <div class="btn-row">
       <button class="restart-btn" onclick="restartGame()">[ 再来一次 ]</button>
+      <button class="screenshot-btn" id="screenshotBtn">📷 截图保存</button>
     </div>
+  `;
+
+  // ─── Assemble full result bubble ───────────
+  addAiBubble(`
+    ${shareCardHtml}
+    <div class="snap-scroll" id="cardScroller">
+      ${cardsHtml}
+    </div>
+    <div class="dots-wrap" id="cardDots">${dotsHtml}</div>
+    ${buttonsHtml}
   `);
 
   // ─── Update result header ───────────────────
@@ -775,12 +907,75 @@ function showResult() {
     });
   }
 
+  // ─── Bind screenshot button ─────────────────
+  setTimeout(() => {
+    const btn = document.getElementById('screenshotBtn');
+    if (btn) {
+      btn.addEventListener('click', handleScreenshot);
+    }
+  }, 100);
+
   // ─── Render Radar Chart ─────────────────────
   requestAnimationFrame(() => {
     const canvas = document.getElementById('radarChart');
     if (!canvas) return;
     animateRadarChart(canvas, dimData, totalQuestions);
   });
+}
+
+// ═══════════════════════════════════════════════
+//  Screenshot & Share
+// ═══════════════════════════════════════════════
+function handleScreenshot() {
+  const card = document.getElementById('shareCard');
+  const btn = document.getElementById('screenshotBtn');
+  if (!card) return;
+  if (btn) btn.disabled = true;
+
+  html2canvas(card, {
+    backgroundColor: '#0a0a0c',
+    scale: 3,
+    useCORS: true,
+    allowTaint: true,
+    logging: false
+  }).then(canvas => {
+    // Clear any potential shadow artifacts
+    const ctx = canvas.getContext('2d');
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+
+    // Convert to blob for sharing/download
+    canvas.toBlob(blob => {
+      if (btn) btn.disabled = false;
+
+      // Try navigator.share on mobile
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'image.png', { type: 'image/png' })] })) {
+        navigator.share({
+          title: 'HEX.COACH 战力评估',
+          text: '来看看我的赛博特工战力评估！',
+          files: [new File([blob], `HEX_Agent_Square_${Date.now()}.png`, { type: 'image/png' })]
+        }).catch(() => {
+          // Fallback: download directly
+          downloadPngFallback(canvas);
+        });
+      } else {
+        // Fallback download
+        downloadPngFallback(canvas);
+      }
+    }, 'image/png');
+  }).catch(err => {
+    console.error('海报生成失败:', err);
+    if (btn) btn.disabled = false;
+  });
+}
+
+function downloadPngFallback(canvas) {
+  const link = document.createElement('a');
+  link.download = `HEX_Agent_Square_${Date.now()}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 
 // ═══════════════════════════════════════════════
