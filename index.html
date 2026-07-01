@@ -23,7 +23,7 @@
     /* ─── Header ─────────────────────────────── */
     #header {
       flex-shrink: 0;
-      padding: 0.75rem 1rem;
+      padding: 0.7rem 1rem;
       background: rgba(10,10,18,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid #1e1e3a;
@@ -35,7 +35,7 @@
     .header-logo {
       font-family: 'JetBrains Mono', monospace;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       background: linear-gradient(135deg, #6366f1, #a855f7);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -51,7 +51,7 @@
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 1rem 0.75rem 1rem;
+      padding: 0.75rem 0.75rem 0.5rem;
       scroll-behavior: smooth;
     }
     #chatInner {
@@ -111,39 +111,24 @@
       border-bottom-right-radius: 0.25rem;
     }
 
-    /* ─── Bottom bar ─────────────────────────── */
-    #bottomBar {
-      flex-shrink: 0;
-      padding: 0.6rem 0.75rem 1rem;
-      background: rgba(10,10,18,0.95);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid #1e1e3a;
-      z-index: 20;
-      min-height: 60px;
-    }
-    #bottomInner {
-      max-width: 640px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    /* ─── Option buttons (adaptive wrap) ─────── */
-    #optionWrap {
+    /* ─── Inline option buttons ──────────────── */
+    .option-group {
+      align-self: flex-end;
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       justify-content: flex-end;
+      max-width: 88%;
+      animation: fadeUp 0.3s ease;
     }
     .opt-btn {
       flex: 0 0 auto;
-      padding: 0.75rem 1.1rem;
+      padding: 0.7rem 1rem;
       background: rgba(30,30,60,0.7);
       border: 1px solid #2e2e52;
       border-radius: 999px;
       color: #cbd5e1;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -168,40 +153,38 @@
     }
     .opt-btn.disabled { cursor: default; opacity: 0.6; }
 
-    /* ─── GO! button ─────────────────────────── */
-    #goBtn {
+    /* ─── GO! inline ─────────────────────────── */
+    .go-inline {
       align-self: flex-end;
-      padding: 0.75rem 2.5rem;
+      padding: 0.7rem 2.2rem;
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
       border: none;
       border-radius: 999px;
       color: #fff;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: all 0.2s;
       -webkit-tap-highlight-color: transparent;
     }
-    #goBtn:active { transform: scale(0.94); }
-    #goBtn.disabled { opacity: 0.4; cursor: default; transform: none; }
+    .go-inline:active { transform: scale(0.94); }
+    .go-inline.disabled { opacity: 0.4; cursor: default; transform: none; }
 
-    /* ─── Timer bar ──────────────────────────── */
-    .timer-track {
-      width: 100%;
+    /* ─── Fixed bottom timer bar ─────────────── */
+    #bottomTimer {
+      flex-shrink: 0;
       height: 3px;
       background: #1e1e3a;
-      border-radius: 2px;
-      overflow: hidden;
-      margin-bottom: 0.25rem;
+      z-index: 30;
     }
-    .timer-fill {
+    #timerFill {
       height: 100%;
+      width: 100%;
       background: linear-gradient(90deg, #6366f1, #a855f7);
-      border-radius: 2px;
       transition: width 0.1s linear;
     }
-    .timer-fill.warning { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+    #timerFill.warning { background: linear-gradient(90deg, #f59e0b, #ef4444); }
 
     /* ─── Typing dots ────────────────────────── */
     .typing-dots {
@@ -272,7 +255,7 @@
     }
     .restart-btn:active { transform: scale(0.97); }
 
-    /* ─── Scroll anchor ──────────────────────── */
+    /* ─── Empty spacer for scroll anchor ─────── */
     #scrollAnchor { height: 1px; flex-shrink: 0; }
   </style>
 </head>
@@ -285,16 +268,14 @@
   <span class="header-progress" id="headerProgress"></span>
 </div>
 
-<!-- ─── Chat ────────────────────────────────── -->
+<!-- ─── Chat (scrollable) ──────────────────── -->
 <div id="chatContainer">
   <div id="chatInner"></div>
   <div id="scrollAnchor"></div>
 </div>
 
-<!-- ─── Bottom bar ──────────────────────────── -->
-<div id="bottomBar">
-  <div id="bottomInner"></div>
-</div>
+<!-- ─── Fixed bottom timer bar ────────────── -->
+<div id="bottomTimer"><div id="timerFill"></div></div>
 
 <script>
 // ═══════════════════════════════════════════════
@@ -320,13 +301,14 @@ let currentIndex = 0;
 let correctCount = 0;
 let dimensionResults = {};
 let timer = null;
-let locked = false;       // prevent double clicks during transitions
+let locked = false;    // prevent double clicks during transitions
+let initialGo = true;  // track if GO! was already clicked
 
 // ─── DOM refs ────────────────────────────────
 const chatInner = document.getElementById('chatInner');
-const bottomInner = document.getElementById('bottomInner');
 const headerProgress = document.getElementById('headerProgress');
 const anchor = document.getElementById('scrollAnchor');
+const timerFill = document.getElementById('timerFill');
 
 // ─── Helpers ────────────────────────────────
 function shuffle(arr) {
@@ -367,7 +349,6 @@ function addTypingBubble() {
   div.innerHTML = `<div class="author"><span class="avatar">🤖</span> hex.coach</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
   chatInner.appendChild(div);
   scrollBottom();
-  return div;
 }
 
 function removeTyping() {
@@ -389,18 +370,43 @@ function buildQuiz() {
   shuffle(quiz);
 }
 
+// ─── Timer control ─────────────────────────
+function startTimer() {
+  clearInterval(timer);
+  timerFill.style.width = '100%';
+  timerFill.classList.remove('warning');
+  const start = Date.now();
+  const dur = 15 * 1000;
+  timer = setInterval(() => {
+    const elapsed = Date.now() - start;
+    const remain = Math.max(0, dur - elapsed);
+    const pct = (remain / dur) * 100;
+    timerFill.style.width = pct + '%';
+    timerFill.classList.toggle('warning', pct < 35);
+    if (remain <= 0) {
+      clearInterval(timer);
+      if (!locked) handleTimeout();
+    }
+  }, 50);
+}
+
+function stopTimer() {
+  clearInterval(timer);
+  timerFill.style.width = '0%';
+}
+
 // ═══════════════════════════════════════════════
-//  PHASE 1: Init → "准备好了吗？" + GO! button
+//  PHASE 1: Init → "准备好了吗？" + GO! inline
 // ═══════════════════════════════════════════════
 function initGame() {
   correctCount = 0;
   currentIndex = 0;
+  initialGo = true;
   buildQuiz();
   chatInner.innerHTML = '';
-  bottomInner.innerHTML = '';
+  stopTimer();
   headerProgress.textContent = `0/${quiz.length}`;
 
-  // AI welcome
   addAiBubble(`
     <div style="font-weight:700;margin-bottom:0.25rem;">🧪 hex.coach 已上线</div>
     <div style="color:#94a3b8;font-size:0.82rem;line-height:1.6;">
@@ -409,12 +415,13 @@ function initGame() {
     </div>
   `);
 
-  // GO! button
+  // GO! inline button, below welcome
   const go = document.createElement('button');
+  go.className = 'go-inline';
   go.id = 'goBtn';
   go.textContent = 'GO!';
   go.addEventListener('click', () => handleGo(go));
-  bottomInner.appendChild(go);
+  chatInner.appendChild(go);
   scrollBottom();
 }
 
@@ -422,27 +429,26 @@ function initGame() {
 //  PHASE 2: GO! → user bubble → typing → question
 // ═══════════════════════════════════════════════
 function handleGo(goBtn) {
-  if (locked) return;
+  if (locked || !initialGo) return;
   locked = true;
+  initialGo = false;
 
-  // GO! stays as user bubble in chat
-  addUserBubble('GO!');
-
-  // Disable the button visually
+  // GO! flies to right as user bubble
   goBtn.classList.add('disabled');
   goBtn.style.pointerEvents = 'none';
+  // reuse its text as user bubble
+  addUserBubble(goBtn.textContent);
 
-  // Typing → first question
+  // typing → first question
   addTypingBubble();
   setTimeout(() => {
     removeTyping();
     askQuestion();
-    // locked released inside askQuestion after options appear
   }, 600);
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 3: Show question → options appear
+//  PHASE 3: Question bubble + inline options
 // ═══════════════════════════════════════════════
 function askQuestion() {
   if (currentIndex >= quiz.length) { showResult(); return; }
@@ -450,77 +456,49 @@ function askQuestion() {
   const q = quiz[currentIndex];
   headerProgress.textContent = `${currentIndex + 1}/${quiz.length}`;
 
-  // AI sends question bubble (no dimension badge? include dim for context)
+  // AI question bubble
   addAiBubble(`
     <div style="font-size:0.7rem;color:#818cf8;margin-bottom:0.3rem;">${q.dimensionEmoji} ${q.dimensionName}</div>
     <div style="font-weight:600;">${q.question}</div>
   `);
 
-  // Render option buttons (adaptive wrap, no A/B/C/D)
-  bottomInner.innerHTML = '';
-  const timerWrap = document.createElement('div');
-  timerWrap.className = 'timer-track';
-  timerWrap.innerHTML = '<div class="timer-fill" id="timerFill" style="width:100%"></div>';
-  bottomInner.appendChild(timerWrap);
-
-  const optWrap = document.createElement('div');
-  optWrap.id = 'optionWrap';
+  // Inline option group (below question, right-aligned pills, no labels)
+  const group = document.createElement('div');
+  group.className = 'option-group';
+  group.id = 'optionGroup';
   q.options.forEach((opt) => {
     const btn = document.createElement('button');
     btn.className = 'opt-btn';
     btn.textContent = opt;
     btn.addEventListener('click', () => handleAnswer(opt, btn));
-    optWrap.appendChild(btn);
+    group.appendChild(btn);
   });
-  bottomInner.appendChild(optWrap);
+  chatInner.appendChild(group);
   scrollBottom();
   startTimer();
-  locked = false;  // now user can answer
-}
-
-// ─── Timer ─────────────────────────────────
-function startTimer() {
-  clearInterval(timer);
-  const fill = document.getElementById('timerFill');
-  if (!fill) return;
-  const start = Date.now();
-  const dur = 15 * 1000;
-  timer = setInterval(() => {
-    const elapsed = Date.now() - start;
-    const remain = Math.max(0, dur - elapsed);
-    const pct = (remain / dur) * 100;
-    fill.style.width = pct + '%';
-    fill.classList.toggle('warning', pct < 35);
-    if (remain <= 0) {
-      clearInterval(timer);
-      if (!locked) handleTimeout();
-    }
-  }, 50);
+  locked = false;
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 4: Answer → user bubble → typing → AI response → next
+//  PHASE 4a: User answers
 // ═══════════════════════════════════════════════
 function handleAnswer(optionText, clickedBtn) {
   if (locked) return;
   locked = true;
-  clearInterval(timer);
+  stopTimer();
 
   const q = quiz[currentIndex];
   const isCorrect = optionText === q.options[q.answer];
 
-  // Highlight buttons
+  // Highlight option buttons
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     btn.classList.add('disabled');
     if (btn.textContent === q.options[q.answer]) btn.classList.add('correct');
     else if (btn === clickedBtn && !isCorrect) btn.classList.add('wrong');
   });
 
-  // User bubble (no label prefix)
+  // User bubble with chosen text
   addUserBubble(optionText);
-
-  // Clear bottom area immediately
-  bottomInner.innerHTML = '';
 
   // Score
   if (isCorrect) {
@@ -532,51 +510,40 @@ function handleAnswer(optionText, clickedBtn) {
   addTypingBubble();
   setTimeout(() => {
     removeTyping();
-
     const tone = isCorrect ? pick(PRAISE) : pick(BOO);
-    const answerText = q.options[q.answer];
-
     addAiBubble(`
       <div style="font-weight:700;margin-bottom:0.25rem;">${isCorrect ? '✅' : '💡'} ${tone}</div>
-      <div style="color:#818cf8;font-size:0.82rem;margin-bottom:0.3rem;">${answerText}</div>
+      <div style="color:#818cf8;font-size:0.82rem;margin-bottom:0.3rem;">${q.options[q.answer]}</div>
       <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;">${q.explanation}</div>
     `);
 
-    // Advance after 1.5s
     currentIndex++;
-    setTimeout(() => {
-      askQuestion();
-    }, 1500);
+    setTimeout(() => { askQuestion(); }, 1500);
   }, 700);
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 4b: Timeout → tease bubble (non-blocking)
+//  PHASE 4b: Timeout → tease (non-blocking)
 // ═══════════════════════════════════════════════
 function handleTimeout() {
   if (locked) return;
   locked = true;
-  const q = quiz[currentIndex];
 
-  // Highlight correct option only (no wrong selection)
+  const q = quiz[currentIndex];
+  // Highlight correct answer
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     btn.classList.add('disabled');
     if (btn.textContent === q.options[q.answer]) btn.classList.add('correct');
   });
 
-  // Send a teasing bubble — does NOT consume the question
-  addAiBubble(`
-    <div style="font-weight:700;margin-bottom:0.25rem;">⏰ ${pick(TIMEOUT_TEASE)}</div>
-  `);
+  // Tease bubble (not consuming question)
+  addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;">⏰ ${pick(TIMEOUT_TEASE)}</div>`);
 
-  // User can still click options — re-enable
+  // Re-enable non-correct buttons + restart timer
   locked = false;
-  // Restart timer for remaining time? Simpler: keep the timer expired state, user can still click
-  // Re-enable buttons (except correct highlight stays)
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     if (!btn.classList.contains('correct')) btn.classList.remove('disabled');
   });
-  // We restart a fresh timer
   startTimer();
 }
 
@@ -584,7 +551,7 @@ function handleTimeout() {
 //  RESULT
 // ═══════════════════════════════════════════════
 function showResult() {
-  bottomInner.innerHTML = '';
+  stopTimer();
   headerProgress.textContent = '✓ 完成';
   const pct = Math.round((correctCount / quiz.length) * 100);
   let dims = '';
