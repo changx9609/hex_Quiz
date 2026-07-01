@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>hex.coach — 六维对话竞技</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -555,14 +556,72 @@ function showResult() {
   for (const [name, data] of Object.entries(dimensionResults)) {
     dims += `<div class="result-item"><span class="rn">${data.emoji} ${name}</span><span class="rs">${data.correct}/${data.total}</span></div>`;
   }
+  // Build dimension data array in fixed order
+  const dimOrder = ['深海', '星空', '世界之最', '古文明', '智商测试', 'AI'];
+  const dimData = dimOrder.map(name => dimensionResults[name] ? dimensionResults[name].correct : 0);
+
   addAiBubble(`
     <div class="result-card">
       <div class="big-score">${correctCount}/${quiz.length}</div>
       <div style="text-align:center;color:#64748b;font-size:0.8rem;margin-bottom:0.3rem;">正确率 ${pct}%</div>
+      <div class="relative w-full max-w-[280px] mx-auto my-3 aspect-square">
+        <canvas id="radarChart"></canvas>
+      </div>
       <div class="result-grid">${dims}</div>
       <button class="restart-btn" onclick="restartGame()">[ 再来一次 ]</button>
     </div>
   `);
+
+  // ─── Render Radar Chart ────────────────────────
+  requestAnimationFrame(() => {
+    const canvas = document.getElementById('radarChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const neonGradient = ctx.createLinearGradient(0, 0, 0, 280);
+    neonGradient.addColorStop(0, 'rgba(139, 92, 246, 0.65)');
+    neonGradient.addColorStop(1, 'rgba(249, 115, 22, 0.15)');
+
+    if (window.myRadarChart) window.myRadarChart.destroy();
+
+    window.myRadarChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: dimOrder,
+        datasets: [{
+          label: '特工维度战力',
+          data: dimData,
+          backgroundColor: neonGradient,
+          borderColor: '#a78bfa',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#f97316',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 1.5,
+          pointRadius: 4.5,
+          pointHoverRadius: 7
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          r: {
+            angleLines: { color: 'rgba(255, 255, 255, 0.15)' },
+            grid: { color: 'rgba(139, 92, 246, 0.25)' },
+            pointLabels: {
+              color: '#ffffff',
+              font: { size: 13, weight: 'bold', family: 'monospace' }
+            },
+            ticks: {
+              display: false,
+              beginAtZero: true,
+              max: 3
+            }
+          }
+        }
+      }
+    });
+  });
 }
 
 function restartGame() {
