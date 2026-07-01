@@ -47,6 +47,44 @@
       margin-left: auto;
     }
 
+    /* ─── Result header row (hidden by default) ─── */
+    #resultHeaderRow {
+      display: none;
+      flex-shrink: 0;
+      padding: 0.5rem 1rem;
+      background: rgba(10,10,18,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1e1e3a;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 20;
+    }
+    #resultHeaderRow .power {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #a78bfa;
+      white-space: nowrap;
+    }
+    #resultHeaderRow .badge-wrap {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    #resultHeaderRow .medal {
+      font-size: 1.2rem;
+    }
+    #resultHeaderRow .rank-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a855f7, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
     /* ─── Chat container ─────────────────────── */
     #chatContainer {
       flex: 1;
@@ -249,23 +287,6 @@
       margin-bottom: 0.3rem;
       line-height: 1.4;
     }
-    .result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-      margin: 0.8rem 0;
-    }
-    .result-item {
-      background: rgba(30,30,60,0.5);
-      border: 1px solid #2a2a4a;
-      border-radius: 0.5rem;
-      padding: 0.5rem 0.6rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-    }
-    .result-item .rn { color: #64748b; }
-    .result-item .rs { font-weight: 700; color: #a5b4fc; }
     .restart-btn {
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
@@ -281,6 +302,75 @@
     }
     .restart-btn:active { transform: scale(0.97); }
 
+    /* ─── Scroll Snap Card Container ─────────── */
+    .snap-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      padding: 0.5rem 0;
+    }
+    .snap-scroll::-webkit-scrollbar { display: none; }
+    .snap-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .snap-card {
+      width: 100%;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      padding: 0 0.25rem;
+    }
+    .snap-card-inner {
+      background: rgba(30,30,60,0.6);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 0.75rem;
+      padding: 1rem 1rem;
+    }
+    .snap-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .snap-card-header .dim-emoji { font-size: 1.2rem; }
+    .snap-card-header .dim-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #c4b5fd;
+    }
+    .snap-card-header .dim-score {
+      margin-left: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+    .snap-card-text {
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: #94a3b8;
+    }
+
+    /* ─── Dot indicators ─────────────────────── */
+    .dots-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #475569;
+      transition: all 0.25s ease;
+    }
+    .dot.active {
+      background: #a78bfa;
+      box-shadow: 0 0 6px rgba(167, 139, 250, 0.6);
+    }
+
     /* ─── Empty spacer for scroll anchor ─────── */
     #scrollAnchor { height: 1px; flex-shrink: 0; }
   </style>
@@ -292,6 +382,15 @@
   <span class="header-logo">hex.coach</span>
   <span style="font-size:0.7rem;color:#475569;">六维对话竞技</span>
   <span class="header-progress" id="headerProgress"></span>
+</div>
+
+<!-- ─── Result Header Row (shown when game ends) ─ -->
+<div id="resultHeaderRow">
+  <span class="power" id="resultPower">⚔️ 总战力：0</span>
+  <div class="badge-wrap">
+    <span class="medal" id="resultMedal">🥉</span>
+    <span class="rank-badge" id="resultRankBadge">—</span>
+  </div>
 </div>
 
 <!-- ─── Chat (scrollable) ──────────────────── -->
@@ -309,6 +408,16 @@
 // ═══════════════════════════════════════════════
 const QUIZ_DATA = {"dimensions":[{"name":"深海","emoji":"🌊","questions":[{"id":"deep_01","question":"马里亚纳海沟最深处（挑战者深渊）的水压约为海平面大气压的多少倍？","options":["约 110 倍","约 550 倍","约 1100 倍","约 5500 倍"],"answer":2,"explanation":"深度约 11,000 米，每 10 米增 1 个大气压，故约 1,100 倍。这相当于 50 架波音 747 叠在你脚上。"},{"id":"deep_02","question":"哪种深海生物能发出红光，且是已知唯一能看到红光并以此狩猎的鱼类？","options":["鮟鱇鱼","黑龙鱼","水母","深海鳕鱼"],"answer":1,"explanation":"黑龙鱼（Malacosteus）可发射远红光并用叶绿素衍生物感知它。多数深海鱼只看蓝光，而黑龙鱼拥有自己的夜视仪。"},{"id":"deep_03","question":"深海热泉（Hydrothermal Vent）生态系统的能量来源是什么？","options":["太阳光","地热与化学合成","海底火山岩浆","放射性衰变"],"answer":1,"explanation":"深海热泉依赖化能合成细菌将 H₂S 和 CO₂ 转化为有机物，完全不依赖光合作用——这是地球上独立于太阳的第二生物圈。"},{"id":"deep_04","question":"抹香鲸能下潜到约 2,000 米深处捕食大王乌贼，它的哪个器官帮助应对巨大水压？","options":["巨大的肺","头部的鲸蜡油","厚达 30 厘米的脂肪层","可塌缩的肋骨"],"answer":1,"explanation":"抹香鲸头部的鲸蜡油（Spermaceti）可在深潜时冷却凝固（密度变大），帮助浮力调节且保护脑部不被压扁，鲸蜡油也因此得名。"},{"id":"deep_05","question":"目前已知最深的活鱼记录是在什么深度发现的？","options":["约 4,000 米","约 5,800 米","约 8,300 米","约 10,900 米"],"answer":2,"explanation":"2014 年在马里亚纳海沟 8,143 米处发现狮子鱼（Pseudoliparis swirei）。2017 年日本深海科考又在 8,178 米拍到了同类。"}]},{"name":"星空","emoji":"⭐","questions":[{"id":"star_01","question":"一个秒差距（Parsec）大约相当于多少光年？","options":["1.5 光年","3.26 光年","5.88 光年","10.5 光年"],"answer":1,"explanation":"1 pc ≈ 3.2616 ly。定义：当天文单位（1 AU）对应 1 角秒的视差时，观测者与目标之间的距离。千年隼号跑完 Kessel 跑道的 12 pc 就是《星球大战》经典梗。"},{"id":"star_02","question":"中子星上一茶匙的物质在地球上大约有多重？","options":["10 吨","100 吨","1,000 万吨","10 亿吨"],"answer":3,"explanation":"中子星密度约 4×10¹⁷ kg/m³，一茶匙（5 mL）质量约 20 亿吨。这相当于将所有人类压缩到方糖大小。"},{"id":"star_03","question":"银河系中心超大质量黑洞的名称和最近确认的新闻是什么？","options":["M87*，2019 年首张照片","Sagittarius A*，2022 年事件视界望远镜发布照片","TON 618，被发现是宇宙最大黑洞","Cygnus X-1，2021 年质量更新"],"answer":1,"explanation":"人马座 A*（Sgr A*），质量约 400 万倍太阳。EHT 在 2022 年 5 月发布了其照片，距 M87* 首照三年后，证实了其存在。"},{"id":"star_04","question":"宇宙微波背景辐射（CMB）的温度大约是多少？","options":["零下 200°C","2.725 K","10 K","0 K"],"answer":1,"explanation":"CMB 是宇宙大爆炸约 38 万年后的余晖，当前温度 2.725 K（约 -270.4°C），是宇宙最完美的黑体辐射谱，精确度达 10⁻⁵。"},{"id":"star_05","question":"科学家发现的最快轨道速度的系外行星有多快？什么原因？","options":["约 1,000 km/s，双星引力弹弓","约 480 km/s，被恒星潮汐剥离","约 200 km/s，超大质量黑洞抛射","约 50 km/s，普通恒星引力"],"answer":0,"explanation":"Swift J1756.9-2508 系统的行星以约 1,000 km/s 绕中子星公转（地球仅 30 km/s）。如果它在太阳系，从地球到月球只需 6 分钟。"}]},{"name":"世界之最","emoji":"🏆","questions":[{"id":"record_01","question":"地球上最长的不间断山脉是哪座？","options":["喜马拉雅山脉","安第斯山脉","大洋中脊","洛基山脉"],"answer":2,"explanation":"大洋中脊（Mid-Ocean Ridge）全长约 65,000 公里，是地球上最长山脉，几乎全部在水下。安第斯才 7,000 公里，不及它十分之一。"},{"id":"record_02","question":"人类已知的最短命的大型动物是什么？","options":["蜉蝣","灯蛾毛虫","侏儒虾虎鱼","雄性蜂鸟"],"answer":2,"explanation":"侏儒虾虎鱼（Eviota sigillata）之寿命仅 59 天，为脊椎动物最短。蜉蝣幼虫可活数年，只是成虫仅活数小时——总寿命远长于虾虎鱼。"},{"id":"record_03","question":"宇宙中已知最明亮的类星体是哪个？","options":["3C 273","S5 0014+81","SMSS J2157-3602","TON 618"],"answer":3,"explanation":"TON 618 光度高达 4×10⁴¹ 瓦，相当于 140 万亿个太阳，是已知最亮类星体。其中心黑洞约 660 亿倍太阳质量，也是已知最大黑洞。"},{"id":"record_04","question":"地球上最干燥（降水量最少）的地方是哪里？","options":["撒哈拉沙漠","南极干谷","阿塔卡马沙漠","戈壁沙漠"],"answer":2,"explanation":"智利阿塔卡马沙漠的亚里卡（Arica）年均降水 0.5 mm，但南极麦克默多干谷已数百万年无降水，是地球上最干燥的地方。"},{"id":"record_05","question":"人类飞行到达的最远人造物体是？距离多远？","options":["旅行者 1号，约 240 亿公里","新视野号，约 80 亿公里","先驱者 10号，约 120 亿公里","旅行者 2号，约 200 亿公里"],"answer":0,"explanation":"旅行者 1号（1977 年发射）截至 2024 年距地约 162 AU（240 亿公里），是唯一进入星际空间的人造物。它的信号以光速需 22.5 小时才能到达地球。"}]},{"name":"古文明","emoji":"🏛️","questions":[{"id":"ancient_01","question":"已知最古老的法典是哪一部？","options":["汉谟拉比法典","乌尔纳姆法典","十二铜表法","摩奴法典"],"answer":1,"explanation":"《乌尔纳姆法典》（约公元前 2100 年）比汉谟拉比早了约 300 年，由苏美尔乌尔第三王朝创立。其中已有罚金代替肉刑的规定——相当超前。"},{"id":"ancient_02","question":"古埃及人建造金字塔时使用的铜制工具最缺乏哪种性能？","options":["硬度","韧性","抗腐蚀性","密度"],"answer":0,"explanation":"自然界铜的硬度（莫氏 3）远低于花岗岩（莫氏 7）。古埃及人用铜锯加石英砂岩磨削花岗岩，一块巨石需数百人数周时间。没铁器才如此耗时。"},{"id":"ancient_03","question":"特洛伊古城真正的地理位置（根据考古学）在哪里？","options":["希腊雅典附近","土耳其希萨利克","意大利西西里","埃及亚历山大"],"answer":1,"explanation":"1870 年海因里希·施利曼在土耳其西北的希萨利克（Hisarlik）发掘出 9 层特洛伊遗址。特洛伊 VII 层（约前 1300 年）被认为是荷马史诗中的特洛伊。"},{"id":"ancient_04","question":"玛雅数字系统中 0 的符号是什么？","options":["一个点","一根横线","一个贝壳/眼睛形符号","一个倒V"],"answer":2,"explanation":"玛雅人在公元前 3 世纪独立发明了零的概念和符号（贝壳形），比印度数学早几个世纪。它是人类仅有的两个独立发明零的文明之一。"},{"id":"ancient_05","question":"秦始皇陵中未开封的陪葬坑哪个最著名并使用非破坏性探测技术？","options":["兵马俑二号坑","石甲坑","百戏俑坑","水银地宫"],"answer":3,"explanation":"地宫尚未发掘，但 2002 年利用 μ 子探测和中子扫描确认地宫内部结构，汞含量异常高（史书记载以水银为百川江河大海），证实司马迁记载。"}]},{"name":"智商测试","emoji":"🧠","questions":[{"id":"iq_01","question":"下面哪个数字与其他的不属于同一类？3, 5, 7, 11, 13, 15","options":["3","13","15","11"],"answer":2,"explanation":"15 是合数（3×5），其余均为质数。质数是大于 1 且只能被 1 和自身整除的自然数，是数论的核心构件。"},{"id":"iq_02","question":"如果 Banana = 5，Apple = 3，Strawberry = 9，Orange = 5，那么 Grape = ?","options":["2","3","4","6"],"answer":0,"explanation":"编码规则是每个大写字母中包含的封闭环数量：G(0)+R(0)+A(1)+P(1)+E(0)=2。A=1环,B=2环,D=1环,O=1环,P=1环。题目考察符号模式识别能力。"},{"id":"iq_03","question":"3, 8, 15, 24, 35, ? 请问下一个数是什么？","options":["44","46","48","50"],"answer":2,"explanation":"规律：n²-1。2²-1=3，3²-1=8，4²-1=15，5²-1=24，6²-1=35，7²-1=48。这是一个经典数列规律，考察对二次关系的敏感度。"},{"id":"iq_04","question":"经典火柴题：只能移动一根火柴使等式 8 + 3 = 0 成立。以下哪种方法正确？","options":["移动 8 的中间火柴到 0 中间，得到 6+3=9","移动 0 的火柴到 8 上，得到 9+3=12","移动 8 的左上火柴到 3 上，得到 9+3=12","无解"],"answer":0,"explanation":"将 8 中间的一根火柴移走（8 变成 6），放到 0 中间（0 变成 9），得到 6+3=9。移动 1 根即可达成，考察数字火柴的几何变换想象。"},{"id":"iq_05","question":"一个人朝南走 1 公里，朝东走 1 公里，朝北走 1 公里后回到了起点。起点在哪里？","options":["北极点","赤道","南极点附近某纬度圈","无法确定"],"answer":2,"explanation":"北极点是众知解。但还有无数解：在南半球某纬度圈（使得东走 1 公里正好绕该纬度整数圈），再朝北 1 公里回到原点。展示了地球非欧几何特性。"}]},{"name":"AI","emoji":"🤖","questions":[{"id":"ai_01","question":"2024 年诺贝尔物理学奖授予了谁？为什么备受 AI 界关注？","options":["John Hopfield 和 Geoffrey Hinton，因人工神经网络的基础发现","Demis Hassabis 和 John Jumper，因 AlphaFold","Yann LeCun 和 Yoshua Bengio，因深度学习","Andrej Karpathy 和 Ilya Sutskever，因 GPT"],"answer":0,"explanation":"2024 诺贝尔物理学奖出人意料地授予 Hopfield 和 Hinton，表彰他们在人工神经网络和机器学习方面的基础性贡献。这是 AI 首次赢得诺贝尔物理学奖。"},{"id":"ai_02","question":"Transformer 架构中自注意力（Self-Attention）的计算复杂度是多少？","options":["O(n)","O(n log n)","O(n²)","O(2ⁿ)"],"answer":2,"explanation":"标准自注意力的复杂度为 O(n²·d)，n 为序列长度。每个 token 都要与所有其他 token 计算 attention score，这使得长文本处理极其昂贵。"},{"id":"ai_03","question":"AI 对齐（AI Alignment）的核心目标是什么？","options":["让 AI 的输出与数学公式对齐","确保 AI 系统的目标和价值观符合人类意图","让多个 AI 模型有相同的参数量","让 AI 生成的内容符合语法规则"],"answer":1,"explanation":"AI 对齐是指确保 AI 系统追求的目标与人类的真实意图和价值观一致。RLHF（基于人类反馈的强化学习）是目前最主流的对齐技术。"},{"id":"ai_04","question":"GPT-4 的上下文窗口（Context Window）大小在早期版本中最大是多少？","options":["2,048 tokens","8,192 tokens","32,768 tokens","128,000 tokens"],"answer":2,"explanation":"GPT-4 最初发布时支持 8K 和 32K 两个版本。2024 年 GPT-4 Turbo 扩展到 128K。作为对比，BERT 仅为 512 tokens——三年增长了 256 倍。"},{"id":"ai_05","question":"机器学习中过拟合（Overfitting）的典型表现是什么？","options":["训练集和测试集准确率都很高","训练集准确率很高，测试集准确率很低","训练集和测试集准确率都很低","模型参数量过大"],"answer":1,"explanation":"过拟合指模型在训练数据上表现完美（甚至记住噪声），但在未见数据上泛化能力差——相当于考试背答案而非理解知识。Dropout、正则化、早停法是常用缓解手段。"}]}]};
 
+// ─── Interpretations ──────────────────────────────
+const DIM_INTERP = {
+  "深海": { "low": "极端抗压测试失败。你对深海未知的恐惧让数据流产生紊乱，建议先从浅水区特训开始。", "mid": "拥有在极端压力下保持冷静的潜质。潜水舱已降至中层带，你适合探索未知的数据边界。", "high": "深渊级的神经抗压怪兽！即使万吨水压过载，你的逻辑核心依然稳如磐石，深渊禁区任你横行。" },
+  "星空": { "low": "星轨迷航。你的坐标轴似乎被引力捕获，暂时无法在宏大的天体逻辑中找到北极星。", "mid": "天体观测者。你已经掌握了星空维度的算法轨迹，正在穿越密集的彗星碎片区。", "high": "幽灵星轨主宰！你的思维拥有超光速跃迁能力，宇宙黑暗森林法则在你的算力面前形同虚设。" },
+  "世界之最": { "low": "地理检索离线。你似乎对现实地表的极端数据不太敏感，特工雷达甚至没能定位珠穆朗玛峰。", "mid": "极境漫游者。全球极端地貌与宏观数据已载入你的记忆库，地表检索准确率超越平均水平。", "high": "行走的人类百科全书！你对地表最极端指标了如指掌，世界的边界就是你的后花园。" },
+  "古文明": { "low": "历史黑盒锁死。面对远古的加密代码，你的破译流直接报错，看来你更属于未来时代。", "mid": "黑盒考古客。你成功破译了部分远古文明遗留的逻辑残卷，正逐步逼近历史的底层代码。", "high": "遗迹智者！你拥有沟通远古科技树的神秘直觉，任何尘封万年的逻辑迷宫在你眼里都是单行道。" },
+  "智商测试": { "low": "CPU微幅超载。刚才的逻辑风暴可能让你的神经元短暂短路，建议重启大脑核心再试一次。", "mid": "高维破译官。复杂的矩阵图形与数字陷阱没能难倒你，你总能在混乱的数据中抓到线索。", "high": "降维打击者！160+ 逻辑风暴全量通过。你已经进化出多线程逻辑闭环，凡人的谜题是在浪费你的时间。" },
+  "AI": { "low": "碳基直觉卡顿。你对硅基代码的进化速度缺乏一丝警惕，差点被矩阵的底层逻辑反向吞噬。", "mid": "矩阵幽灵。你对大模型复杂度与神经网络的嗅觉非常敏锐，能够熟练穿梭于算法黑箱之中。", "high": "天网架构师！你对硅基生命的理解已经深入数字神经元底层，未来的算法帝国将由你执笔。" }
+};
+
 // ─── Tone pools ──────────────────────────────
 const PRAISE = ['天才！', '绝了！', '稳如老狗！', '脑容量爆表！'];
 const BOO = ['大意了！', '危！', '痛失一臂！', 'CPU烧了？'];
@@ -325,17 +434,21 @@ function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 let quiz = [];
 let currentIndex = 0;
 let correctCount = 0;
-let streakCount = 0;   // consecutive correct answers
+let streakCount = 0;
 let dimensionResults = {};
 let timer = null;
-let locked = false;    // prevent double clicks during transitions
-let initialGo = true;  // track if GO! was already clicked
+let locked = false;
+let initialGo = true;
 
 // ─── DOM refs ────────────────────────────────
 const chatInner = document.getElementById('chatInner');
 const headerProgress = document.getElementById('headerProgress');
 const anchor = document.getElementById('scrollAnchor');
 const timerFill = document.getElementById('timerFill');
+const resultHeaderRow = document.getElementById('resultHeaderRow');
+const resultPower = document.getElementById('resultPower');
+const resultMedal = document.getElementById('resultMedal');
+const resultRankBadge = document.getElementById('resultRankBadge');
 
 // ─── Helpers ────────────────────────────────
 function shuffle(arr) {
@@ -350,6 +463,16 @@ function pickRandom(arr, n) {
 }
 function scrollBottom() {
   requestAnimationFrame(() => anchor.scrollIntoView({ behavior: 'smooth' }));
+}
+function getInterpTier(score) {
+  if (score <= 1) return 'low';
+  if (score <= 3) return 'mid';
+  return 'high';
+}
+function rankConfig(power) {
+  if (power <= 2000) return { name: '初始白客', sub: '初入战场，数据流尚在摸索', medal: '🥉' };
+  if (power <= 4000) return { name: '裂变行者', sub: '具备全局意识，正稳步崛起', medal: '🥈' };
+  return { name: '超维主宰', sub: '全方位无短板，已逼近全能战士', medal: '🥇' };
 }
 
 // ─── Bubble builders ───────────────────────
@@ -433,6 +556,7 @@ function initGame() {
   buildQuiz();
   chatInner.innerHTML = '';
   stopTimer();
+  resultHeaderRow.style.display = 'none';
   headerProgress.textContent = `0/${quiz.length}`;
 
   addAiBubble(`
@@ -443,7 +567,6 @@ function initGame() {
     </div>
   `);
 
-  // GO! inline button, below welcome
   const go = document.createElement('button');
   go.className = 'go-inline';
   go.id = 'goBtn';
@@ -454,20 +577,15 @@ function initGame() {
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 2: GO! → user bubble → typing → question
+//  PHASE 2: GO!
 // ═══════════════════════════════════════════════
 function handleGo(goBtn) {
   if (locked || !initialGo) return;
   locked = true;
   initialGo = false;
-
-  // GO! flies to right as user bubble
   goBtn.classList.add('disabled');
   goBtn.style.pointerEvents = 'none';
-  // reuse its text as user bubble
   addUserBubble(goBtn.textContent);
-
-  // typing → first question
   addTypingBubble();
   setTimeout(() => {
     removeTyping();
@@ -476,21 +594,16 @@ function handleGo(goBtn) {
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 3: Question bubble + inline options
+//  PHASE 3: Question
 // ═══════════════════════════════════════════════
 function askQuestion() {
   if (currentIndex >= quiz.length) { showResult(); return; }
-
   const q = quiz[currentIndex];
   headerProgress.textContent = `${currentIndex + 1}/${quiz.length}`;
-
-  // AI question bubble
   addAiBubble(`
     <div style="font-size:0.7rem;color:#818cf8;margin-bottom:0.3rem;">${q.dimensionEmoji} ${q.dimensionName}</div>
     <div style="font-weight:600;">${q.question}</div>
   `);
-
-  // Inline option group (below question, right-aligned pills, no labels)
   const group = document.createElement('div');
   group.className = 'option-group';
   group.id = 'optionGroup';
@@ -508,30 +621,22 @@ function askQuestion() {
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 4a: User answers
+//  PHASE 4a: Answer
 // ═══════════════════════════════════════════════
 function handleAnswer(optionText, clickedBtn) {
   if (locked) return;
   locked = true;
   stopTimer();
-
   const q = quiz[currentIndex];
   const isCorrect = optionText === q.options[q.answer];
-
-  // Remove option group from chat flow entirely
   const og = document.getElementById('optionGroup');
   if (og) og.remove();
-
-  // User bubble with chosen text
   addUserBubble(optionText);
-
-  // Score & streak
   let streakMsg = '';
   if (isCorrect) {
     correctCount++;
     streakCount++;
     dimensionResults[q.dimensionName].correct++;
-    // Check streak milestones
     if (streakCount === 3) {
       streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">🔥 连击！脑力全开！</div>';
     } else if (streakCount === 7) {
@@ -542,8 +647,6 @@ function handleAnswer(optionText, clickedBtn) {
   } else {
     streakCount = 0;
   }
-
-  // Typing → AI response
   addTypingBubble();
   setTimeout(() => {
     removeTyping();
@@ -554,30 +657,23 @@ function handleAnswer(optionText, clickedBtn) {
       <div style="color:#818cf8;font-size:0.82rem;margin-bottom:0.3rem;">${q.options[q.answer]}</div>
       <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;">${q.explanation}</div>
     `);
-
     currentIndex++;
     setTimeout(() => { askQuestion(); }, 1500);
   }, 700);
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 4b: Timeout → tease (non-blocking)
+//  PHASE 4b: Timeout
 // ═══════════════════════════════════════════════
 function handleTimeout() {
   if (locked) return;
   locked = true;
-
   const q = quiz[currentIndex];
-  // Highlight correct (no wrong clicks since timeout)
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     btn.classList.add('disabled');
     if (btn.textContent === q.options[q.answer]) btn.classList.add('correct');
   });
-
-  // Tease bubble (not consuming question)
   addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;">⏰ ${pick(TIMEOUT_TEASE)}</div>`);
-
-  // Restart timer
   locked = false;
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     if (!btn.classList.contains('correct')) btn.classList.remove('disabled');
@@ -591,30 +687,16 @@ function handleTimeout() {
 function showResult() {
   stopTimer();
   headerProgress.textContent = '✓ 完成';
-  const pct = Math.round((correctCount / quiz.length) * 100);
-  let dims = '';
-  for (const [name, data] of Object.entries(dimensionResults)) {
-    dims += `<div class="result-item"><span class="rn">${data.emoji} ${name}</span><span class="rs">${data.correct}/${data.total}</span></div>`;
-  }
-  // Build dimension data array in fixed order
+
   const dimOrder = ['深海', '星空', '世界之最', '古文明', '智商测试', 'AI'];
   const dimData = dimOrder.map(name => dimensionResults[name] ? dimensionResults[name].correct : 0);
-  // Dynamic max: total questions per dimension (from any dimension)
-  const totalQuestions = dimensionResults[dimOrder[0]] ? dimensionResults[dimOrder[0]].total : 3;
+  const totalQuestions = dimensionResults[dimOrder[0]] ? dimensionResults[dimOrder[0]].total : 4;
 
   // ─── Compute rank & title ─────────────────────
   const totalPower = Math.round((correctCount / quiz.length) * 6000);
-  let rankName, rankSub;
-  if (totalPower <= 2000) {
-    rankName = '初始白客';
-    rankSub = '初入战场，数据流尚在摸索';
-  } else if (totalPower <= 4000) {
-    rankName = '裂变行者';
-    rankSub = '具备全局意识，正稳步崛起';
-  } else {
-    rankName = '超维主宰';
-    rankSub = '全方位无短板，已逼近全能战士';
-  }
+  const rc = rankConfig(totalPower);
+  const rankName = rc.name;
+  const rankSub = rc.sub;
 
   const titleMap = { '深海': '深渊铁壁', '星空': '幽灵星轨', '世界之最': '极境漫游者', '古文明': '黑盒考古客', '智商测试': '高维破译官', 'AI': '矩阵幽灵' };
   const dimScores = dimOrder.map(name => ({ name, score: dimensionResults[name] ? dimensionResults[name].correct : 0 }));
@@ -631,6 +713,32 @@ function showResult() {
     titleText = '万象均衡 · 全能基石';
   }
 
+  // ─── Build swipeable interpretation cards ────
+  let cardsHtml = '';
+  for (const name of dimOrder) {
+    const data = dimensionResults[name];
+    if (!data) continue;
+    const tier = getInterpTier(data.correct);
+    const interp = DIM_INTERP[name] ? DIM_INTERP[name][tier] : '';
+    const emoji = data.emoji;
+    cardsHtml += `<div class="snap-card">
+      <div class="snap-card-inner">
+        <div class="snap-card-header">
+          <span class="dim-emoji">${emoji}</span>
+          <span class="dim-name">${name}</span>
+          <span class="dim-score">${data.correct}/${data.total}</span>
+        </div>
+        <div class="snap-card-text">${interp}</div>
+      </div>
+    </div>`;
+  }
+
+  // ─── Dots HTML ─────────────────────────────
+  let dotsHtml = '';
+  for (let i = 0; i < dimOrder.length; i++) {
+    dotsHtml += `<span class="dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`;
+  }
+
   addAiBubble(`
     <div class="result-card">
       <div class="rank-display">${rankName}</div>
@@ -640,12 +748,34 @@ function showResult() {
       <div class="relative w-full max-w-[280px] mx-auto my-3 aspect-square">
         <canvas id="radarChart"></canvas>
       </div>
-      <div class="result-grid">${dims}</div>
+
+      <div class="snap-scroll" id="cardScroller">
+        ${cardsHtml}
+      </div>
+      <div class="dots-wrap" id="cardDots">${dotsHtml}</div>
+
       <button class="restart-btn" onclick="restartGame()">[ 再来一次 ]</button>
     </div>
   `);
 
-  // ─── Render Radar Chart (native Canvas animation) ──
+  // ─── Update result header ───────────────────
+  resultPower.textContent = `⚔️ 总战力：${totalPower}`;
+  resultMedal.textContent = rc.medal;
+  resultRankBadge.textContent = rankName;
+  resultHeaderRow.style.display = 'flex';
+
+  // ─── Sync scroll snap dots ──────────────────
+  const scroller = document.getElementById('cardScroller');
+  const dotsContainer = document.getElementById('cardDots');
+  if (scroller && dotsContainer) {
+    scroller.addEventListener('scroll', () => {
+      const idx = Math.round(scroller.scrollLeft / scroller.clientWidth);
+      const dots = dotsContainer.querySelectorAll('.dot');
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    });
+  }
+
+  // ─── Render Radar Chart ─────────────────────
   requestAnimationFrame(() => {
     const canvas = document.getElementById('radarChart');
     if (!canvas) return;
@@ -654,7 +784,7 @@ function showResult() {
 }
 
 // ═══════════════════════════════════════════════
-//  Native Canvas Radar Chart Animation Engine
+//  Radar Animation Engine
 // ═══════════════════════════════════════════════
 function animateRadarChart(canvas, actualData, totalQuestions = 4) {
   const ctx = canvas.getContext('2d');
@@ -675,20 +805,16 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
   const numAxes = labels.length;
 
   let startTime = null;
-  const duration = 1500; // 1.5 seconds
+  const duration = 1500;
 
   function drawFrame(timestamp) {
     if (!startTime) startTime = timestamp;
     let progress = (timestamp - startTime) / duration;
     if (progress > 1) progress = 1;
 
-    // 1. Clear canvas (transparent background)
     ctx.clearRect(0, 0, size, size);
-
-    // 2. Dynamic spiral radius
     const currentMaxRadius = maxRadius * progress;
 
-    // 3. Draw hexagonal rings (web)
     for (let i = 1; i <= totalQuestions; i++) {
       const ringRadius = (currentMaxRadius / totalQuestions) * i;
       ctx.beginPath();
@@ -705,7 +831,6 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
       ctx.stroke();
     }
 
-    // 4. Draw 6 axis lines from center
     ctx.beginPath();
     for (let j = 0; j < numAxes; j++) {
       const angle = (Math.PI * 2 / numAxes) * j - Math.PI / 2;
@@ -715,7 +840,6 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
     ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * progress})`;
     ctx.stroke();
 
-    // 5. Draw data coverage area (dynamically expanding)
     ctx.beginPath();
     for (let j = 0; j < numAxes; j++) {
       const angle = (Math.PI * 2 / numAxes) * j - Math.PI / 2;
@@ -738,14 +862,12 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // 6. Draw bright orange glow dots at data endpoints
     for (let j = 0; j < numAxes; j++) {
       const angle = (Math.PI * 2 / numAxes) * j - Math.PI / 2;
       const scoreRatio = actualData[j] / totalQuestions;
       const currentScoreRadius = maxRadius * scoreRatio * progress;
       const x = centerX + Math.cos(angle) * currentScoreRadius;
       const y = centerY + Math.sin(angle) * currentScoreRadius;
-
       ctx.beginPath();
       ctx.arc(x, y, 4.5, 0, Math.PI * 2);
       ctx.fillStyle = '#f97316';
@@ -755,21 +877,17 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
       ctx.stroke();
     }
 
-    // 7. When animation completes, draw labels & trigger confetti
     if (progress === 1) {
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 13px monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-
       for (let j = 0; j < numAxes; j++) {
         const angle = (Math.PI * 2 / numAxes) * j - Math.PI / 2;
         const labelX = centerX + Math.cos(angle) * (maxRadius + 20);
         const labelY = centerY + Math.sin(angle) * (maxRadius + 20);
         ctx.fillText(labels[j], labelX, labelY);
       }
-
-      // ✨ Trigger lightweight confetti burst!
       triggerLightConfetti();
     } else {
       requestAnimationFrame(drawFrame);
@@ -780,7 +898,7 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
 }
 
 // ═══════════════════════════════════════════════
-//  Lightweight Confetti (canvas-confetti)
+//  Confetti
 // ═══════════════════════════════════════════════
 function triggerLightConfetti() {
   if (typeof confetti !== 'function') return;
@@ -802,7 +920,6 @@ function restartGame() {
   locked = false;
 }
 
-// ─── Boot ───────────────────────────────────
 initGame();
 </script>
 </body>
