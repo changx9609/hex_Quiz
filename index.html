@@ -224,14 +224,30 @@
       padding: 1.2rem;
       margin-top: 0.3rem;
     }
-    .result-card .big-score {
+    .rank-display {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 2.8rem;
+      font-size: 2rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      text-align: center;
+      background: linear-gradient(135deg, #a855f7, #f97316);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      line-height: 1.3;
+    }
+    .rank-sub {
       text-align: center;
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 0.4rem;
+    }
+    .title-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      color: #c4b5fd;
+      margin-bottom: 0.3rem;
+      line-height: 1.4;
     }
     .result-grid {
       display: grid;
@@ -372,11 +388,11 @@ function buildQuiz() {
   quiz = [];
   dimensionResults = {};
   for (const dim of QUIZ_DATA.dimensions) {
-    const picked = pickRandom(dim.questions, 3);
+    const picked = pickRandom(dim.questions, 4);
     for (const q of picked) {
       quiz.push({ ...q, dimensionName: dim.name, dimensionEmoji: dim.emoji });
     }
-    dimensionResults[dim.name] = { correct: 0, total: 3, emoji: dim.emoji };
+    dimensionResults[dim.name] = { correct: 0, total: 4, emoji: dim.emoji };
   }
   shuffle(quiz);
 }
@@ -586,10 +602,41 @@ function showResult() {
   // Dynamic max: total questions per dimension (from any dimension)
   const totalQuestions = dimensionResults[dimOrder[0]] ? dimensionResults[dimOrder[0]].total : 3;
 
+  // ─── Compute rank & title ─────────────────────
+  const totalPower = Math.round((correctCount / quiz.length) * 6000);
+  let rankName, rankSub;
+  if (totalPower <= 2000) {
+    rankName = '初始白客';
+    rankSub = '初入战场，数据流尚在摸索';
+  } else if (totalPower <= 4000) {
+    rankName = '裂变行者';
+    rankSub = '具备全局意识，正稳步崛起';
+  } else {
+    rankName = '超维主宰';
+    rankSub = '全方位无短板，已逼近全能战士';
+  }
+
+  const titleMap = { '深海': '深渊铁壁', '星空': '幽灵星轨', '世界之最': '极境漫游者', '古文明': '黑盒考古客', '智商测试': '高维破译官', 'AI': '矩阵幽灵' };
+  const dimScores = dimOrder.map(name => ({ name, score: dimensionResults[name] ? dimensionResults[name].correct : 0 }));
+  const maxScore = Math.max(...dimScores.map(d => d.score));
+  const topDims = dimScores.filter(d => d.score === maxScore).map(d => d.name);
+  let titleText = '';
+  if (topDims.length === 1) {
+    titleText = `【${titleMap[topDims[0]]}】`;
+  } else if (topDims.length === 2) {
+    titleText = `${titleMap[topDims[0]]} · ${titleMap[topDims[1]]} 双核驱动`;
+  } else if (topDims.length === 3) {
+    titleText = `${topDims.map(d => titleMap[d]).join(' · ')} 三极共鸣`;
+  } else {
+    titleText = '万象均衡 · 全能基石';
+  }
+
   addAiBubble(`
     <div class="result-card">
-      <div class="big-score">${correctCount}/${quiz.length}</div>
-      <div style="text-align:center;color:#64748b;font-size:0.8rem;margin-bottom:0.3rem;">正确率 ${pct}%</div>
+      <div class="rank-display">${rankName}</div>
+      <div class="rank-sub">${rankSub}</div>
+      <div class="title-display">${titleText}</div>
+      <div style="text-align:center;color:#64748b;font-size:0.75rem;margin-bottom:0.3rem;">战力总分 ${totalPower} / 6000</div>
       <div class="relative w-full max-w-[280px] mx-auto my-3 aspect-square">
         <canvas id="radarChart"></canvas>
       </div>
@@ -609,7 +656,7 @@ function showResult() {
 // ═══════════════════════════════════════════════
 //  Native Canvas Radar Chart Animation Engine
 // ═══════════════════════════════════════════════
-function animateRadarChart(canvas, actualData, totalQuestions = 3) {
+function animateRadarChart(canvas, actualData, totalQuestions = 4) {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.parentElement.getBoundingClientRect();
@@ -641,7 +688,7 @@ function animateRadarChart(canvas, actualData, totalQuestions = 3) {
     // 2. Dynamic spiral radius
     const currentMaxRadius = maxRadius * progress;
 
-    // 3. Draw 3 hexagonal rings (web)
+    // 3. Draw hexagonal rings (web)
     for (let i = 1; i <= totalQuestions; i++) {
       const ringRadius = (currentMaxRadius / totalQuestions) * i;
       ctx.beginPath();
