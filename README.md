@@ -1,51 +1,53 @@
-# hex.coach — 六维智商与科学竞技系统
+# hex.coach — 6D Cognitive & Science Combat Arena
 
-> **全栈解耦 · 极客题库 · 实时对战级体验**
+> **Fully Decoupled · Hardcore Quiz Engine · Real-time PvP-grade Experience**
 
-## 概述
+## Overview
 
-hex.coach 是一个以 6 个科学维度为核心的纯前端答题竞技系统。所有数据与逻辑在浏览器端完成，无需后端服务。
+hex.coach is a pure front-end quiz combat system centered around **6 scientific dimensions**. All data and logic run entirely in the browser — no backend required.
 
-### 六维题库
+### The Six Dimensions
 
-| 维度 | 内容 | 题数 |
-|------|------|------|
-| 🌊 深海 | 海洋地理、深海生物、物理极限 | 15 题 |
-| ⭐ 星空 | 天文学、黑洞、相对论、航天 | 15 题 |
-| 🏆 世界之最 | 地理、生物、物理极端纪录 | 15 题 |
-| 🏛️ 古文明 | 苏美尔、古埃及、玛雅、特洛伊、秦 | 15 题 |
-| 🧠 智商测试 | 数列、逻辑、模式识别、空间思维 | 15 题 |
-| 🤖 AI | 神经网络、Transformer、对齐、诺贝尔奖 | 15 题 |
+| Dimension | Coverage | Questions |
+|-----------|----------|-----------|
+| 🌊 DEEP SEA | Oceanography, deep-sea biology, extreme physics | 15 |
+| ⭐ COSMOS | Astronomy, black holes, relativity, space exploration | 15 |
+| 🏆 WORLD RECORDS | Geographic, biological & physical extreme records | 15 |
+| 🏛️ ANCIENT CIV | Sumer, Egypt, Maya, Troy, Qin Dynasty | 15 |
+| 🧠 IQ MATRIX | Number sequences, logic, pattern recognition, spatial reasoning | 15 |
+| 🤖 AI CORE | Neural networks, Transformers, AI alignment, Nobel Prize | 15 |
 
-共计 **90 道** 专业单选题，每次随机抽取 **18 题**（每维度 3 题）组成测试卷。
+A total of **90 expert-level single-choice questions**, with **18 randomly selected per session** (3 per dimension).
 
-## 技术栈
+## Tech Stack
 
-- **HTML5** + **CSS3** (纯 CSS 动画 & 布局)
-- **Tailwind CSS** (CDN 加载，辅助样式)
-- **Vanilla JavaScript** (ES2020+，零依赖)
-- **JSON** 静态题库（`quiz_data.json`）
+- **HTML5** + **CSS3** (Pure CSS animations & layout)
+- **Tailwind CSS** (CDN-loaded utility-first styling)
+- **Vanilla JavaScript** (ES2020+, zero dependencies)
+- **JSON** static question bank (`quiz_data.json`)
 
-## 项目结构
+## Project Structure
 
 ```
 hex_Quiz/
-├── index.html        # 单页应用入口
-├── quiz_data.json    # 静态题库（6维 × 15题）
-└── README.md         # 本文档
+├── index.html                 # Single-page application entry
+├── quiz_data.json             # Static question bank (6 × 15 questions)
+├── dimension_interpretations.json  # Dimension result interpretations
+└── README.md                  # This file
 ```
 
-## 核心功能
+## Core Features
 
-1. **智能组卷** — 每维度随机抽 3 题，全局打乱，保证每次测试不重复
-2. **15 秒倒计时** — 动态计时条，最后 35% 变红预警，超时自动判错
-3. **即时反馈** — 点击后立即判定对错（绿色=正确，红色=错误），同时弹窗显示硬核冷知识解析
-4. **冷知识解析** — 每题包含 100 字以内的硬核科普，答对答错皆可学习
-5. **维度成绩** — 结果页展示各维度正确率，精准定位知识短板
+1. **Smart Quiz Assembly** — 3 random questions per dimension, globally shuffled, ensuring a unique test every time
+2. **15-Second Countdown** — Dynamic progress bar turns red below 35%, auto-grades as incorrect on timeout
+3. **Instant Feedback** — Click to reveal correct/wrong (green=correct, red=wrong) with hardcore cold-knowledge explanations
+4. **Cold-Knowledge Explanations** — Every question includes a ~100-character hard-science explanation, learnable regardless of answering correctly
+5. **Dimensional Scoring** — Results page breaks down accuracy per dimension, pinpointing knowledge gaps
+6. **Share Card** — Generate and share a stylish screenshot card with rank, radar chart, and a golden quote
 
-## 运行方式
+## How to Run
 
-直接打开 `index.html` 即可运行（需要网络加载 Tailwind CSS CDN）：
+Simply open `index.html` in your browser (requires internet for Tailwind CSS CDN):
 
 ```bash
 # Windows
@@ -58,38 +60,41 @@ open index.html
 xdg-open index.html
 ```
 
-或使用本地服务器（推荐以获得 best JSON fetch 体验）：
+Or use a local server (recommended for best experience):
 
 ```bash
 # Python 3
 python -m http.server 8000
-# 然后打开 http://localhost:8000
+# Then open http://localhost:8000
 
 # Node.js
 npx serve .
 ```
 
-## 扩展指南
+## Extension Guide
 
-### 添加题目
-编辑 `quiz_data.json`，在对应维度的 `questions` 数组中添加新条目：
+### Adding Questions
+
+Edit `quiz_data.json` and add a new entry to the `questions` array of the relevant dimension:
 
 ```json
 {
   "id": "dimension_06",
-  "question": "题目文本",
-  "options": ["选项A", "选项B", "选项C", "选项D"],
+  "question": "Question text here",
+  "options": ["Option A", "Option B", "Option C", "Option D"],
   "answer": 0,
-  "explanation": "100字以内硬核解析"
+  "explanation": "Hard-science explanation within 100 characters"
 }
 ```
 
-### 添加新维度
-在 `quiz_data.json` 的 `dimensions` 数组中添加新对象，并提供 5+ 道题目即可自动生效。
+### Adding a New Dimension
 
-### 修改计时
-编辑 `index.html` 中 `startTimer` 函数的 `duration` 变量（单位毫秒）。
+Add a new object to the `dimensions` array in `quiz_data.json` with 5+ questions — it will be automatically picked up.
 
-## 许可证
+### Adjusting Timer
+
+Edit the `duration` variable in the `startTimer` function inside `index.html` (value in milliseconds).
+
+## License
 
 MIT © hex.coach

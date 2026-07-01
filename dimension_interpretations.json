@@ -1,32 +1,32 @@
 {
-  "深海": {
-    "low": "极端抗压测试失败。你对深海未知的恐惧让数据流产生紊乱，建议先从浅水区特训开始。",
-    "mid": "拥有在极端压力下保持冷静的潜质。潜水舱已降至中层带，你适合探索未知的数据边界。",
-    "high": "深渊级的神经抗压怪兽！即使万吨水压过载，你的逻辑核心依然稳如磐石，深渊禁区任你横行。"
+  "DEEP_SEA": {
+    "low": "Deep-pressure stress test aborted. Dark trench anomalies induced data corruption in your cognitive core. Remedial shallow-water drills advised.",
+    "mid": "Demonstrates strong operational calm under extreme systemic pressure. Dive capsule stabilized at twilight zone. Fit for deep boundary charting.",
+    "high": "Abyssal Neural Titan. Millions of tons of pressure cannot bend your logic. The absolute dark of the deepest ocean trenches is your playground."
   },
-  "星空": {
-    "low": "星轨迷航。你的坐标轴似乎被引力捕获，暂时无法在宏大的天体逻辑中找到北极星。",
-    "mid": "天体观测者。你已经掌握了星空维度的算法轨迹，正在穿越密集的彗星碎片区。",
-    "high": "幽灵星轨主宰！你的思维拥有超光速跃迁能力，宇宙黑暗森林法则在你的算力面前形同虚设。"
+  "COSMOS": {
+    "low": "Orbital tracking failure. Your logical coordinates were captured by unexpected gravity wells, losing telemetry with cosmic scale vectors.",
+    "mid": "Celestial Astromancer status unlocked. You have mapped the baseline algorithm of stellar trajectories and successfully navigated heavy comet debris fields.",
+    "high": "Phantom Star-Rail Sovereign. Your deduction speed breaks light-speed constants. The terrifying cosmic Dark Forest hypothesis is solved under your processing power."
   },
-  "世界之最": {
-    "low": "地理检索离线。你似乎对现实地表的极端数据不太敏感，特工雷达甚至没能定位珠穆朗玛峰。",
-    "mid": "极境漫游者。全球极端地貌与宏观数据已载入你的记忆库，地表检索准确率超越平均水平。",
-    "high": "行走的人类百科全书！你对地表最极端指标了如指掌，世界的边界就是你的后花园。"
+  "EX_RECORDS": {
+    "low": "Geographic telemetry offline. Mind matrix fails to parse planetary extreme metrics. Local sensors couldn't even ping the baseline peaks of Earth.",
+    "mid": "Extreme Frontier Nomad. Earth's extreme topographical anomalies and macro data arrays are fully indexed in your memory cells. Benchmark accuracy verified.",
+    "high": "The Walking Planetary Compendium! You retain absolute recall of the planet's most extreme thresholds. The edge of the map is simply your backyard."
   },
-  "古文明": {
-    "low": "历史黑盒锁死。面对远古的加密代码，你的破译流直接报错，看来你更属于未来时代。",
-    "mid": "黑盒考古客。你成功破译了部分远古文明遗留的逻辑残卷，正逐步逼近历史的底层代码。",
-    "high": "遗迹智者！你拥有沟通远古科技树的神秘直觉，任何尘封万年的逻辑迷宫在你眼里都是单行道。"
+  "CIVILIZATION": {
+    "low": "Archival Blackbox locked. Faced with ancient encrypted source files, your decryption pipelines threw a fatal error. You belong strictly to the future.",
+    "mid": "Cryptic Relic Archeologist. You successfully compiled fragments of ancient logic arrays. Step-by-step, you are reverse-engineering history's root source code.",
+    "high": "Architect of the Archaic Core. You possess an uncanny, almost esoteric intuition for primeval technology branches. No historical labyrinth can trap your threads."
   },
-  "智商测试": {
-    "low": "CPU微幅超载。刚才的逻辑风暴可能让你的神经元短暂短路，建议重启大脑核心再试一次。",
-    "mid": "高维破译官。复杂的矩阵图形与数字陷阱没能难倒你，你总能在混乱的数据中抓到线索。",
-    "high": "降维打击者！160+ 逻辑风暴全量通过。你已经进化出多线程逻辑闭环，凡人的谜题是在浪费你的时间。"
+  "IQ_MATRIX": {
+    "low": "Neural CPU micro-overload detected. The abstract logical crossfire triggered a transient gateway timeout. System reboot recommended.",
+    "mid": "Hyperdimensional Decoder. Complex matrix grids and numerical honey-pots failed to trap your thread stack. You consistently extract signals from noise.",
+    "high": "Dimensional Strike Deployment. 160+ Cognitive storm stress-test cleared. Multithreaded logic loop completely closed. Ordinary puzzles are a waste of your clock cycles."
   },
-  "AI": {
-    "low": "碳基直觉卡顿。你对硅基代码的进化速度缺乏一丝警惕，差点被矩阵的底层逻辑反向吞噬。",
-    "mid": "矩阵幽灵。你对大模型复杂度与神经网络的嗅觉非常敏锐，能够熟练穿梭于算法黑箱之中。",
-    "high": "天网架构师！你对硅基生命的理解已经深入数字神经元底层，未来的算法帝国将由你执笔。"
+  "AI_CORE": {
+    "low": "Carbon-based intuition lag. You underestimated the evolutionary acceleration curve of silicon code, nearly getting reverse-consumed by the neural matrix.",
+    "mid": "Matrix Phantom. Highly perceptive to transformer complexity layers and deep neural nets. You slide through neural-network black boxes with surgical precision.",
+    "high": "Skynet Super-Architect. Your architectural grasp reaches the lowest layers of synthetic digital neurons. The blueprints of the future algorithm empire are yours to write."
   }
 }

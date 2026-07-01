@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>hex.coach — 六维对话竞技</title>
+  <title>hex.coach — 6D Cognitive Arena</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -484,13 +484,13 @@
 <!-- ─── Header ─────────────────────────────── -->
 <div id="header">
   <span class="header-logo">hex.coach</span>
-  <span style="font-size:0.7rem;color:#475569;">六维对话竞技</span>
+  <span style="font-size:0.7rem;color:#475569;">6D Cognitive Arena</span>
   <span class="header-progress" id="headerProgress"></span>
 </div>
 
 <!-- ─── Result Header Row (shown when game ends) ─ -->
 <div id="resultHeaderRow">
-  <span class="power" id="resultPower">⚔️ 总战力：0</span>
+  <span class="power" id="resultPower">⚔️ NET POWER: 0</span>
   <div class="badge-wrap">
     <span class="medal" id="resultMedal">🥉</span>
     <span class="rank-badge" id="resultRankBadge">—</span>
@@ -514,25 +514,35 @@ const QUIZ_DATA = {"dimensions":[{"name":"深海","emoji":"🌊","questions":[{"
 
 // ─── Interpretations ──────────────────────────────
 const DIM_INTERP = {
-  "深海": { "low": "极端抗压测试失败。你对深海未知的恐惧让数据流产生紊乱，建议先从浅水区特训开始。", "mid": "拥有在极端压力下保持冷静的潜质。潜水舱已降至中层带，你适合探索未知的数据边界。", "high": "深渊级的神经抗压怪兽！即使万吨水压过载，你的逻辑核心依然稳如磐石，深渊禁区任你横行。" },
-  "星空": { "low": "星轨迷航。你的坐标轴似乎被引力捕获，暂时无法在宏大的天体逻辑中找到北极星。", "mid": "天体观测者。你已经掌握了星空维度的算法轨迹，正在穿越密集的彗星碎片区。", "high": "幽灵星轨主宰！你的思维拥有超光速跃迁能力，宇宙黑暗森林法则在你的算力面前形同虚设。" },
-  "世界之最": { "low": "地理检索离线。你似乎对现实地表的极端数据不太敏感，特工雷达甚至没能定位珠穆朗玛峰。", "mid": "极境漫游者。全球极端地貌与宏观数据已载入你的记忆库，地表检索准确率超越平均水平。", "high": "行走的人类百科全书！你对地表最极端指标了如指掌，世界的边界就是你的后花园。" },
-  "古文明": { "low": "历史黑盒锁死。面对远古的加密代码，你的破译流直接报错，看来你更属于未来时代。", "mid": "黑盒考古客。你成功破译了部分远古文明遗留的逻辑残卷，正逐步逼近历史的底层代码。", "high": "遗迹智者！你拥有沟通远古科技树的神秘直觉，任何尘封万年的逻辑迷宫在你眼里都是单行道。" },
-  "智商测试": { "low": "CPU微幅超载。刚才的逻辑风暴可能让你的神经元短暂短路，建议重启大脑核心再试一次。", "mid": "高维破译官。复杂的矩阵图形与数字陷阱没能难倒你，你总能在混乱的数据中抓到线索。", "high": "降维打击者！160+ 逻辑风暴全量通过。你已经进化出多线程逻辑闭环，凡人的谜题是在浪费你的时间。" },
-  "AI": { "low": "碳基直觉卡顿。你对硅基代码的进化速度缺乏一丝警惕，差点被矩阵的底层逻辑反向吞噬。", "mid": "矩阵幽灵。你对大模型复杂度与神经网络的嗅觉非常敏锐，能够熟练穿梭于算法黑箱之中。", "high": "天网架构师！你对硅基生命的理解已经深入数字神经元底层，未来的算法帝国将由你执笔。" }
+  "DEEP_SEA": { "low": "Deep-pressure stress test aborted. Dark trench anomalies induced data corruption in your cognitive core. Remedial shallow-water drills advised.", "mid": "Demonstrates strong operational calm under extreme systemic pressure. Dive capsule stabilized at twilight zone. Fit for deep boundary charting.", "high": "Abyssal Neural Titan. Millions of tons of pressure cannot bend your logic. The absolute dark of the deepest ocean trenches is your playground." },
+  "COSMOS": { "low": "Orbital tracking failure. Your logical coordinates were captured by unexpected gravity wells, losing telemetry with cosmic scale vectors.", "mid": "Celestial Astromancer status unlocked. You have mapped the baseline algorithm of stellar trajectories and successfully navigated heavy comet debris fields.", "high": "Phantom Star-Rail Sovereign. Your deduction speed breaks light-speed constants. The terrifying cosmic Dark Forest hypothesis is solved under your processing power." },
+  "EX_RECORDS": { "low": "Geographic telemetry offline. Mind matrix fails to parse planetary extreme metrics. Local sensors couldn't even ping the baseline peaks of Earth.", "mid": "Extreme Frontier Nomad. Earth's extreme topographical anomalies and macro data arrays are fully indexed in your memory cells. Benchmark accuracy verified.", "high": "The Walking Planetary Compendium! You retain absolute recall of the planet's most extreme thresholds. The edge of the map is simply your backyard." },
+  "CIVILIZATION": { "low": "Archival Blackbox locked. Faced with ancient encrypted source files, your decryption pipelines threw a fatal error. You belong strictly to the future.", "mid": "Cryptic Relic Archeologist. You successfully compiled fragments of ancient logic arrays. Step-by-step, you are reverse-engineering history's root source code.", "high": "Architect of the Archaic Core. You possess an uncanny, almost esoteric intuition for primeval technology branches. No historical labyrinth can trap your threads." },
+  "IQ_MATRIX": { "low": "Neural CPU micro-overload detected. The abstract logical crossfire triggered a transient gateway timeout. System reboot recommended.", "mid": "Hyperdimensional Decoder. Complex matrix grids and numerical honey-pots failed to trap your thread stack. You consistently extract signals from noise.", "high": "Dimensional Strike Deployment. 160+ Cognitive storm stress-test cleared. Multithreaded logic loop completely closed. Ordinary puzzles are a waste of your clock cycles." },
+  "AI_CORE": { "low": "Carbon-based intuition lag. You underestimated the evolutionary acceleration curve of silicon code, nearly getting reverse-consumed by the neural matrix.", "mid": "Matrix Phantom. Highly perceptive to transformer complexity layers and deep neural nets. You slide through neural-network black boxes with surgical precision.", "high": "Skynet Super-Architect. Your architectural grasp reaches the lowest layers of synthetic digital neurons. The blueprints of the future algorithm empire are yours to write." }
 };
 
 // ─── Tone pools ──────────────────────────────
-const PRAISE = ['天才！', '绝了！', '稳如老狗！', '脑容量爆表！'];
-const BOO = ['大意了！', '危！', '痛失一臂！', 'CPU烧了？'];
+const PRAISE = ['GENIUS!', 'FLAWLESS!', 'ROCK SOLID!', 'BRAIN OVERCLOCKED!'];
+const BOO = ['ALMOST!', 'ALERT!', 'CORE LOST!', 'CPU MELTDOWN?'];
 const TIMEOUT_TEASE = [
-  '兄弟，你掉线了吗？',
-  '去洗手间忘了带手机？',
-  '断网了还是CPU烧了，兄弟？',
-  '歪？人还在吗，给个反应！',
-  '再不选，特工先去喝杯咖啡了☕'
+  'Agent, are you still online?',
+  'Left your neural-link at the charging dock?',
+  'Connection lost or CPU fried, operator?',
+  'Hello? Any carbon unit still active?',
+  'Tick tock... shall I grab a coffee while you decide? ☕'
 ];
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// ─── Dimension label map for UI display ──────
+const DIM_LABELS = {
+  'DEEP_SEA': 'DEEP SEA',
+  'COSMOS': 'COSMOS',
+  'EX_RECORDS': 'WORLD RECORDS',
+  'CIVILIZATION': 'ANCIENT CIV',
+  'IQ_MATRIX': 'IQ MATRIX',
+  'AI_CORE': 'AI CORE'
+};
 
 // ─── State ───────────────────────────────────
 let quiz = [];
@@ -574,9 +584,9 @@ function getInterpTier(score) {
   return 'high';
 }
 function rankConfig(power) {
-  if (power <= 2000) return { name: '初始白客', sub: '初入战场，数据流尚在摸索', medal: '🥉' };
-  if (power <= 4000) return { name: '裂变行者', sub: '具备全局意识，正稳步崛起', medal: '🥈' };
-  return { name: '超维主宰', sub: '全方位无短板，已逼近全能战士', medal: '🥇' };
+  if (power <= 2000) return { name: 'NEO WHITEHAT', sub: 'Fresh on the grid. Data streams still calibrating.', medal: '🥉' };
+  if (power <= 4000) return { name: 'FISSION WALKER', sub: 'System-wide awareness online. Steady ascent underway.', medal: '🥈' };
+  return { name: 'OMNI OVERLORD', sub: 'Zero blind spots. Approaching full-spectrum combat readiness.', medal: '🥇' };
 }
 
 // ─── Bubble builders ───────────────────────
@@ -664,10 +674,10 @@ function initGame() {
   headerProgress.textContent = `0/${quiz.length}`;
 
   addAiBubble(`
-    <div style="font-weight:700;margin-bottom:0.25rem;">🧪 hex.coach 已上线</div>
+    <div style="font-weight:700;margin-bottom:0.25rem;">🧪 hex.coach ONLINE</div>
     <div style="color:#94a3b8;font-size:0.82rem;line-height:1.6;">
-      从六个维度随机抽题轰炸你的大脑。<br>
-      准备好了吗？
+      6 dimensions of tactical data incoming to blitz your cerebral core.<br>
+      Are you calibrated?
     </div>
   `);
 
@@ -705,7 +715,7 @@ function askQuestion() {
   const q = quiz[currentIndex];
   headerProgress.textContent = `${currentIndex + 1}/${quiz.length}`;
   addAiBubble(`
-    <div style="font-size:0.7rem;color:#818cf8;margin-bottom:0.3rem;">${q.dimensionEmoji} ${q.dimensionName}</div>
+    <div style="font-size:0.7rem;color:#818cf8;margin-bottom:0.3rem;">${q.dimensionEmoji} ${DIM_LABELS[q.dimensionName] || q.dimensionName}</div>
     <div style="font-weight:600;">${q.question}</div>
   `);
   const group = document.createElement('div');
@@ -742,11 +752,11 @@ function handleAnswer(optionText, clickedBtn) {
     streakCount++;
     dimensionResults[q.dimensionName].correct++;
     if (streakCount === 3) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">🔥 连击！脑力全开！</div>';
+      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">🔥 COMBO! NEURAL CORES FULLY LEVERAGED!</div>';
     } else if (streakCount === 7) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">⚡ 超频模式！神挡杀神！</div>';
+      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">⚡ OVERCLOCK MODE! CRUSHING THE MATRIX SYSTEM!</div>';
     } else if (streakCount === 10) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">👑 满血通关！人类智慧巅峰！</div>';
+      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">👑 FLAWLESS CLEAR! PEAK CARBON-BASED INTELLIGENCE!</div>';
     }
   } else {
     streakCount = 0;
@@ -790,9 +800,9 @@ function handleTimeout() {
 // ═══════════════════════════════════════════════
 function showResult() {
   stopTimer();
-  headerProgress.textContent = '✓ 完成';
+  headerProgress.textContent = '✓ COMPLETE';
 
-  const dimOrder = ['深海', '星空', '世界之最', '古文明', '智商测试', 'AI'];
+  const dimOrder = ['DEEP_SEA', 'COSMOS', 'EX_RECORDS', 'CIVILIZATION', 'IQ_MATRIX', 'AI_CORE'];
   const dimData = dimOrder.map(name => dimensionResults[name] ? dimensionResults[name].correct : 0);
   const totalQuestions = dimensionResults[dimOrder[0]] ? dimensionResults[dimOrder[0]].total : 4;
 
@@ -802,7 +812,7 @@ function showResult() {
   const rankName = rc.name;
   const rankSub = rc.sub;
 
-  const titleMap = { '深海': '深渊铁壁', '星空': '幽灵星轨', '世界之最': '极境漫游者', '古文明': '黑盒考古客', '智商测试': '高维破译官', 'AI': '矩阵幽灵' };
+  const titleMap = { 'DEEP_SEA': 'ABYSSAL IRONCLAD', 'COSMOS': 'PHANTOM STAR-RAIL', 'EX_RECORDS': 'FRONTIER NOMAD', 'CIVILIZATION': 'ARCHAIC DECODER', 'IQ_MATRIX': 'HIGH-DIM PARSER', 'AI_CORE': 'MATRIX PHANTOM' };
   const dimScores = dimOrder.map(name => ({ name, score: dimensionResults[name] ? dimensionResults[name].correct : 0 }));
   const maxScore = Math.max(...dimScores.map(d => d.score));
   const topDims = dimScores.filter(d => d.score === maxScore).map(d => d.name);
@@ -810,11 +820,11 @@ function showResult() {
   if (topDims.length === 1) {
     titleText = `【${titleMap[topDims[0]]}】`;
   } else if (topDims.length === 2) {
-    titleText = `${titleMap[topDims[0]]} · ${titleMap[topDims[1]]} 双核驱动`;
+    titleText = `${titleMap[topDims[0]]} · ${titleMap[topDims[1]]} · Dual-Core Ignition`;
   } else if (topDims.length === 3) {
-    titleText = `${topDims.map(d => titleMap[d]).join(' · ')} 三极共鸣`;
+    titleText = `${topDims.map(d => titleMap[d]).join(' · ')} · Tri-Vector Resonance`;
   } else {
-    titleText = '万象均衡 · 全能基石';
+    titleText = 'Omni-Equilibrium · The Universal Foundation';
   }
 
   // ─── Find top dimension for golden quote ──────
@@ -830,19 +840,19 @@ function showResult() {
       <div class="rank-display">${rankName}</div>
       <div class="rank-sub">${rankSub}</div>
       <div class="title-display">${titleText}</div>
-      <div style="text-align:center;color:#64748b;font-size:0.75rem;margin-bottom:0.3rem;">战力总分 ${totalPower} / 6000</div>
+      <div style="text-align:center;color:#64748b;font-size:0.75rem;margin-bottom:0.3rem;">COMBAT POWER: ${totalPower} / 6000</div>
       <div class="relative" style="width:100%;max-width:280px;margin:0.75rem auto;">
         <canvas id="radarChart" style="display:block;width:100%;height:auto;aspect-ratio:1/1;"></canvas>
       </div>
 
       <div class="golden-quote">
         <div class="gq-header">
-          <span>🔥 ${topEmoji} ${topDimName} · 巅峰金句</span>
+          <span>🔥 ${topEmoji} ${DIM_LABELS[topDimName] || topDimName} · PRIME TALENT</span>
         </div>
         <div class="gq-text">${topQuoteText}</div>
       </div>
 
-      <div class="watermark">⚡ HEX.COACH | 赛博特工战力评估</div>
+      <div class="watermark">⚡ HEX.COACH | Cyber-Agent Combat Assessment</div>
     </div>
   `;
 
@@ -858,7 +868,7 @@ function showResult() {
       <div class="snap-card-inner">
         <div class="snap-card-header">
           <span class="dim-emoji">${emoji}</span>
-          <span class="dim-name">${name}</span>
+          <span class="dim-name">${DIM_LABELS[name] || name}</span>
           <span class="dim-score">${data.correct}/${data.total}</span>
         </div>
         <div class="snap-card-text">${interp}</div>
@@ -875,8 +885,8 @@ function showResult() {
   // ─── Button row ────────────────────────────
   const buttonsHtml = `
     <div class="btn-row">
-      <button class="restart-btn" onclick="restartGame()">[ 再来一次 ]</button>
-      <button class="screenshot-btn" id="screenshotBtn">📷 截图保存</button>
+      <button class="restart-btn" onclick="restartGame()">[ 🔄 INITIATE REBOOT ]</button>
+      <button class="screenshot-btn" id="screenshotBtn">📷 DEPLOY POSTER</button>
     </div>
   `;
 
@@ -891,7 +901,7 @@ function showResult() {
   `);
 
   // ─── Update result header ───────────────────
-  resultPower.textContent = `⚔️ 总战力：${totalPower}`;
+  resultPower.textContent = `⚔️ NET POWER: ${totalPower}`;
   resultMedal.textContent = rc.medal;
   resultRankBadge.textContent = rankName;
   resultHeaderRow.style.display = 'flex';
@@ -953,8 +963,8 @@ function handleScreenshot() {
       // Try navigator.share on mobile
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'image.png', { type: 'image/png' })] })) {
         navigator.share({
-          title: 'HEX.COACH 战力评估',
-          text: '来看看我的赛博特工战力评估！',
+          title: 'HEX.COACH Combat Assessment',
+          text: 'Check out my Cyber-Agent combat assessment!',
           files: [new File([blob], `HEX_Agent_Square_${Date.now()}.png`, { type: 'image/png' })]
         }).catch(() => {
           // Fallback: download directly
@@ -966,7 +976,7 @@ function handleScreenshot() {
       }
     }, 'image/png');
   }).catch(err => {
-    console.error('海报生成失败:', err);
+    console.error('Poster generation failed:', err);
     if (btn) btn.disabled = false;
   });
 }
@@ -996,7 +1006,7 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4) {
   const centerY = size / 2;
   const maxRadius = Math.min(centerX, centerY) - 50;
 
-  const labels = ['深海', '星空', '世界之最', '古文明', '智商测试', 'AI'];
+  const labels = ['DEEP SEA', 'COSMOS', 'WORLD RECORDS', 'ANCIENT CIV', 'IQ MATRIX', 'AI CORE'];
   const numAxes = labels.length;
 
   let startTime = null;

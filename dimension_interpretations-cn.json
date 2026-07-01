@@ -1,0 +1,32 @@
+{
+  "DEEP_SEA": {
+    "low": "Deep-pressure stress test aborted. Dark trench anomalies induced data corruption in your cognitive core. Remedial shallow-water drills advised.",
+    "mid": "Demonstrates strong operational calm under extreme systemic pressure. Dive capsule stabilized at twilight zone. Fit for deep boundary charting.",
+    "high": "Abyssal Neural Titan. Millions of tons of pressure cannot bend your logic. The absolute dark of the deepest ocean trenches is your playground."
+  },
+  "COSMOS": {
+    "low": "Orbital tracking failure. Your logical coordinates were captured by unexpected gravity wells, losing telemetry with cosmic scale vectors.",
+    "mid": "Celestial Astromancer status unlocked. You have mapped the baseline algorithm of stellar trajectories and successfully navigated heavy comet debris fields.",
+    "high": "Phantom Star-Rail Sovereign. Your deduction speed breaks light-speed constants. The terrifying cosmic Dark Forest hypothesis is solved under your processing power."
+  },
+  "EX_RECORDS": {
+    "low": "Geographic telemetry offline. Mind matrix fails to parse planetary extreme metrics. Local sensors couldn't even ping the baseline peaks of Earth.",
+    "mid": "Extreme Frontier Nomad. Earth's extreme topographical anomalies and macro data arrays are fully indexed in your memory cells. Benchmark accuracy verified.",
+    "high": "The Walking Planetary Compendium! You retain absolute recall of the planet's most extreme thresholds. The edge of the map is simply your backyard."
+  },
+  "CIVILIZATION": {
+    "low": "Archival Blackbox locked. Faced with ancient encrypted source files, your decryption pipelines threw a fatal error. You belong strictly to the future.",
+    "mid": "Cryptic Relic Archeologist. You successfully compiled fragments of ancient logic arrays. Step-by-step, you are reverse-engineering history's root source code.",
+    "high": "Architect of the Archaic Core. You possess an uncanny, almost esoteric intuition for primeval technology branches. No historical labyrinth can trap your threads."
+  },
+  "IQ_MATRIX": {
+    "low": "Neural CPU micro-overload detected. The abstract logical crossfire triggered a transient gateway timeout. System reboot recommended.",
+    "mid": "Hyperdimensional Decoder. Complex matrix grids and numerical honey-pots failed to trap your thread stack. You consistently extract signals from noise.",
+    "high": "Dimensional Strike Deployment. 160+ Cognitive storm stress-test cleared. Multithreaded logic loop completely closed. Ordinary puzzles are a waste of your clock cycles."
+  },
+  "AI_CORE": {
+    "low": "Carbon-based intuition lag. You underestimated the evolutionary acceleration curve of silicon code, nearly getting reverse-consumed by the neural matrix.",
+    "mid": "Matrix Phantom. Highly perceptive to transformer complexity layers and deep neural nets. You slide through neural-network black boxes with surgical precision.",
+    "high": "Skynet Super-Architect. Your architectural grasp reaches the lowest layers of synthetic digital neurons. The blueprints of the future algorithm empire are yours to write."
+  }
+}
