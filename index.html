@@ -490,12 +490,9 @@ function handleAnswer(optionText, clickedBtn) {
   const q = quiz[currentIndex];
   const isCorrect = optionText === q.options[q.answer];
 
-  // Highlight option buttons
-  document.querySelectorAll('.opt-btn').forEach((btn) => {
-    btn.classList.add('disabled');
-    if (btn.textContent === q.options[q.answer]) btn.classList.add('correct');
-    else if (btn === clickedBtn && !isCorrect) btn.classList.add('wrong');
-  });
+  // Remove option group from chat flow entirely
+  const og = document.getElementById('optionGroup');
+  if (og) og.remove();
 
   // User bubble with chosen text
   addUserBubble(optionText);
@@ -530,7 +527,7 @@ function handleTimeout() {
   locked = true;
 
   const q = quiz[currentIndex];
-  // Highlight correct answer
+  // Highlight correct (no wrong clicks since timeout)
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     btn.classList.add('disabled');
     if (btn.textContent === q.options[q.answer]) btn.classList.add('correct');
@@ -539,7 +536,7 @@ function handleTimeout() {
   // Tease bubble (not consuming question)
   addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;">⏰ ${pick(TIMEOUT_TEASE)}</div>`);
 
-  // Re-enable non-correct buttons + restart timer
+  // Restart timer
   locked = false;
   document.querySelectorAll('.opt-btn').forEach((btn) => {
     if (!btn.classList.contains('correct')) btn.classList.remove('disabled');
