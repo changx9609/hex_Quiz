@@ -559,6 +559,8 @@ function showResult() {
   // Build dimension data array in fixed order
   const dimOrder = ['深海', '星空', '世界之最', '古文明', '智商测试', 'AI'];
   const dimData = dimOrder.map(name => dimensionResults[name] ? dimensionResults[name].correct : 0);
+  // Dynamic max: total questions per dimension (from any dimension)
+  const totalQuestions = dimensionResults[dimOrder[0]] ? dimensionResults[dimOrder[0]].total : 3;
 
   addAiBubble(`
     <div class="result-card">
@@ -606,16 +608,18 @@ function showResult() {
         plugins: { legend: { display: false } },
         scales: {
           r: {
+            min: 0,
+            max: totalQuestions,
+            grid: { color: 'rgba(139, 92, 246, 0.2)' },
             angleLines: { color: 'rgba(255, 255, 255, 0.15)' },
-            grid: { color: 'rgba(139, 92, 246, 0.25)' },
             pointLabels: {
               color: '#ffffff',
+              padding: 15,
               font: { size: 13, weight: 'bold', family: 'monospace' }
             },
             ticks: {
               display: false,
-              beginAtZero: true,
-              max: 3
+              stepSize: 1
             }
           }
         }
