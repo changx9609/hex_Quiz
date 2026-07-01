@@ -162,18 +162,22 @@
       animation: fadeUp 0.3s ease;
     }
     .opt-btn {
-      flex: 0 0 auto;
-      padding: 0.7rem 1rem;
+      flex: 0 1 auto;
+      padding: 0.55rem 0.85rem;
       background: rgba(30,30,60,0.7);
       border: 1px solid #2e2e52;
-      border-radius: 999px;
+      border-radius: 0.7rem;
       color: #cbd5e1;
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
       -webkit-tap-highlight-color: transparent;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      max-width: 100%;
+      line-height: 1.4;
+      text-align: left;
     }
     .opt-btn:active {
       animation: btnElastic 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -885,7 +889,7 @@ function showResult() {
   // ─── Button row ────────────────────────────
   const buttonsHtml = `
     <div class="btn-row">
-      <button class="restart-btn" onclick="restartGame()">[ 🔄 INITIATE REBOOT ]</button>
+      <button class="restart-btn" onclick="restartGame()">[ TRY AGAIN ]</button>
       <button class="screenshot-btn" id="screenshotBtn">📷 DEPLOY POSTER</button>
     </div>
   `;
@@ -942,19 +946,42 @@ function handleScreenshot() {
   if (!card) return;
   if (btn) btn.disabled = true;
 
+  // ─── Patch gradient text before capture ───────
+  // html2canvas doesn't render -webkit-background-clip:text (gradient text)
+  // Temporarily replace with solid color, then restore after capture
+  const rankEls = card.querySelectorAll('.rank-display, .rank-badge, .header-logo, .gq-header');
+  const patched = [];
+  rankEls.forEach(el => {
+    patched.push(el);
+    // Save original inline styles
+    el.dataset.patchFill = el.style.getPropertyValue('-webkit-text-fill-color') || '';
+    el.dataset.patchBg = el.style.getPropertyValue('background') || '';
+    el.dataset.patchClip = el.style.getPropertyValue('-webkit-background-clip') || '';
+    el.dataset.patchColor = el.style.color || '';
+    // Apply solid color patch
+    el.style.setProperty('-webkit-text-fill-color', '#c4b5fd', 'important');
+    el.style.setProperty('background', 'none', 'important');
+    el.style.setProperty('-webkit-background-clip', 'unset', 'important');
+  });
+
   html2canvas(card, {
-    backgroundColor: '#0a0a0c',
+    backgroundColor: null,
     scale: 3,
     useCORS: true,
     allowTaint: true,
     logging: false
   }).then(canvas => {
-    // Clear any potential shadow artifacts
-    const ctx = canvas.getContext('2d');
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
+    // ─── Restore gradient text ────────────────
+    patched.forEach(el => {
+      el.style.setProperty('-webkit-text-fill-color', el.dataset.patchFill || 'transparent');
+      el.style.setProperty('background', el.dataset.patchBg || '');
+      el.style.setProperty('-webkit-background-clip', el.dataset.patchClip || '');
+      el.style.color = el.dataset.patchColor || '';
+      delete el.dataset.patchFill;
+      delete el.dataset.patchBg;
+      delete el.dataset.patchClip;
+      delete el.dataset.patchColor;
+    });
 
     // Convert to blob for sharing/download
     canvas.toBlob(blob => {
