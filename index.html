@@ -442,8 +442,10 @@
       font-size: 0.9rem;
     }
     .wm-combat {
-      color: #94a3b8;
-      font-weight: 500;
+      background: linear-gradient(135deg, #a855f7, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
       font-size: 0.75rem;
     }
 
@@ -967,6 +969,11 @@ function showResult() {
     const canvas = document.getElementById('radarChart');
     if (!canvas) return;
     animateRadarChart(canvas, dimData, totalQuestions);
+
+    // Scroll radar chart to center of screen so user can see the drawing animation
+    setTimeout(() => {
+      canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 150);
   });
 }
 
