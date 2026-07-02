@@ -449,6 +449,13 @@
       font-size: 0.75rem;
     }
 
+    /* ─── Product Hunt badge ─────────────────── */
+    .ph-badge-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.75rem;
+    }
+
     /* ─── Button row (outside shareCard) ─────── */
     .btn-row {
       display: flex;
@@ -937,6 +944,11 @@ function showResult() {
     </div>
     <div class="dots-wrap" id="cardDots">${dotsHtml}</div>
     ${buttonsHtml}
+    <div class="ph-badge-wrap">
+      <a href="https://www.producthunt.com/products/hex-coach-6d-cognitive-arena?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-hex-coach-6d-cognitive-arena" target="_blank" rel="noopener noreferrer">
+        <img alt="hex.coach — 6D Cognitive Arena - Cyberpunk-style ability profile  discover your hidden stats  | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1186570&theme=dark&t=1783018668989">
+      </a>
+    </div>
   `);
 
   // ─── Update result header ───────────────────
