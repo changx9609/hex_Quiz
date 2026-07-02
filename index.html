@@ -846,7 +846,15 @@ function showResult() {
   // ─── Build shareCard content (screenshot target) ──
   const shareCardHtml = `
     <div id="shareCard">
-      <div class="rank-display">${rankName}</div>
+      <svg class="w-full h-auto font-bold" viewBox="0 0 500 54" style="max-width:100%;display:block;margin:0 auto;">
+        <defs>
+          <linearGradient id="rankGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <text x="50%" y="38" fill="url(#rankGrad)" text-anchor="middle" font-size="32" font-weight="800" font-family="JetBrains Mono, monospace" letter-spacing="1">${rankName}</text>
+      </svg>
       <div class="rank-sub">${rankSub}</div>
       <div class="title-display">${titleText}</div>
       <div style="text-align:center;color:#64748b;font-size:0.75rem;margin-bottom:0.3rem;">COMBAT POWER: ${totalPower} / 6000</div>
@@ -861,7 +869,23 @@ function showResult() {
         <div class="gq-text">${topQuoteText}</div>
       </div>
 
-      <div class="watermark">⚡ HEX.COACH | Cyber-Agent Combat Assessment</div>
+      <svg class="w-full" viewBox="0 0 500 24" style="max-width:100%;display:block;margin:0.6rem auto 0;overflow:visible;">
+        <defs>
+          <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="combatGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <text x="50%" y="16" text-anchor="middle" font-size="13" font-family="JetBrains Mono, monospace">
+          <tspan fill="url(#hexGrad)" font-weight="700">⚡ HEX.COACH</tspan>
+          <tspan fill="#475569" font-weight="400"> | </tspan>
+          <tspan fill="url(#combatGrad)" font-weight="500">Cyber-Agent Combat Assessment</tspan>
+        </text>
+      </svg>
     </div>
   `;
 
@@ -953,8 +977,8 @@ function handleScreenshot() {
 
   // ─── Patch gradient text before capture ───────
   // html2canvas doesn't render -webkit-background-clip:text (gradient text)
-  // Temporarily replace with solid color, then restore after capture
-  const rankEls = card.querySelectorAll('.rank-display, .rank-badge, .header-logo, .gq-header');
+  // Only .gq-header still uses CSS gradient; .rank-display is now SVG (fully compatible)
+  const rankEls = card.querySelectorAll('.gq-header');
   const patched = [];
   rankEls.forEach(el => {
     patched.push(el);
