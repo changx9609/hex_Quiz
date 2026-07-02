@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script defer src="https://umami-production-922a.up.railway.app/script.js" data-website-id="39feeb44-ac0c-41a5-ba3c-fc0bff86d406"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -295,17 +296,18 @@
     .restart-btn {
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      width: 100%;
-      padding: 0.75rem;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      border: none;
+      flex: 1;
+      padding: 0.65rem 1rem;
+      background: rgba(30,30,60,0.6);
+      border: 1px solid rgba(139, 92, 246, 0.35);
       border-radius: 0.7rem;
-      color: #fff;
+      color: #c4b5fd;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .restart-btn:active { transform: scale(0.97); }
+    .restart-btn:active { transform: scale(0.96); background: rgba(99,102,241,0.15); }
 
     /* ─── Scroll Snap Card Container ─────────── */
     .snap-scroll {
@@ -424,12 +426,25 @@
 
     /* ─── Watermark ──────────────────────────── */
     .watermark {
-      font-size: 0.55rem;
-      color: #475569;
+      font-size: 0.85rem;
+      color: #94a3b8;
       text-align: center;
-      padding-top: 0.6rem;
+      padding-top: 0.8rem;
+      padding-bottom: 0.4rem;
       letter-spacing: 0.5px;
       font-family: 'JetBrains Mono', monospace;
+    }
+    .wm-hex {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .wm-combat {
+      color: #94a3b8;
+      font-weight: 500;
+      font-size: 0.75rem;
     }
 
     /* ─── Button row (outside shareCard) ─────── */
@@ -846,7 +861,7 @@ function showResult() {
   // ─── Build shareCard content (screenshot target) ──
   const shareCardHtml = `
     <div id="shareCard">
-      <svg class="w-full h-auto font-bold" viewBox="0 0 500 54" style="max-width:100%;display:block;margin:0 auto;">
+      <svg width="100%" height="54" viewBox="0 0 500 54" style="display:block;margin:0 auto;max-width:100%;">
         <defs>
           <linearGradient id="rankGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
@@ -869,23 +884,12 @@ function showResult() {
         <div class="gq-text">${topQuoteText}</div>
       </div>
 
-      <svg class="w-full" viewBox="0 0 500 24" style="max-width:100%;display:block;margin:0.6rem auto 0;overflow:visible;">
-        <defs>
-          <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
-          </linearGradient>
-          <linearGradient id="combatGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <text x="50%" y="16" text-anchor="middle" font-size="13" font-family="JetBrains Mono, monospace">
-          <tspan fill="url(#hexGrad)" font-weight="700">⚡ HEX.COACH</tspan>
-          <tspan fill="#475569" font-weight="400"> | </tspan>
-          <tspan fill="url(#combatGrad)" font-weight="500">Cyber-Agent Combat Assessment</tspan>
-        </text>
-      </svg>
+      <div class="watermark">
+        <span style="color:#475569;">⚡</span>
+        <span class="wm-hex"> HEX.COACH</span>
+        <span style="color:#475569;"> | </span>
+        <span class="wm-combat">Cyber-Agent Combat Assessment</span>
+      </div>
     </div>
   `;
 
@@ -918,7 +922,7 @@ function showResult() {
   // ─── Button row ────────────────────────────
   const buttonsHtml = `
     <div class="btn-row">
-      <button class="restart-btn" onclick="restartGame()">[ TRY AGAIN ]</button>
+      <button class="restart-btn" onclick="restartGame()">TRY AGAIN</button>
       <button class="screenshot-btn" id="screenshotBtn">📷 DEPLOY POSTER</button>
     </div>
   `;
@@ -977,8 +981,8 @@ function handleScreenshot() {
 
   // ─── Patch gradient text before capture ───────
   // html2canvas doesn't render -webkit-background-clip:text (gradient text)
-  // Only .gq-header still uses CSS gradient; .rank-display is now SVG (fully compatible)
-  const rankEls = card.querySelectorAll('.gq-header');
+  // .rank-display is SVG (fully compatible), but watermark spans (.wm-hex/.wm-combat) and .gq-header need patching
+  const rankEls = card.querySelectorAll('.gq-header, .wm-hex, .wm-combat');
   const patched = [];
   rankEls.forEach(el => {
     patched.push(el);
