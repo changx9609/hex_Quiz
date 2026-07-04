@@ -778,6 +778,7 @@ function handleAnswer(optionText, clickedBtn) {
   if (locked) return;
   locked = true;
   stopTimer();
+  try { umami.track('click-option'); } catch (_) {}
   const q = quiz[currentIndex];
   const isCorrect = optionText === q.options[q.answer];
   const og = document.getElementById('optionGroup');
