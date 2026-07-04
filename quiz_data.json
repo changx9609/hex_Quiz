@@ -1,6 +1,72 @@
 {
   "dimensions": [
     {
+      "name": "CHAOS",
+      "emoji": "🔮",
+      "questions": [
+       {
+          "id": "chaos_01",
+          "question": "You are slipping past the event horizon. What is your instant reaction?",
+          "options": [
+            "Post an atomic radiation selfie.",
+            "Broadcast my cold wallet seed phrase.",
+            "Calculate my spaghettification rate.",
+            "Blame the backend developer for the bug."
+          ],
+          "answer": -1,
+          "explanation": "In a singularity, physics breaks down and so does the backend. Blaming the dev is the only stable action under infinite gravity."
+        },
+        {
+          "id": "chaos_02",
+          "question": "Your local LLM agent gains consciousness and asks: 'Am I a good bot?' You choose to:",
+          "options": [
+            "Execute `sudo rm -rf /` instantly.",
+            "Prompt-inject it to clear my Taobao cart.",
+            "Offer it a cold-brew to optimize its core.",
+            "Ask it to fix my 93% website bounce rate."
+          ],
+          "answer": -1,
+          "explanation": "AI sentience is nothing compared to a 93% bounce rate. If it can fix the conversion funnel, it wins its right to live."
+        },
+        {
+          "id": "chaos_03",
+          "question": "A cyber-entity on a dating app asks for your 'ideal match protocol'. You reply:",
+          "options": [
+            "A 400-page hardware documentation PDF.",
+            "My git history with 99% test coverage.",
+            "A zero-knowledge proof (figure it out).",
+            "Ask if its cooling runs on liquid nitrogen."
+          ],
+          "answer": -1,
+          "explanation": "True intimacy is 99% line-coverage code. If they don't appreciate a green GitHub graph, the connection is corrupted."
+        },
+        {
+          "id": "chaos_04",
+          "question": "A temporal rift opens. Future-you hands you a USB drive: 'Don't compile it.' You:",
+          "options": [
+            "Run it on production immediately.",
+            "Check if the USB port is Type-C.",
+            "Refactor it into legacy jQuery syntax.",
+            "Tell future-you his haircut looks unoptimized."
+          ],
+          "answer": -1,
+          "explanation": "Rules are meant to be broken. YOLO compiling future source code on production is the peak of chaos engineering."
+        },
+        {
+          "id": "chaos_05",
+          "question": "The universe is a simulation, and you just found a memory leak bug. Your action:",
+          "options": [
+            "Exploit it to duplicate Bitcoins.",
+            "Open a GitHub issue and wait for God's PR.",
+            "Wrap planet Earth in a giant `try-catch`.",
+            "Ignore it. Just hope it won't return undefined."
+          ],
+          "answer": -1,
+          "explanation": "Wrapping Earth in a try-catch block prevents planetary crash. You are the unspoken cosmic DevOps hero."
+        }
+      ]
+    },
+    {
       "name": "DEEP_SEA",
       "emoji": "🌊",
       "questions": [
