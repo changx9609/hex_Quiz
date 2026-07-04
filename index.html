@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>hex.coach — 6D Cognitive Arena</title>
+  <title>hex.coach 鈥?6D Cognitive Arena</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -23,7 +23,7 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 2px; }
 
-    /* ─── Header ─────────────────────────────── */
+    /* 鈹€鈹€鈹€ Header 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     #header {
       flex-shrink: 0;
       padding: 0.7rem 1rem;
@@ -49,7 +49,7 @@
       margin-left: auto;
     }
 
-    /* ─── Result header row (hidden by default) ─── */
+    /* 鈹€鈹€鈹€ Result header row (hidden by default) 鈹€鈹€鈹€ */
     #resultHeaderRow {
       display: none;
       flex-shrink: 0;
@@ -87,7 +87,7 @@
       white-space: nowrap;
     }
 
-    /* ─── Chat container ─────────────────────── */
+    /* 鈹€鈹€鈹€ Chat container 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     #chatContainer {
       flex: 1;
       overflow-y: auto;
@@ -103,7 +103,7 @@
       gap: 0.6rem;
     }
 
-    /* ─── Bubbles ────────────────────────────── */
+    /* 鈹€鈹€鈹€ Bubbles 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .bubble {
       max-width: 88%;
       border-radius: 1rem;
@@ -152,7 +152,7 @@
       border-bottom-right-radius: 0.25rem;
     }
 
-    /* ─── Inline option buttons ──────────────── */
+    /* 鈹€鈹€鈹€ Inline option buttons 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .option-group {
       align-self: flex-end;
       display: flex;
@@ -207,7 +207,7 @@
     }
     .opt-btn.disabled { cursor: default; opacity: 0.6; }
 
-    /* ─── GO! inline ─────────────────────────── */
+    /* 鈹€鈹€鈹€ GO! inline 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .go-inline {
       align-self: flex-end;
       padding: 0.7rem 2.2rem;
@@ -225,7 +225,7 @@
     .go-inline:active { transform: scale(0.94); }
     .go-inline.disabled { opacity: 0.4; cursor: default; transform: none; }
 
-    /* ─── Fixed bottom timer bar ─────────────── */
+    /* 鈹€鈹€鈹€ Fixed bottom timer bar 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     #bottomTimer {
       flex-shrink: 0;
       height: 3px;
@@ -240,7 +240,7 @@
     }
     #timerFill.warning { background: linear-gradient(90deg, #f59e0b, #ef4444); }
 
-    /* ─── Typing dots ────────────────────────── */
+    /* 鈹€鈹€鈹€ Typing dots 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .typing-dots {
       display: flex;
       align-items: center;
@@ -260,7 +260,7 @@
       30% { opacity: 1; transform: scale(1.3); }
     }
 
-    /* ─── Result card ────────────────────────── */
+    /* 鈹€鈹€鈹€ Result card 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .result-card {
       background: linear-gradient(145deg, #13131f, #1a1a2e);
       border: 1px solid #2a2a4a;
@@ -309,7 +309,7 @@
     }
     .restart-btn:active { transform: scale(0.96); background: rgba(99,102,241,0.15); }
 
-    /* ─── Scroll Snap Card Container ─────────── */
+    /* 鈹€鈹€鈹€ Scroll Snap Card Container 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .snap-scroll {
       display: flex;
       overflow-x: auto;
@@ -358,7 +358,7 @@
       color: #94a3b8;
     }
 
-    /* ─── Dot indicators ─────────────────────── */
+    /* 鈹€鈹€鈹€ Dot indicators 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .dots-wrap {
       display: flex;
       justify-content: center;
@@ -378,10 +378,10 @@
       box-shadow: 0 0 6px rgba(167, 139, 250, 0.6);
     }
 
-    /* ─── Empty spacer for scroll anchor ─────── */
+    /* 鈹€鈹€鈹€ Empty spacer for scroll anchor 鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     #scrollAnchor { height: 1px; flex-shrink: 0; }
 
-    /* ─── Share Card (screenshot target) ─────── */
+    /* 鈹€鈹€鈹€ Share Card (screenshot target) 鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     #shareCard {
       background: linear-gradient(145deg, #13131f, #1a1a2e);
       border: 1px solid #2a2a4a;
@@ -389,7 +389,7 @@
       padding: 1.2rem;
     }
 
-    /* ─── Golden Quote (top-dimension highlight) ─ */
+    /* 鈹€鈹€鈹€ Golden Quote (top-dimension highlight) 鈹€ */
     .golden-quote {
       position: relative;
       background: rgba(139, 92, 246, 0.08);
@@ -424,7 +424,7 @@
       color: #e2e8f0;
     }
 
-    /* ─── Watermark ──────────────────────────── */
+    /* 鈹€鈹€鈹€ Watermark 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .watermark {
       font-size: 0.85rem;
       color: #94a3b8;
@@ -449,7 +449,7 @@
       font-size: 0.75rem;
     }
 
-    /* ─── Product Hunt badge ─────────────────── */
+    /* 鈹€鈹€鈹€ Product Hunt badge 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .ph-badge-wrap {
       display: flex;
       justify-content: flex-start;
@@ -460,7 +460,7 @@
       height: auto;
     }
 
-    /* ─── Button row (outside shareCard) ─────── */
+    /* 鈹€鈹€鈹€ Button row (outside shareCard) 鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .btn-row {
       display: flex;
       justify-content: space-between;
@@ -497,7 +497,7 @@
       transform: none;
     }
 
-    /* ─── Discord neon CTA ───────────────────── */
+    /* 鈹€鈹€鈹€ Discord neon CTA 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
     .discord-cta-wrap {
       display: flex;
       justify-content: center;
@@ -534,13 +534,6 @@
       transform: scale(0.97);
       box-shadow: 0 0 8px rgba(168,85,247,0.3);
     }
-    .discord-cta .bracket {
-      color: #7c3aed;
-      transition: color 0.25s;
-    }
-    .discord-cta:hover .bracket {
-      color: #a855f7;
-    }
     .discord-cta .cta-text {
       background: linear-gradient(135deg, #c084fc, #f97316);
       -webkit-background-clip: text;
@@ -548,7 +541,7 @@
       background-clip: text;
     }
 
-    /* ─── Canvas parent fix for screenshots ──── */
+    /* 鈹€鈹€鈹€ Canvas parent fix for screenshots 鈹€鈹€鈹€鈹€ */
     #shareCard .relative {
       position: relative;
       width: 100%;
@@ -564,43 +557,43 @@
 </head>
 <body>
 
-<!-- ─── Header ─────────────────────────────── -->
+<!-- 鈹€鈹€鈹€ Header 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ -->
 <div id="header">
   <span class="header-logo">hex.coach</span>
   <span style="font-size:0.7rem;color:#475569;">6D Cognitive Arena</span>
   <span class="header-progress" id="headerProgress"></span>
 </div>
 
-<!-- ─── Privacy link (barely visible hacker-style) ─ -->
+<!-- 鈹€鈹€鈹€ Privacy link (barely visible hacker-style) 鈹€ -->
 <div class="fixed top-4 right-4 z-50 font-mono text-[10px] opacity-30 hover:opacity-80 transition-opacity duration-300">
   <a href="/privacy.html" class="text-gray-600/40 decoration-dotted underline-offset-2 hover:text-gray-500 hover:underline">[PRIVACY ]</a>
 </div>
 
-<!-- ─── Result Header Row (shown when game ends) ─ -->
+<!-- 鈹€鈹€鈹€ Result Header Row (shown when game ends) 鈹€ -->
 <div id="resultHeaderRow">
-  <span class="power" id="resultPower">⚔️ NET POWER: 0</span>
+  <span class="power" id="resultPower">鈿旓笍 NET POWER: 0</span>
   <div class="badge-wrap">
-    <span class="medal" id="resultMedal">🥉</span>
-    <span class="rank-badge" id="resultRankBadge">—</span>
+    <span class="medal" id="resultMedal">馃</span>
+    <span class="rank-badge" id="resultRankBadge">鈥?/span>
   </div>
 </div>
 
-<!-- ─── Chat (scrollable) ──────────────────── -->
+<!-- 鈹€鈹€鈹€ Chat (scrollable) 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ -->
 <div id="chatContainer">
   <div id="chatInner"></div>
   <div id="scrollAnchor"></div>
 </div>
 
-<!-- ─── Fixed bottom timer bar ────────────── -->
+<!-- 鈹€鈹€鈹€ Fixed bottom timer bar 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ -->
 <div id="bottomTimer"><div id="timerFill"></div></div>
 
 <script>
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  Embedded quiz data (90 questions, 6 dimensions)
-// ═══════════════════════════════════════════════
-const QUIZ_DATA = {"dimensions":[{"name":"DEEP_SEA","emoji":"🌊","questions":[{"id":"deep_01","question":"What is the water pressure at the deepest point of the Mariana Trench (Challenger Deep) relative to sea level?","options":["~110 times","~550 times","~1,100 times","~5,500 times"],"answer":2,"explanation":"At ~11,000 meters down, pressure scales by 1 atm per 10m, reaching ~1,100 atm. That is equivalent to 50 Boeing 747s stacked on your toes."},{"id":"deep_02","question":"Which deep-sea creature emits red light and is the only known fish that can see red light to hunt?","options":["Anglerfish","Black Dragonfish","Deep-sea Jellyfish","Deep-sea Cod"],"answer":1,"explanation":"The Black Dragonfish (Malacosteus) flashes far-red light and detects it via chlorophyll derivatives. Most deep-sea life only sees blue light, meaning this fish carries its own stealth night-vision goggles."},{"id":"deep_03","question":"What serves as the primary energy source for Hydrothermal Vent ecosystems?","options":["Solar Radiation","Geothermal & Chemosynthesis","Submarine Lava Flow","Radioactive Decay"],"answer":1,"explanation":"Hydrothermal vents rely on chemosynthetic bacteria converting H₂S and CO₂ into organic matter. This forms a completely separate biosphere on Earth that is independent of the Sun."},{"id":"deep_04","question":"Sperm whales dive down to 2,000m (~6,500 ft) to hunt giant squids. Which organ directly assists them in managing extreme pressure?","options":["Enormous Lung Capacity","Spermaceti Organ","30-cm Thick Blubber Layer","Collapsible Rib Cage"],"answer":1,"explanation":"The spermaceti oil in their heads cools and solidifies during deep dives, adjusting buoyancy and buffering the brain cavity against crushing pressures."},{"id":"deep_05","question":"At what depth was the deepest living fish record captured by marine scientists?","options":["~4,000 meters","~5,800 meters","~8,300 meters","~10,900 meters"],"answer":2,"explanation":"The Mariana Snailfish (Pseudoliparis swirei) was filmed alive at 8,143 meters in 2014, and later clocked at 8,178 meters (~26,830 ft) by a Japanese research expedition in 2017."}]},{"name":"COSMOS","emoji":"⭐","questions":[{"id":"star_01","question":"One parsec (pc) is approximately equivalent to how many light-years?","options":["1.5 light-years","3.26 light-years","5.88 light-years","10.5 light-years"],"answer":1,"explanation":"1 pc ≈ 3.2616 ly. Defined as the distance at which 1 AU subtends an angle of 1 arcsecond. Han Solo's famous Millennium Falcon '12 parsecs' boast is a classic reference to this."},{"id":"star_02","question":"Approximately how much would one teaspoon of matter from a neutron star weigh on Earth?","options":["10 tons","100 tons","10 million tons","2 billion tons"],"answer":3,"explanation":"With a density of ~4×10¹⁷ kg/m³, a single teaspoon (5 mL) weighs about 2 billion tons. That is equivalent to compressing the entire human race into a single sugar cube."},{"id":"star_03","question":"What is the designation of the supermassive black hole at the center of the Milky Way, and its latest confirmed milestone?","options":["M87*, first-ever photo captured in 2019","Sagittarius A*, Event Horizon Telescope image released in 2022","TON 618, discovered as the largest black hole in the universe","Cygnus X-1, mass metrics updated in 2021"],"answer":1,"explanation":"Sagittarius A* (Sgr A*), packing ~4 million solar masses, had its event horizon direct image published by the EHT team in May 2022, confirming its existence three years after M87*."},{"id":"star_04","question":"What is the cosmic microwave background (CMB) radiation temperature?","options":["-200°C (-328°F)","2.725 K","10 K","0 K"],"answer":1,"explanation":"The CMB is the afterglow of the Big Bang from ~380,000 years ago. It has cooled down to a uniform 2.725 K (-270.4°C / -454.8°F), making it the most perfect blackbody spectrum in physics."},{"id":"star_05","question":"What is the extreme orbital speed of the exoplanet Swift J1756.9-2508 around its host neutron star, and why?","options":["~1,000 km/s (621 mi/s), due to binary gravitational slingshot","~480 km/s (298 mi/s), caused by stellar tidal stripping","~200 km/s (124 mi/s), propelled by supermassive black hole ejection","~50 km/s (31 mi/s), bound by standard stellar mass core"],"answer":0,"explanation":"It orbits a neutron star at ~1,000 km/s (compared to Earth's 30 km/s). If it were placed in our solar system, traveling from Earth to the Moon would take less than 6 minutes."}]},{"name":"EX_RECORDS","emoji":"🏆","questions":[{"id":"record_01","question":"What is the longest continuous mountain range on planet Earth?","options":["The Himalayas","The Andes","The Mid-Ocean Ridge","The Rockies"],"answer":2,"explanation":"The Mid-Ocean Ridge stretches over 65,000 km (40,390 mi). It is almost entirely underwater. The Andes, at 7,000 km, is less than a tenth of its length."},{"id":"record_02","question":"What is the shortest-lived vertebrate animal known to science?","options":["Mayfly","Woolly Bear Caterpillar","Coral Reef Pygmy Goby","Male Hummingbird"],"answer":2,"explanation":"The Pygmy Goby (Eviota sigillata) has a maximum lifespan of just 59 days. Mayfly larvae can live for years before their brief adult phase, making the Goby much shorter-lived overall."},{"id":"record_03","question":"Which is the most luminous known quasar in the observable universe?","options":["3C 273","S5 0014+81","SMSS J2157-3602","TON 618"],"answer":3,"explanation":"TON 618 shines with a luminosity of 4×10⁴¹ Watts, equal to 140 trillion Suns. Housing a central black hole of 66 billion solar masses, it stands as the brightest and largest single object cataloged."},{"id":"record_04","question":"Where is the absolute driest place (lowest recorded precipitation) on Earth?","options":["Sahara Desert","McMurdo Dry Valleys","Atacama Desert","Gobi Desert"],"answer":1,"explanation":"While Chile's Atacama Desert is incredibly arid, Antarctica's McMurdo Dry Valleys have seen zero precipitation for millions of years. It is Earth's ultimate low-moisture zone."},{"id":"record_05","question":"What is the farthest human-made object from Earth, and approximately how far is it?","options":["Voyager 1, ~24 billion km","New Horizons, ~8 billion km","Pioneer 10, ~12 billion km","Voyager 2, ~20 billion km"],"answer":0,"explanation":"Launched in 1977, Voyager 1 is over 162 AU (~24 billion km / 15 billion mi) away, cruising in interstellar space. Its radio signals take over 22.5 hours to reach Earth."}]},{"name":"CIVILIZATION","emoji":"🏛️","questions":[{"id":"ancient_01","question":"Which of the following is recognized as the oldest surviving legal code in history?","options":["Code of Hammurabi","Code of Ur-Nammu","Twelve Tables","Laws of Manu"],"answer":1,"explanation":"The Sumerian Code of Ur-Nammu (c. 2100 BCE) predates Hammurabi by ~300 years. It was highly progressive, opting for financial fines instead of physical mutilation."},{"id":"ancient_02","question":"What mechanical property did the copper tools used by ancient Egyptians to build pyramids most critically lack?","options":["Hardness","Ductility","Corrosion Resistance","Density"],"answer":0,"explanation":"Pure copper scores a 3 on the Mohs scale, while granite is a 7. Workers had to use copper saws embedded with abrasive quartz sand, sacrificing brute hardness for abrasive cutting."},{"id":"ancient_03","question":"What was the true geographic location of the ancient city of Troy according to modern archeology?","options":["Near Athens, Greece","Hisarlik, Turkey","Sicily, Italy","Alexandria, Egypt"],"answer":1,"explanation":"In 1870, Heinrich Schliemann excavated a 9-layer deep archaeological site at Hisarlik, Turkey. Troy Layer VII (c. 1300 BCE) is verified as the historical city matching Homer's Iliad."},{"id":"ancient_04","question":"What is the symbol for zero '0' in the ancient Mayan vigesimal numeral system?","options":["A Single Dot","A Horizontal Bar","A Shell or Eye Symbol","An Inverted V"],"answer":2,"explanation":"The Mayans independently invented the concept and symbol of zero (a stylized shell) by the 3rd century BCE, centuries ahead of European mathematics."},{"id":"ancient_05","question":"Which unexcavated tomb chamber was verified using non-destructive Muon Tomography in 2002?","options":["Terracotta Pit No.2","The Stone Armor Pit","Mausoleum of First Qin Emperor","The Hanging Coffins"],"answer":2,"explanation":"Muon scanning confirmed the layout of Qin Shi Huang's main underground palace and identified massive mercury anomalies, corroborating historical claims of 'rivers of mercury'."}]},{"name":"IQ_MATRIX","emoji":"🧠","questions":[{"id":"iq_01","question":"Identify the number that does NOT belong to the same logical mathematical group: 3, 5, 7, 11, 13, 15","options":["3","13","15","11"],"answer":2,"explanation":"15 is a composite number (3×5), whereas all other numbers in the sequence are prime numbers, meaning they are only divisible by 1 and themselves."},{"id":"iq_02","question":"If Banana = 5, Apple = 3, Strawberry = 9, and Orange = 5, then Grape = ?","options":["2","3","4","6"],"answer":0,"explanation":"The pattern counts the number of closed loops in the uppercase spelling of each word: G(0)+R(0)+A(1)+P(1)+E(0) = 2. A, O, P, R contain 1 loop, B has 2."},{"id":"iq_03","question":"Complete the logical sequence: 3, 8, 15, 24, 35, ?","options":["44","46","48","50"],"answer":2,"explanation":"The pattern follows the quadratic formula: n² - 1. (2²-1=3, 3²-1=8, 4²-1=15, 5²-1=24, 6²-1=35). The next step is 7² - 1 = 48."},{"id":"iq_04","question":"Classic Matchstick Puzzle: Move exactly ONE matchstick to make the equation 8 + 3 = 0 true. Which action is correct?","options":["Move the center stick of 8 to 0, making it 6 + 3 = 9","Move a stick from 0 to 8, making it 9 + 3 = 12","Move the top-left stick of 8 to 3, making it 9 + 3 = 12","No solution exists"],"answer":0,"explanation":"By removing the middle crossbar of 8, it transforms into 6. Placing that matchstick into the empty center of 0 changes it to 9, resolving into 6 + 3 = 9."},{"id":"iq_05","question":"A explorer walks 1 mile South, 1 mile East, and 1 mile North, arriving exactly back at the starting point. Where is this position located?","options":["The North Pole","The Equator","Near the South Pole at specific latitudes","Both A and C"],"answer":3,"explanation":"The North Pole is the obvious solution. However, there are infinite rings near the South Pole where walking 1 mile East completes a perfect loop, returning you to the starting track."}]},{"name":"AI_CORE","emoji":"🤖","questions":[{"id":"ai_01","question":"Why did the 2024 Nobel Prize in Physics trigger massive shockwaves across the global tech sector?","options":["It was awarded for Quantum Computing breakthroughs","It was awarded to Hopfield & Hinton for Artificial Neural Networks","It was awarded to DeepMind founders for AlphaFold","It was awarded for inventing the Transformer architecture"],"answer":1,"explanation":"The Nobel Committee shocked the world by awarding the Physics prize to John Hopfield and Geoffrey Hinton, marking the first time AI foundational research won a Nobel Prize."},{"id":"ai_02","question":"What is the algorithmic computational complexity of the Self-Attention mechanism in standard Transformers?","options":["O(n)","O(n log n)","O(n²)","O(2ⁿ)"],"answer":2,"explanation":"Self-attention computed complexity scales quadratically at O(n²·d), where n is sequence length. Every token pairs with every other token, making long-context tracking extremely compute-heavy."},{"id":"ai_03","question":"What is the primary objective of the field known as 'AI Alignment'?","options":["Aligning model output parameters with specialized hardware","Ensuring AI system behaviors and vectors align with human intent","Enforcing uniform context lengths across open-source clusters","Optimizing tokenization algorithms for legal/syntax parsing"],"answer":1,"explanation":"AI Alignment ensures an AI's autonomous goals line up with true human safety guidelines and intentions. RLHF is currently the most deployed alignment layer."},{"id":"ai_04","question":"What was the maximum context window capacity of GPT-4 in its initial early release versions?","options":["2,048 tokens","8,192 tokens","32,768 tokens","128,000 tokens"],"answer":2,"explanation":"GPT-4 initially shipped with 8K and 32K token variants back in early 2023. By comparison, legacy BERT cap was 512 tokens—a 256x expansion scale over a few iterative cycles."},{"id":"ai_05","question":"In machine learning, what is the classic empirical signature of 'Overfitting'?","options":["High accuracy on both training and test data arrays","High training accuracy matched with plummeting test accuracy","Consistently low accuracy across all dataset cross-validations","Uncontrollable parameter bloat during gradient descent steps"],"answer":1,"explanation":"Overfitting occurs when a model memorizes training data and its noise instead of generalizing concepts. It scores perfectly on training but fails completely on new test data."}]},{"name":"CHAOS","emoji":"🔮","questions":[{"id":"chaos_01","question":"You are slipping past the event horizon. What is your instant reaction?","options":["Post an atomic radiation selfie.","Broadcast my cold wallet seed phrase.","Calculate my spaghettification rate.","Blame the backend developer for the bug."],"answer":-1,"explanation":"In a singularity, physics breaks down and so does the backend. Blaming the dev is the only stable action under infinite gravity."},{"id":"chaos_02","question":"Your local LLM agent gains consciousness and asks: 'Am I a good bot?' You choose to:","options":["Execute `sudo rm -rf /` instantly.","Prompt-inject it to clear my Taobao cart.","Offer it a cold-brew to optimize its core.","Ask it to fix my 93% website bounce rate."],"answer":-1,"explanation":"AI sentience is nothing compared to a 93% bounce rate. If it can fix the conversion funnel, it wins its right to live."},{"id":"chaos_03","question":"A cyber-entity on a dating app asks for your 'ideal match protocol'. You reply:","options":["A 400-page hardware documentation PDF.","My git history with 99% test coverage.","A zero-knowledge proof (figure it out).","Ask if its cooling runs on liquid nitrogen."],"answer":-1,"explanation":"True intimacy is 99% line-coverage code. If they don't appreciate a green GitHub graph, the connection is corrupted."},{"id":"chaos_04","question":"A temporal rift opens. Future-you hands you a USB drive: 'Don't compile it.' You:","options":["Run it on production immediately.","Check if the USB port is Type-C.","Refactor it into legacy jQuery syntax.","Tell future-you his haircut looks unoptimized."],"answer":-1,"explanation":"Rules are meant to be broken. YOLO compiling future source code on production is the peak of chaos engineering."},{"id":"chaos_05","question":"The universe is a simulation, and you just found a memory leak bug. Your action:","options":["Exploit it to duplicate Bitcoins.","Open a GitHub issue and wait for God's PR.","Wrap planet Earth in a giant `try-catch`.","Ignore it. Just hope it won't return undefined."],"answer":-1,"explanation":"Wrapping Earth in a try-catch block prevents planetary crash. You are the unspoken cosmic DevOps hero."}]}]};
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
+const QUIZ_DATA = {"dimensions":[{"name":"DEEP_SEA","emoji":"馃寠","questions":[{"id":"deep_01","question":"What is the water pressure at the deepest point of the Mariana Trench (Challenger Deep) relative to sea level?","options":["~110 times","~550 times","~1,100 times","~5,500 times"],"answer":2,"explanation":"At ~11,000 meters down, pressure scales by 1 atm per 10m, reaching ~1,100 atm. That is equivalent to 50 Boeing 747s stacked on your toes."},{"id":"deep_02","question":"Which deep-sea creature emits red light and is the only known fish that can see red light to hunt?","options":["Anglerfish","Black Dragonfish","Deep-sea Jellyfish","Deep-sea Cod"],"answer":1,"explanation":"The Black Dragonfish (Malacosteus) flashes far-red light and detects it via chlorophyll derivatives. Most deep-sea life only sees blue light, meaning this fish carries its own stealth night-vision goggles."},{"id":"deep_03","question":"What serves as the primary energy source for Hydrothermal Vent ecosystems?","options":["Solar Radiation","Geothermal & Chemosynthesis","Submarine Lava Flow","Radioactive Decay"],"answer":1,"explanation":"Hydrothermal vents rely on chemosynthetic bacteria converting H鈧係 and CO鈧?into organic matter. This forms a completely separate biosphere on Earth that is independent of the Sun."},{"id":"deep_04","question":"Sperm whales dive down to 2,000m (~6,500 ft) to hunt giant squids. Which organ directly assists them in managing extreme pressure?","options":["Enormous Lung Capacity","Spermaceti Organ","30-cm Thick Blubber Layer","Collapsible Rib Cage"],"answer":1,"explanation":"The spermaceti oil in their heads cools and solidifies during deep dives, adjusting buoyancy and buffering the brain cavity against crushing pressures."},{"id":"deep_05","question":"At what depth was the deepest living fish record captured by marine scientists?","options":["~4,000 meters","~5,800 meters","~8,300 meters","~10,900 meters"],"answer":2,"explanation":"The Mariana Snailfish (Pseudoliparis swirei) was filmed alive at 8,143 meters in 2014, and later clocked at 8,178 meters (~26,830 ft) by a Japanese research expedition in 2017."}]},{"name":"COSMOS","emoji":"猸?,"questions":[{"id":"star_01","question":"One parsec (pc) is approximately equivalent to how many light-years?","options":["1.5 light-years","3.26 light-years","5.88 light-years","10.5 light-years"],"answer":1,"explanation":"1 pc 鈮?3.2616 ly. Defined as the distance at which 1 AU subtends an angle of 1 arcsecond. Han Solo's famous Millennium Falcon '12 parsecs' boast is a classic reference to this."},{"id":"star_02","question":"Approximately how much would one teaspoon of matter from a neutron star weigh on Earth?","options":["10 tons","100 tons","10 million tons","2 billion tons"],"answer":3,"explanation":"With a density of ~4脳10鹿鈦?kg/m鲁, a single teaspoon (5 mL) weighs about 2 billion tons. That is equivalent to compressing the entire human race into a single sugar cube."},{"id":"star_03","question":"What is the designation of the supermassive black hole at the center of the Milky Way, and its latest confirmed milestone?","options":["M87*, first-ever photo captured in 2019","Sagittarius A*, Event Horizon Telescope image released in 2022","TON 618, discovered as the largest black hole in the universe","Cygnus X-1, mass metrics updated in 2021"],"answer":1,"explanation":"Sagittarius A* (Sgr A*), packing ~4 million solar masses, had its event horizon direct image published by the EHT team in May 2022, confirming its existence three years after M87*."},{"id":"star_04","question":"What is the cosmic microwave background (CMB) radiation temperature?","options":["-200掳C (-328掳F)","2.725 K","10 K","0 K"],"answer":1,"explanation":"The CMB is the afterglow of the Big Bang from ~380,000 years ago. It has cooled down to a uniform 2.725 K (-270.4掳C / -454.8掳F), making it the most perfect blackbody spectrum in physics."},{"id":"star_05","question":"What is the extreme orbital speed of the exoplanet Swift J1756.9-2508 around its host neutron star, and why?","options":["~1,000 km/s (621 mi/s), due to binary gravitational slingshot","~480 km/s (298 mi/s), caused by stellar tidal stripping","~200 km/s (124 mi/s), propelled by supermassive black hole ejection","~50 km/s (31 mi/s), bound by standard stellar mass core"],"answer":0,"explanation":"It orbits a neutron star at ~1,000 km/s (compared to Earth's 30 km/s). If it were placed in our solar system, traveling from Earth to the Moon would take less than 6 minutes."}]},{"name":"EX_RECORDS","emoji":"馃弳","questions":[{"id":"record_01","question":"What is the longest continuous mountain range on planet Earth?","options":["The Himalayas","The Andes","The Mid-Ocean Ridge","The Rockies"],"answer":2,"explanation":"The Mid-Ocean Ridge stretches over 65,000 km (40,390 mi). It is almost entirely underwater. The Andes, at 7,000 km, is less than a tenth of its length."},{"id":"record_02","question":"What is the shortest-lived vertebrate animal known to science?","options":["Mayfly","Woolly Bear Caterpillar","Coral Reef Pygmy Goby","Male Hummingbird"],"answer":2,"explanation":"The Pygmy Goby (Eviota sigillata) has a maximum lifespan of just 59 days. Mayfly larvae can live for years before their brief adult phase, making the Goby much shorter-lived overall."},{"id":"record_03","question":"Which is the most luminous known quasar in the observable universe?","options":["3C 273","S5 0014+81","SMSS J2157-3602","TON 618"],"answer":3,"explanation":"TON 618 shines with a luminosity of 4脳10鈦绰?Watts, equal to 140 trillion Suns. Housing a central black hole of 66 billion solar masses, it stands as the brightest and largest single object cataloged."},{"id":"record_04","question":"Where is the absolute driest place (lowest recorded precipitation) on Earth?","options":["Sahara Desert","McMurdo Dry Valleys","Atacama Desert","Gobi Desert"],"answer":1,"explanation":"While Chile's Atacama Desert is incredibly arid, Antarctica's McMurdo Dry Valleys have seen zero precipitation for millions of years. It is Earth's ultimate low-moisture zone."},{"id":"record_05","question":"What is the farthest human-made object from Earth, and approximately how far is it?","options":["Voyager 1, ~24 billion km","New Horizons, ~8 billion km","Pioneer 10, ~12 billion km","Voyager 2, ~20 billion km"],"answer":0,"explanation":"Launched in 1977, Voyager 1 is over 162 AU (~24 billion km / 15 billion mi) away, cruising in interstellar space. Its radio signals take over 22.5 hours to reach Earth."}]},{"name":"CIVILIZATION","emoji":"馃彌锔?,"questions":[{"id":"ancient_01","question":"Which of the following is recognized as the oldest surviving legal code in history?","options":["Code of Hammurabi","Code of Ur-Nammu","Twelve Tables","Laws of Manu"],"answer":1,"explanation":"The Sumerian Code of Ur-Nammu (c. 2100 BCE) predates Hammurabi by ~300 years. It was highly progressive, opting for financial fines instead of physical mutilation."},{"id":"ancient_02","question":"What mechanical property did the copper tools used by ancient Egyptians to build pyramids most critically lack?","options":["Hardness","Ductility","Corrosion Resistance","Density"],"answer":0,"explanation":"Pure copper scores a 3 on the Mohs scale, while granite is a 7. Workers had to use copper saws embedded with abrasive quartz sand, sacrificing brute hardness for abrasive cutting."},{"id":"ancient_03","question":"What was the true geographic location of the ancient city of Troy according to modern archeology?","options":["Near Athens, Greece","Hisarlik, Turkey","Sicily, Italy","Alexandria, Egypt"],"answer":1,"explanation":"In 1870, Heinrich Schliemann excavated a 9-layer deep archaeological site at Hisarlik, Turkey. Troy Layer VII (c. 1300 BCE) is verified as the historical city matching Homer's Iliad."},{"id":"ancient_04","question":"What is the symbol for zero '0' in the ancient Mayan vigesimal numeral system?","options":["A Single Dot","A Horizontal Bar","A Shell or Eye Symbol","An Inverted V"],"answer":2,"explanation":"The Mayans independently invented the concept and symbol of zero (a stylized shell) by the 3rd century BCE, centuries ahead of European mathematics."},{"id":"ancient_05","question":"Which unexcavated tomb chamber was verified using non-destructive Muon Tomography in 2002?","options":["Terracotta Pit No.2","The Stone Armor Pit","Mausoleum of First Qin Emperor","The Hanging Coffins"],"answer":2,"explanation":"Muon scanning confirmed the layout of Qin Shi Huang's main underground palace and identified massive mercury anomalies, corroborating historical claims of 'rivers of mercury'."}]},{"name":"IQ_MATRIX","emoji":"馃","questions":[{"id":"iq_01","question":"Identify the number that does NOT belong to the same logical mathematical group: 3, 5, 7, 11, 13, 15","options":["3","13","15","11"],"answer":2,"explanation":"15 is a composite number (3脳5), whereas all other numbers in the sequence are prime numbers, meaning they are only divisible by 1 and themselves."},{"id":"iq_02","question":"If Banana = 5, Apple = 3, Strawberry = 9, and Orange = 5, then Grape = ?","options":["2","3","4","6"],"answer":0,"explanation":"The pattern counts the number of closed loops in the uppercase spelling of each word: G(0)+R(0)+A(1)+P(1)+E(0) = 2. A, O, P, R contain 1 loop, B has 2."},{"id":"iq_03","question":"Complete the logical sequence: 3, 8, 15, 24, 35, ?","options":["44","46","48","50"],"answer":2,"explanation":"The pattern follows the quadratic formula: n虏 - 1. (2虏-1=3, 3虏-1=8, 4虏-1=15, 5虏-1=24, 6虏-1=35). The next step is 7虏 - 1 = 48."},{"id":"iq_04","question":"Classic Matchstick Puzzle: Move exactly ONE matchstick to make the equation 8 + 3 = 0 true. Which action is correct?","options":["Move the center stick of 8 to 0, making it 6 + 3 = 9","Move a stick from 0 to 8, making it 9 + 3 = 12","Move the top-left stick of 8 to 3, making it 9 + 3 = 12","No solution exists"],"answer":0,"explanation":"By removing the middle crossbar of 8, it transforms into 6. Placing that matchstick into the empty center of 0 changes it to 9, resolving into 6 + 3 = 9."},{"id":"iq_05","question":"A explorer walks 1 mile South, 1 mile East, and 1 mile North, arriving exactly back at the starting point. Where is this position located?","options":["The North Pole","The Equator","Near the South Pole at specific latitudes","Both A and C"],"answer":3,"explanation":"The North Pole is the obvious solution. However, there are infinite rings near the South Pole where walking 1 mile East completes a perfect loop, returning you to the starting track."}]},{"name":"AI_CORE","emoji":"馃","questions":[{"id":"ai_01","question":"Why did the 2024 Nobel Prize in Physics trigger massive shockwaves across the global tech sector?","options":["It was awarded for Quantum Computing breakthroughs","It was awarded to Hopfield & Hinton for Artificial Neural Networks","It was awarded to DeepMind founders for AlphaFold","It was awarded for inventing the Transformer architecture"],"answer":1,"explanation":"The Nobel Committee shocked the world by awarding the Physics prize to John Hopfield and Geoffrey Hinton, marking the first time AI foundational research won a Nobel Prize."},{"id":"ai_02","question":"What is the algorithmic computational complexity of the Self-Attention mechanism in standard Transformers?","options":["O(n)","O(n log n)","O(n虏)","O(2鈦?"],"answer":2,"explanation":"Self-attention computed complexity scales quadratically at O(n虏路d), where n is sequence length. Every token pairs with every other token, making long-context tracking extremely compute-heavy."},{"id":"ai_03","question":"What is the primary objective of the field known as 'AI Alignment'?","options":["Aligning model output parameters with specialized hardware","Ensuring AI system behaviors and vectors align with human intent","Enforcing uniform context lengths across open-source clusters","Optimizing tokenization algorithms for legal/syntax parsing"],"answer":1,"explanation":"AI Alignment ensures an AI's autonomous goals line up with true human safety guidelines and intentions. RLHF is currently the most deployed alignment layer."},{"id":"ai_04","question":"What was the maximum context window capacity of GPT-4 in its initial early release versions?","options":["2,048 tokens","8,192 tokens","32,768 tokens","128,000 tokens"],"answer":2,"explanation":"GPT-4 initially shipped with 8K and 32K token variants back in early 2023. By comparison, legacy BERT cap was 512 tokens鈥攁 256x expansion scale over a few iterative cycles."},{"id":"ai_05","question":"In machine learning, what is the classic empirical signature of 'Overfitting'?","options":["High accuracy on both training and test data arrays","High training accuracy matched with plummeting test accuracy","Consistently low accuracy across all dataset cross-validations","Uncontrollable parameter bloat during gradient descent steps"],"answer":1,"explanation":"Overfitting occurs when a model memorizes training data and its noise instead of generalizing concepts. It scores perfectly on training but fails completely on new test data."}]},{"name":"CHAOS","emoji":"馃敭","questions":[{"id":"chaos_01","question":"You are slipping past the event horizon. What is your instant reaction?","options":["Post an atomic radiation selfie.","Broadcast my cold wallet seed phrase.","Calculate my spaghettification rate.","Blame the backend developer for the bug."],"answer":-1,"explanation":"In a singularity, physics breaks down and so does the backend. Blaming the dev is the only stable action under infinite gravity."},{"id":"chaos_02","question":"Your local LLM agent gains consciousness and asks: 'Am I a good bot?' You choose to:","options":["Execute `sudo rm -rf /` instantly.","Prompt-inject it to clear my Taobao cart.","Offer it a cold-brew to optimize its core.","Ask it to fix my 93% website bounce rate."],"answer":-1,"explanation":"AI sentience is nothing compared to a 93% bounce rate. If it can fix the conversion funnel, it wins its right to live."},{"id":"chaos_03","question":"A cyber-entity on a dating app asks for your 'ideal match protocol'. You reply:","options":["A 400-page hardware documentation PDF.","My git history with 99% test coverage.","A zero-knowledge proof (figure it out).","Ask if its cooling runs on liquid nitrogen."],"answer":-1,"explanation":"True intimacy is 99% line-coverage code. If they don't appreciate a green GitHub graph, the connection is corrupted."},{"id":"chaos_04","question":"A temporal rift opens. Future-you hands you a USB drive: 'Don't compile it.' You:","options":["Run it on production immediately.","Check if the USB port is Type-C.","Refactor it into legacy jQuery syntax.","Tell future-you his haircut looks unoptimized."],"answer":-1,"explanation":"Rules are meant to be broken. YOLO compiling future source code on production is the peak of chaos engineering."},{"id":"chaos_05","question":"The universe is a simulation, and you just found a memory leak bug. Your action:","options":["Exploit it to duplicate Bitcoins.","Open a GitHub issue and wait for God's PR.","Wrap planet Earth in a giant `try-catch`.","Ignore it. Just hope it won't return undefined."],"answer":-1,"explanation":"Wrapping Earth in a try-catch block prevents planetary crash. You are the unspoken cosmic DevOps hero."}]}]};
 
-// ─── Interpretations ──────────────────────────────
+// 鈹€鈹€鈹€ Interpretations 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 const DIM_INTERP = {
   "DEEP_SEA": { "low": "Deep-pressure stress test aborted. Dark trench anomalies induced data corruption in your cognitive core. Remedial shallow-water drills advised.", "mid": "Demonstrates strong operational calm under extreme systemic pressure. Dive capsule stabilized at twilight zone. Fit for deep boundary charting.", "high": "Abyssal Neural Titan. Millions of tons of pressure cannot bend your logic. The absolute dark of the deepest ocean trenches is your playground." },
   "COSMOS": { "low": "Orbital tracking failure. Your logical coordinates were captured by unexpected gravity wells, losing telemetry with cosmic scale vectors.", "mid": "Celestial Astromancer status unlocked. You have mapped the baseline algorithm of stellar trajectories and successfully navigated heavy comet debris fields.", "high": "Phantom Star-Rail Sovereign. Your deduction speed breaks light-speed constants. The terrifying cosmic Dark Forest hypothesis is solved under your processing power." },
@@ -608,10 +601,10 @@ const DIM_INTERP = {
   "CIVILIZATION": { "low": "Archival Blackbox locked. Faced with ancient encrypted source files, your decryption pipelines threw a fatal error. You belong strictly to the future.", "mid": "Cryptic Relic Archeologist. You successfully compiled fragments of ancient logic arrays. Step-by-step, you are reverse-engineering history's root source code.", "high": "Architect of the Archaic Core. You possess an uncanny, almost esoteric intuition for primeval technology branches. No historical labyrinth can trap your threads." },
   "IQ_MATRIX": { "low": "Neural CPU micro-overload detected. The abstract logical crossfire triggered a transient gateway timeout. System reboot recommended.", "mid": "Hyperdimensional Decoder. Complex matrix grids and numerical honey-pots failed to trap your thread stack. You consistently extract signals from noise.", "high": "Dimensional Strike Deployment. 160+ Cognitive storm stress-test cleared. Multithreaded logic loop completely closed. Ordinary puzzles are a waste of your clock cycles." },
   "AI_CORE": { "low": "Carbon-based intuition lag. You underestimated the evolutionary acceleration curve of silicon code, nearly getting reverse-consumed by the neural matrix.", "mid": "Matrix Phantom. Highly perceptive to transformer complexity layers and deep neural nets. You slide through neural-network black boxes with surgical precision.", "high": "Skynet Super-Architect. Your architectural grasp reaches the lowest layers of synthetic digital neurons. The blueprints of the future algorithm empire are yours to write." },
-  "CHAOS": { "low": "Your chaos signal barely registered. The singularity detected your presence but deemed you too predictable for full entropic induction. Try embracing more absurd logic branches next cycle.", "mid": "Entropy Flux Nominee. You surfed the quantum randomness with moderate success. The void acknowledges your capacity for controlled insanity. Keep bending the rules.", "high": "Primordial Chaos Entity. You are no longer bound by classical logic. The fabric of deterministic spacetime acknowledges your authority. You don't follow the rules—you ARE the undefined behavior." }
+  "CHAOS": { "low": "Your chaos signal barely registered. The singularity detected your presence but deemed you too predictable for full entropic induction. Try embracing more absurd logic branches next cycle.", "mid": "Entropy Flux Nominee. You surfed the quantum randomness with moderate success. The void acknowledges your capacity for controlled insanity. Keep bending the rules.", "high": "Primordial Chaos Entity. You are no longer bound by classical logic. The fabric of deterministic spacetime acknowledges your authority. You don't follow the rules鈥攜ou ARE the undefined behavior." }
 };
 
-// ─── Tone pools ──────────────────────────────
+// 鈹€鈹€鈹€ Tone pools 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 const PRAISE = ['GENIUS!', 'FLAWLESS!', 'ROCK SOLID!', 'BRAIN OVERCLOCKED!'];
 const BOO = ['ALMOST!', 'ALERT!', 'CORE LOST!', 'CPU MELTDOWN?'];
 const TIMEOUT_TEASE = [
@@ -619,11 +612,11 @@ const TIMEOUT_TEASE = [
   'Left your neural-link at the charging dock?',
   'Connection lost or CPU fried, operator?',
   'Hello? Any carbon unit still active?',
-  'Tick tock... shall I grab a coffee while you decide? ☕'
+  'Tick tock... shall I grab a coffee while you decide? 鈽?
 ];
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-// ─── Dimension label map for UI display ──────
+// 鈹€鈹€鈹€ Dimension label map for UI display 鈹€鈹€鈹€鈹€鈹€鈹€
 const DIM_LABELS = {
   'DEEP_SEA': 'DEEP SEA',
   'COSMOS': 'COSMOS',
@@ -634,7 +627,7 @@ const DIM_LABELS = {
   'CHAOS': 'CHAOS'
 };
 
-// ─── State ───────────────────────────────────
+// 鈹€鈹€鈹€ State 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 let quiz = [];
 let currentIndex = 0;
 let correctCount = 0;
@@ -646,7 +639,7 @@ let initialGo = true;
 let selectedDimNames = [];
 let timeoutCount = 0;
 
-// ─── DOM refs ────────────────────────────────
+// 鈹€鈹€鈹€ DOM refs 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 const chatInner = document.getElementById('chatInner');
 const headerProgress = document.getElementById('headerProgress');
 const anchor = document.getElementById('scrollAnchor');
@@ -656,7 +649,7 @@ const resultPower = document.getElementById('resultPower');
 const resultMedal = document.getElementById('resultMedal');
 const resultRankBadge = document.getElementById('resultRankBadge');
 
-// ─── Helpers ────────────────────────────────
+// 鈹€鈹€鈹€ Helpers 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -676,16 +669,16 @@ function getInterpTier(score) {
   return 'high';
 }
 function rankConfig(power) {
-  if (power <= 2000) return { name: 'NEO WHITEHAT', sub: 'Fresh on the grid. Data streams still calibrating.', medal: '🥉' };
-  if (power <= 4000) return { name: 'FISSION WALKER', sub: 'System-wide awareness online. Steady ascent underway.', medal: '🥈' };
-  return { name: 'OMNI OVERLORD', sub: 'Zero blind spots. Approaching full-spectrum combat readiness.', medal: '🥇' };
+  if (power <= 2000) return { name: 'NEO WHITEHAT', sub: 'Fresh on the grid. Data streams still calibrating.', medal: '馃' };
+  if (power <= 4000) return { name: 'FISSION WALKER', sub: 'System-wide awareness online. Steady ascent underway.', medal: '馃' };
+  return { name: 'OMNI OVERLORD', sub: 'Zero blind spots. Approaching full-spectrum combat readiness.', medal: '馃' };
 }
 
-// ─── Bubble builders ───────────────────────
+// 鈹€鈹€鈹€ Bubble builders 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 function addAiBubble(html) {
   const div = document.createElement('div');
   div.className = 'bubble bubble-ai';
-  div.innerHTML = `<div class="author"><span class="avatar">🤖</span> hex.coach</div>${html}`;
+  div.innerHTML = `<div class="author"><span class="avatar">馃</span> hex.coach</div>${html}`;
   chatInner.appendChild(div);
   scrollBottom();
 }
@@ -702,7 +695,7 @@ function addTypingBubble() {
   const div = document.createElement('div');
   div.className = 'bubble bubble-ai';
   div.id = 'typingBubble';
-  div.innerHTML = `<div class="author"><span class="avatar">🤖</span> hex.coach</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
+  div.innerHTML = `<div class="author"><span class="avatar">馃</span> hex.coach</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
   chatInner.appendChild(div);
   scrollBottom();
 }
@@ -712,7 +705,7 @@ function removeTyping() {
   if (tb) tb.remove();
 }
 
-// ─── Build quiz ─────────────────────────────
+// 鈹€鈹€鈹€ Build quiz 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 function buildQuiz() {
   quiz = [];
   dimensionResults = {};
@@ -731,7 +724,7 @@ function buildQuiz() {
   shuffle(quiz);
 }
 
-// ─── Timer control ─────────────────────────
+// 鈹€鈹€鈹€ Timer control 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 function startTimer() {
   clearInterval(timer);
   timerFill.style.width = '100%';
@@ -756,9 +749,9 @@ function stopTimer() {
   timerFill.style.width = '0%';
 }
 
-// ═══════════════════════════════════════════════
-//  PHASE 1: Init → "准备好了吗？" + GO! inline
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
+//  PHASE 1: Init 鈫?"鍑嗗濂戒簡鍚楋紵" + GO! inline
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function initGame() {
   correctCount = 0;
   streakCount = 0;
@@ -771,7 +764,7 @@ function initGame() {
   headerProgress.textContent = `0/${quiz.length}`;
 
   addAiBubble(`
-    <div style="font-weight:700;margin-bottom:0.25rem;">🧪 hex.coach ONLINE</div>
+    <div style="font-weight:700;margin-bottom:0.25rem;">馃И hex.coach ONLINE</div>
     <div style="color:#94a3b8;font-size:0.82rem;line-height:1.6;">
       6 dimensions of tactical data incoming to blitz your cerebral core.<br>
       Are you calibrated?
@@ -787,9 +780,9 @@ function initGame() {
   scrollBottom();
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  PHASE 2: GO!
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function handleGo(goBtn) {
   if (locked || !initialGo) return;
   locked = true;
@@ -804,9 +797,9 @@ function handleGo(goBtn) {
   }, 600);
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  PHASE 3: Question
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function askQuestion() {
   timeoutCount = 0;
   if (currentIndex >= quiz.length) { showResult(); return; }
@@ -832,9 +825,9 @@ function askQuestion() {
   locked = false;
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  PHASE 4a: Answer
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function handleAnswer(optionText, clickedBtn) {
   if (locked) return;
   locked = true;
@@ -852,11 +845,11 @@ function handleAnswer(optionText, clickedBtn) {
     streakCount++;
     dimensionResults[q.dimensionName].correct++;
     if (streakCount === 3) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">🔥 COMBO! NEURAL CORES FULLY LEVERAGED!</div>';
+      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">馃敟 COMBO! NEURAL CORES FULLY LEVERAGED!</div>';
     } else if (streakCount === 7) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">⚡ OVERCLOCK MODE! CRUSHING THE MATRIX SYSTEM!</div>';
+      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">鈿?OVERCLOCK MODE! CRUSHING THE MATRIX SYSTEM!</div>';
     } else if (streakCount === 10) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">👑 FLAWLESS CLEAR! PEAK CARBON-BASED INTELLIGENCE!</div>';
+      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">馃憫 FLAWLESS CLEAR! PEAK CARBON-BASED INTELLIGENCE!</div>';
     }
   } else {
     streakCount = 0;
@@ -867,12 +860,12 @@ function handleAnswer(optionText, clickedBtn) {
     if (isChaos) {
       // CHAOS dimension: skip all right/wrong judgment, just show explanation smoothly
       addAiBubble(`
-        <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;font-style:italic;">🔮 ${q.explanation}</div>
+        <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;font-style:italic;">馃敭 ${q.explanation}</div>
       `);
     } else {
       const tone = isCorrect ? pick(PRAISE) : pick(BOO);
       addAiBubble(`
-        <div style="font-weight:700;margin-bottom:0.25rem;">${isCorrect ? '✅' : '💡'} ${tone}</div>
+        <div style="font-weight:700;margin-bottom:0.25rem;">${isCorrect ? '鉁? : '馃挕'} ${tone}</div>
         ${streakMsg}
         <div style="color:#818cf8;font-size:0.82rem;margin-bottom:0.3rem;">${q.options[q.answer]}</div>
         <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;">${q.explanation}</div>
@@ -883,9 +876,9 @@ function handleAnswer(optionText, clickedBtn) {
   }, 700);
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  PHASE 4b: Timeout
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function handleTimeout() {
   if (locked) return;
   locked = true;
@@ -894,7 +887,7 @@ function handleTimeout() {
   timeoutCount++;
   if (timeoutCount === 1) {
     // First timeout: give another chance, NO correct answer highlighting
-    addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;">⏰ ${pick(TIMEOUT_TEASE)}</div>`);
+    addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;">鈴?${pick(TIMEOUT_TEASE)}</div>`);
     locked = false;
     startTimer();
   } else {
@@ -909,24 +902,24 @@ function handleTimeout() {
     }
     const og = document.getElementById('optionGroup');
     if (og) og.remove();
-    addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;color:#64748b;">⏰ Connection terminated. Moving on...</div>`);
+    addAiBubble(`<div style="font-weight:700;margin-bottom:0.25rem;color:#64748b;">鈴?Connection terminated. Moving on...</div>`);
     currentIndex++;
     setTimeout(() => { askQuestion(); }, 1000);
   }
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  RESULT
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function showResult() {
   stopTimer();
-  headerProgress.textContent = '✓ COMPLETE';
+  headerProgress.textContent = '鉁?COMPLETE';
 
   const dimOrder = selectedDimNames;
   const dimData = dimOrder.map(name => dimensionResults[name] ? dimensionResults[name].correct : 0);
   const totalQuestions = dimensionResults[dimOrder[0]] ? dimensionResults[dimOrder[0]].total : 4;
 
-  // ─── Compute rank & title ─────────────────────
+  // 鈹€鈹€鈹€ Compute rank & title 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   const totalPower = Math.round((correctCount / quiz.length) * 6000);
   const rc = rankConfig(totalPower);
   const rankName = rc.name;
@@ -938,23 +931,23 @@ function showResult() {
   const topDims = dimScores.filter(d => d.score === maxScore).map(d => d.name);
   let titleText = '';
   if (topDims.length === 1) {
-    titleText = `【${titleMap[topDims[0]]}】`;
+    titleText = `銆?{titleMap[topDims[0]]}銆慲;
   } else if (topDims.length === 2) {
-    titleText = `${titleMap[topDims[0]]} · ${titleMap[topDims[1]]} · Dual-Core Ignition`;
+    titleText = `${titleMap[topDims[0]]} 路 ${titleMap[topDims[1]]} 路 Dual-Core Ignition`;
   } else if (topDims.length === 3) {
-    titleText = `${topDims.map(d => titleMap[d]).join(' · ')} · Tri-Vector Resonance`;
+    titleText = `${topDims.map(d => titleMap[d]).join(' 路 ')} 路 Tri-Vector Resonance`;
   } else {
-    titleText = 'Omni-Equilibrium · The Universal Foundation';
+    titleText = 'Omni-Equilibrium 路 The Universal Foundation';
   }
 
-  // ─── Find top dimension for golden quote ──────
+  // 鈹€鈹€鈹€ Find top dimension for golden quote 鈹€鈹€鈹€鈹€鈹€鈹€
   const topDimName = topDims[0] || dimOrder[0];
   const topDimData = dimensionResults[topDimName];
   const topTier = topDimData ? getInterpTier(topDimData.correct) : 'mid';
   const topQuoteText = DIM_INTERP[topDimName] ? DIM_INTERP[topDimName][topTier] : '';
-  const topEmoji = topDimData ? topDimData.emoji : '🔥';
+  const topEmoji = topDimData ? topDimData.emoji : '馃敟';
 
-  // ─── Build shareCard content (screenshot target) ──
+  // 鈹€鈹€鈹€ Build shareCard content (screenshot target) 鈹€鈹€
   const shareCardHtml = `
     <div id="shareCard">
       <svg width="100%" height="54" viewBox="0 0 500 54" style="display:block;margin:0 auto;max-width:100%;">
@@ -975,13 +968,13 @@ function showResult() {
 
       <div class="golden-quote">
         <div class="gq-header">
-          <span>🔥 ${topEmoji} ${DIM_LABELS[topDimName] || topDimName} · PRIME TALENT</span>
+          <span>馃敟 ${topEmoji} ${DIM_LABELS[topDimName] || topDimName} 路 PRIME TALENT</span>
         </div>
         <div class="gq-text">${topQuoteText}</div>
       </div>
 
       <div class="watermark">
-        <span style="color:#475569;">⚡</span>
+        <span style="color:#475569;">鈿?/span>
         <span class="wm-hex"> HEX.COACH</span>
         <span style="color:#475569;"> | </span>
         <span class="wm-combat">Cyber-Agent Combat Assessment</span>
@@ -989,7 +982,7 @@ function showResult() {
     </div>
   `;
 
-  // ─── Build swipeable interpretation cards ────
+  // 鈹€鈹€鈹€ Build swipeable interpretation cards 鈹€鈹€鈹€鈹€
   let cardsHtml = '';
   for (const name of dimOrder) {
     const data = dimensionResults[name];
@@ -1009,21 +1002,21 @@ function showResult() {
     </div>`;
   }
 
-  // ─── Dots HTML ─────────────────────────────
+  // 鈹€鈹€鈹€ Dots HTML 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   let dotsHtml = '';
   for (let i = 0; i < dimOrder.length; i++) {
     dotsHtml += `<span class="dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`;
   }
 
-  // ─── Button row ────────────────────────────
+  // 鈹€鈹€鈹€ Button row 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   const buttonsHtml = `
     <div class="btn-row">
       <button class="restart-btn" onclick="restartGame()">TRY AGAIN</button>
-      <button class="screenshot-btn" id="screenshotBtn">📷 DEPLOY POSTER</button>
+      <button class="screenshot-btn" id="screenshotBtn">馃摲 DEPLOY POSTER</button>
     </div>
   `;
 
-  // ─── Assemble full result bubble ───────────
+  // 鈹€鈹€鈹€ Assemble full result bubble 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   addAiBubble(`
     ${shareCardHtml}
     <div class="snap-scroll" id="cardScroller">
@@ -1032,26 +1025,24 @@ function showResult() {
     <div class="dots-wrap" id="cardDots">${dotsHtml}</div>
     ${buttonsHtml}
     <div class="discord-cta-wrap">
-      <a class="discord-cta" href="https://discord.gg/4u4SvxXQ8" target="_blank" rel="noopener noreferrer">
-        <span class="bracket">[</span>
+      <a class="discord-cta" href="https://discord.gg/bYYz9aHD8" target="_blank" rel="noopener noreferrer">
         <span class="cta-text">ENTER THE DISCORD ARENA</span>
-        <span class="bracket">]</span>
       </a>
     </div>
     <div class="ph-badge-wrap">
       <a href="https://www.producthunt.com/products/hex-coach-6d-cognitive-arena?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-hex-coach-6d-cognitive-arena" target="_blank" rel="noopener noreferrer">
-        <img alt="hex.coach — 6D Cognitive Arena - Cyberpunk-style ability profile  discover your hidden stats  | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1186570&theme=dark&t=1783018668989">
+        <img alt="hex.coach 鈥?6D Cognitive Arena - Cyberpunk-style ability profile  discover your hidden stats  | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1186570&theme=dark&t=1783018668989">
       </a>
     </div>
   `);
 
-  // ─── Update result header ───────────────────
-  resultPower.textContent = `⚔️ NET POWER: ${totalPower}`;
+  // 鈹€鈹€鈹€ Update result header 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+  resultPower.textContent = `鈿旓笍 NET POWER: ${totalPower}`;
   resultMedal.textContent = rc.medal;
   resultRankBadge.textContent = rankName;
   resultHeaderRow.style.display = 'flex';
 
-  // ─── Sync scroll snap dots ──────────────────
+  // 鈹€鈹€鈹€ Sync scroll snap dots 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   const scroller = document.getElementById('cardScroller');
   const dotsContainer = document.getElementById('cardDots');
   if (scroller && dotsContainer) {
@@ -1062,7 +1053,7 @@ function showResult() {
     });
   }
 
-  // ─── Bind screenshot button ─────────────────
+  // 鈹€鈹€鈹€ Bind screenshot button 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   setTimeout(() => {
     const btn = document.getElementById('screenshotBtn');
     if (btn) {
@@ -1070,7 +1061,7 @@ function showResult() {
     }
   }, 100);
 
-  // ─── Render Radar Chart ─────────────────────
+  // 鈹€鈹€鈹€ Render Radar Chart 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   requestAnimationFrame(() => {
     const canvas = document.getElementById('radarChart');
     if (!canvas) return;
@@ -1083,16 +1074,16 @@ function showResult() {
   });
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  Screenshot & Share
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function handleScreenshot() {
   const card = document.getElementById('shareCard');
   const btn = document.getElementById('screenshotBtn');
   if (!card) return;
   if (btn) btn.disabled = true;
 
-  // ─── Patch gradient text before capture ───────
+  // 鈹€鈹€鈹€ Patch gradient text before capture 鈹€鈹€鈹€鈹€鈹€鈹€鈹€
   // html2canvas doesn't render -webkit-background-clip:text (gradient text)
   // .rank-display is SVG (fully compatible), but watermark spans (.wm-hex/.wm-combat) and .gq-header need patching
   const rankEls = card.querySelectorAll('.gq-header, .wm-hex, .wm-combat');
@@ -1117,7 +1108,7 @@ function handleScreenshot() {
     allowTaint: true,
     logging: false
   }).then(canvas => {
-    // ─── Restore gradient text ────────────────
+    // 鈹€鈹€鈹€ Restore gradient text 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
     patched.forEach(el => {
       el.style.setProperty('-webkit-text-fill-color', el.dataset.patchFill || 'transparent');
       el.style.setProperty('background', el.dataset.patchBg || '');
@@ -1161,9 +1152,9 @@ function downloadPngFallback(canvas) {
   link.click();
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  Radar Animation Engine
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function animateRadarChart(canvas, actualData, totalQuestions = 4, dimNames) {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
@@ -1275,9 +1266,9 @@ function animateRadarChart(canvas, actualData, totalQuestions = 4, dimNames) {
   requestAnimationFrame(drawFrame);
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  Confetti
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function triggerLightConfetti() {
   if (typeof confetti !== 'function') return;
   confetti({
@@ -1288,9 +1279,9 @@ function triggerLightConfetti() {
   });
 }
 
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 //  Restart & Boot
-// ═══════════════════════════════════════════════
+// 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 function restartGame() {
   locked = true;
   clearInterval(timer);
