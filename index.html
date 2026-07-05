@@ -589,47 +589,22 @@
 
 <script>
 // ═══════════════════════════════════════════════
-//  Data loading — fetched dynamically from Worker API
-//  or fallback to direct JSON files on disk.
-//  Single source of truth: quiz_data.json & dimension_interpretations.json
+//  Data loading — fetched from Cloudflare R2 via Worker API.
+//  Single source of truth: quiz_data.json & dimension_interpretations.json in R2 bucket.
 // ═══════════════════════════════════════════════
 
-// ─── Configure your Worker API base URL here ─────
-// Set this to your deployed Cloudflare Worker URL, e.g.:
-//   const API_BASE = 'https://hex-arena-api.your-username.workers.dev';
-// Leave empty to fallback to direct JSON fetch (for local dev / GitHub Pages):
-const API_BASE = '';
-
-// ─── Language detection ───────────────────────────
-function getLang() {
-  const lang = (navigator.language || '').toLowerCase();
-  return lang.startsWith('zh') ? 'zh' : 'en';
-}
+// ─── Worker API base URL ──────────────────────────
+// Quiz data is served from Cloudflare R2 via Worker.
+const API_BASE = 'https://hex-arena-api.changx9609.workers.dev';
 
 // ─── Dynamic data containers ──────────────────────
 let QUIZ_DATA = null;
 let DIM_INTERP = null;
 
 async function loadData() {
-  const lang = getLang();
-  const qFile = lang === 'zh' ? 'quiz_data-cn.json' : 'quiz_data.json';
-  const iFile = lang === 'zh' ? 'dimension_interpretations-cn.json' : 'dimension_interpretations.json';
-
-  const fetchWithFallback = async (path) => {
-    if (API_BASE) {
-      try {
-        const res = await fetch(`${API_BASE}/${path}`);
-        if (res.ok) return await res.json();
-      } catch (_) { /* fallthrough to direct fetch */ }
-    }
-    const res = await fetch(path);
-    if (!res.ok) throw new Error(`Failed to load ${path}: ${res.status}`);
-    return await res.json();
-  };
-
   const [data, interp] = await Promise.all([
-    fetchWithFallback(qFile),
-    fetchWithFallback(iFile)
+    fetch(`${API_BASE}/quiz_data.json`).then(r => { if (!r.ok) throw new Error(`quiz_data.json: ${r.status}`); return r.json(); }),
+    fetch(`${API_BASE}/dimension_interpretations.json`).then(r => { if (!r.ok) throw new Error(`dimension_interpretations.json: ${r.status}`); return r.json(); })
   ]);
 
   QUIZ_DATA = data;

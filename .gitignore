@@ -1,2 +1,8 @@
 
 .wrangler/
+
+# Quiz data served from Cloudflare R2 via Worker, not from repo
+quiz_data.json
+quiz_data-cn.json
+dimension_interpretations.json
+dimension_interpretations-cn.json
