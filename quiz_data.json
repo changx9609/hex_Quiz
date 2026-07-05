@@ -63,6 +63,39 @@
           ],
           "answer": -1,
           "explanation": "Wrapping Earth in a try-catch block prevents planetary crash. You are the unspoken cosmic DevOps hero."
+        },
+        {
+          "id": "chaos_06",
+          "question": "Your AI project hits Top 3 on PH. Suddenly, a random bot-like account comments: 'Nice product! Let's support each other! 🚀' Your move?",
+          "options": [
+            "Report and ignore. Growth should be organic. Get this gray-hat trash out of my comment section.",
+            "Fast upvote back. Play the game to win. A vote is a vote if it pushes me closer to the #1 spot.",
+            "AI counter-attack. Use my own Agent to auto-generate a 500-word deep review. Out-hustle them with pure automation."
+          ],
+          "answer": -1,
+          "explanation": "In the arena of growth, metrics are weaponized. Whether you enforce the rules, play the system, or automate the hustle, survival is the only logic that matters."
+        },
+        {
+          "id": "chaos_07",
+          "question": "Your AI project drops on PH. An elite Hunter comments: 'Your UI is pure art, miles ahead of any dry MBTI tool!' Your instinct?",
+          "options": [
+            "Sleep is for the weak. Dopamine rushing. I'm staying up all night to code new features based on this comment.",
+            "Cool story, bro. Politely reply 'Thx' while ruthlessly tracking conversion rates and server logs in the background.",
+            "Reverse hunting. Immediately stalk their profile, analyzing their last 100 upvotes to reverse-engineer their brain."
+          ],
+          "answer": -1,
+          "explanation": "Makers always swing between dopamine addiction and cold metrics. Praise is just temporary code; only the dark circles under your eyes are real."
+        },
+        {
+          "id": "chaos_08",
+          "question": "Traffic floods in from PH, but your onboarding channel suddenly breaks due to endless anti-bot verifications. You feel stuck. Action?",
+          "options": [
+            "Pure cyber-punk. Screw the big tech rules. I'll build my own decentralized, open-source channel tomorrow.",
+            "Adapt to survive. Pay whatever it takes to bypass the verification wall. Conversion rate is the only ultimate truth.",
+            "Ruthless pivot. Abandon the broken channel. Replace it with a 1-line email signup on the landing page immediately."
+          ],
+          "answer": -1,
+          "explanation": "In the startup battlefield, no channel is sacred. The only constant is iteration. If the wall blocks you, flow around it, burn through it, or rebuild from scratch."
         }
       ]
     },

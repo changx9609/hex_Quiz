@@ -1,4 +1,9 @@
 {
+  "CHAOS": {
+    "low": "你的混沌抗压测试挂科了。现实世界的不可预测性击穿了你的神经防火墙。建议执行一次系统级重启并关闭所有后台焦虑进程。",
+    "mid": "赛博混沌穿越者。你在大脑的 Bug 海洋里建了一座稳定岛。当全世界都在崩溃时，你甚至在考虑要不要爆米花。",
+    "high": "混沌核心执行者！宇宙的随机性是你棋盘上的棋子。当信号变成噪声、秩序变成混沌，你才是那个笑着改写规则的人。"
+  },
   "DEEP_SEA": {
     "low": "Deep-pressure stress test aborted. Dark trench anomalies induced data corruption in your cognitive core. Remedial shallow-water drills advised.",
     "mid": "Demonstrates strong operational calm under extreme systemic pressure. Dive capsule stabilized at twilight zone. Fit for deep boundary charting.",
