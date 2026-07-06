@@ -594,7 +594,7 @@
 // ═══════════════════════════════════════════════
 
 // ─── Worker API base URL ──────────────────────────
-// Quiz data is served from Cloudflare R2 via Worker.
+// Quiz data fetched from Worker (public endpoints never expose answers).
 const API_BASE = 'https://hex-arena-api.changx9609.workers.dev';
 
 // ─── Dynamic data containers ──────────────────────
@@ -603,8 +603,8 @@ let DIM_INTERP = null;
 
 async function loadData() {
   const [data, interp] = await Promise.all([
-    fetch(`${API_BASE}/quiz_data.json`).then(r => { if (!r.ok) throw new Error(`quiz_data.json: ${r.status}`); return r.json(); }),
-    fetch(`${API_BASE}/dimension_interpretations.json`).then(r => { if (!r.ok) throw new Error(`dimension_interpretations.json: ${r.status}`); return r.json(); })
+    fetch(`${API_BASE}/questions`).then(r => { if (!r.ok) throw new Error(`questions: ${r.status}`); return r.json(); }),
+    fetch(`${API_BASE}/interpretations`).then(r => { if (!r.ok) throw new Error(`interpretations: ${r.status}`); return r.json(); })
   ]);
 
   QUIZ_DATA = data;
@@ -833,7 +833,7 @@ function askQuestion() {
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 4a: Answer
+//  PHASE 4a: Answer — validated server-side via Worker
 // ═══════════════════════════════════════════════
 function handleAnswer(optionText, clickedBtn) {
   if (locked) return;
@@ -841,56 +841,67 @@ function handleAnswer(optionText, clickedBtn) {
   stopTimer();
   try { umami.track('click-option'); } catch (_) {}
   const q = quiz[currentIndex];
-  const isChaos = q.answer === -1 || q.dimensionName === 'CHAOS';
-  const isCorrect = isChaos ? true : (optionText === q.options[q.answer]);
   const og = document.getElementById('optionGroup');
   if (og) og.remove();
   addUserBubble(optionText);
-  let streakMsg = '';
-  if (isCorrect) {
-    correctCount++;
-    streakCount++;
-    dimensionResults[q.dimensionName].correct++;
-    if (streakCount === 3) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">🔥 COMBO! NEURAL CORES FULLY LEVERAGED!</div>';
-    } else if (streakCount === 7) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">⚡ OVERCLOCK MODE! CRUSHING THE MATRIX SYSTEM!</div>';
-    } else if (streakCount === 10) {
-      streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">👑 FLAWLESS CLEAR! PEAK CARBON-BASED INTELLIGENCE!</div>';
-    }
-  } else {
-    streakCount = 0;
-  }
   addTypingBubble();
-  setTimeout(() => {
+
+  fetch(`${API_BASE}/validate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ questionId: q.id, userAnswer: optionText })
+  })
+  .then(r => { if (!r.ok) return r.json().then(e => { throw new Error(e.error || 'validation failed') }); return r.json(); })
+  .then(result => {
     removeTyping();
-    if (isChaos) {
-      // CHAOS dimension: skip all right/wrong judgment, just show explanation smoothly
-      addAiBubble(`
-        <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;font-style:italic;">🔮 ${q.explanation}</div>
-      `);
+    const isCorrect = result.correct;
+    const explanation = result.explanation;
+    const correctAnswer = result.correctAnswer;
+    let streakMsg = '';
+    if (isCorrect) {
+      correctCount++;
+      streakCount++;
+      dimensionResults[q.dimensionName].correct++;
+      if (streakCount === 3) {
+        streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">🔥 COMBO! NEURAL CORES FULLY LEVERAGED!</div>';
+      } else if (streakCount === 7) {
+        streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">⚡ OVERCLOCK MODE! CRUSHING THE MATRIX SYSTEM!</div>';
+      } else if (streakCount === 10) {
+        streakMsg = '<div style="font-size:0.85rem;margin-top:0.25rem;color:#f97316;">👑 FLAWLESS CLEAR! PEAK CARBON-BASED INTELLIGENCE!</div>';
+      }
+    } else {
+      streakCount = 0;
+    }
+    if (result.isChaos) {
+      addAiBubble(`<div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;font-style:italic;">🔮 ${explanation}</div>`);
     } else {
       const tone = isCorrect ? pick(PRAISE) : pick(BOO);
       addAiBubble(`
         <div style="font-weight:700;margin-bottom:0.25rem;">${isCorrect ? '✅' : '💡'} ${tone}</div>
         ${streakMsg}
-        <div style="color:#818cf8;font-size:0.82rem;margin-bottom:0.3rem;">${q.options[q.answer]}</div>
-        <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;">${q.explanation}</div>
+        <div style="color:#818cf8;font-size:0.82rem;margin-bottom:0.3rem;">${correctAnswer}</div>
+        <div style="color:#94a3b8;font-size:0.8rem;line-height:1.6;">${explanation}</div>
       `);
     }
     currentIndex++;
     setTimeout(() => { askQuestion(); }, 1500);
-  }, 700);
+  })
+  .catch(err => {
+    removeTyping();
+    addAiBubble(`<div style="color:#ef4444;font-size:0.82rem;">⚠️ Validation error: ${err.message}</div>`);
+    currentIndex++;
+    setTimeout(() => { askQuestion(); }, 1500);
+  });
 }
 
 // ═══════════════════════════════════════════════
-//  PHASE 4b: Timeout
+//  PHASE 4b: Timeout — no answer exposed to frontend
 // ═══════════════════════════════════════════════
 function handleTimeout() {
   if (locked) return;
   locked = true;
   const q = quiz[currentIndex];
-  const isChaos = q.answer === -1 || q.dimensionName === 'CHAOS';
+  const isChaos = q.dimensionName === 'CHAOS';
   timeoutCount++;
   if (timeoutCount === 1) {
     // First timeout: give another chance, NO correct answer highlighting
