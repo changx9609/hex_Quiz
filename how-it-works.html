@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How hex.coach Works — Scoring, Ranks &amp; the Six Dimensions</title>
+  <link rel="canonical" href="https://www.hex.coach/how-it-works.html">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="description" content="How the hex.coach 6D Cognitive Arena works: the six science dimensions, how 24 questions are drawn, the 15-second timer, how the power score (0–6000) and the three ranks are calculated.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="hex.coach">
+  <meta property="og:url" content="https://www.hex.coach/how-it-works.html">
+  <meta property="og:title" content="How hex.coach Works — Scoring, Ranks &amp; the Six Dimensions">
+  <meta property="og:description" content="The six dimensions, the 24-question draw, the 15-second clock, and how the 0–6000 power score maps to NEO WHITEHAT, FISSION WALKER and OMNI OVERLORD.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is hex.coach free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every run is free, there is no account, no email, and no download. The quiz runs in your browser." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does one run take?",
+        "acceptedAnswer": { "@type": "Answer", "text": "24 questions with a 15-second clock each, so a full run usually takes five to six minutes." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does hex.coach store my answers or score?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Scoring happens inside your browser session. Answers are only sent to the API to be checked, and the result, radar chart and score are not stored against you." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the CHAOS dimension?",
+        "acceptedAnswer": { "@type": "Answer", "text": "CHAOS is a four-question interlude of absurd scenario questions. Every option counts as correct, so it never lowers your score." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I retake the quiz?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each run draws a new random set of dimensions and questions, so a retake is never the same test." }
+      }
+    ]
+  }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #08080e;
+      color: #e2e8f0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.75;
+      padding: 40px 20px 60px;
+    }
+    main { max-width: 720px; margin: 0 auto; }
+    .eyebrow {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #6366f1;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: 28px;
+      line-height: 1.35;
+      font-weight: 800;
+      margin: 0 0 16px;
+      background: linear-gradient(135deg, #a78bfa, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    h2 { font-size: 18px; font-weight: 700; color: #c4b5fd; margin: 36px 0 10px; }
+    p { font-size: 15px; color: #94a3b8; margin: 0 0 14px; }
+    a { color: #818cf8; text-decoration: none; border-bottom: 1px dotted #4c4c8a; }
+    a:hover { color: #a5b4fc; }
+    .lead { font-size: 16px; color: #cbd5e1; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 18px; font-size: 14px; }
+    th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid #1e1e3a; }
+    th { color: #c4b5fd; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+    td { color: #94a3b8; }
+    td:first-child { color: #e2e8f0; white-space: nowrap; }
+    .card {
+      background: linear-gradient(145deg, #14142a, #0f0f1e);
+      border: 1px solid #2a2a4a;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 0 0 18px;
+    }
+    .card p:last-child { margin-bottom: 0; }
+    ol { color: #94a3b8; font-size: 15px; padding-left: 20px; margin: 0 0 16px; }
+    ol li { margin-bottom: 8px; }
+    details {
+      border-bottom: 1px solid #1e1e3a;
+      padding: 12px 0;
+    }
+    details summary {
+      cursor: pointer;
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 15px;
+      list-style: none;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: '+ '; color: #6366f1; font-family: 'JetBrains Mono', monospace; }
+    details[open] summary::before { content: '− '; }
+    details p { margin: 10px 0 0; }
+    .footer {
+      margin-top: 44px;
+      padding-top: 18px;
+      border-top: 1px solid #1e1e3a;
+      font-size: 12px;
+      color: #475569;
+    }
+    .btn {
+      display: inline-block;
+      margin: 8px 0 4px;
+      padding: 11px 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      letter-spacing: 0.04em;
+    }
+    .btn:hover { color: #fff; opacity: 0.92; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">hex.coach · field manual</p>
+    <h1>How the 6D Cognitive Arena works</h1>
+    <p class="lead">
+      hex.coach is a free knowledge quiz that measures how you perform across six very different
+      branches of science and reasoning — then draws the result as a six-axis radar chart.
+      This page explains exactly what a run contains, how the score is calculated and what the
+      ranks mean.
+    </p>
+    <a class="btn" href="/">START A RUN</a>
+
+    <h2>1. The six dimensions</h2>
+    <p>Every question in the bank belongs to exactly one dimension. Each dimension is scored on its own axis of the radar.</p>
+    <table>
+      <thead>
+        <tr><th>Dimension</th><th>What it covers</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>🌊 DEEP SEA</td><td>Oceanography, abyssal biology, pressure and temperature extremes</td></tr>
+        <tr><td>⭐ COSMOS</td><td>Astronomy, black holes, relativity, spaceflight history</td></tr>
+        <tr><td>🏆 WORLD RECORDS</td><td>Geographic, biological and physical extremes</td></tr>
+        <tr><td>🏛️ ANCIENT CIV</td><td>Sumer, Egypt, the Maya, Troy, Qin dynasty</td></tr>
+        <tr><td>🧠 IQ MATRIX</td><td>Number sequences, logic, pattern recognition, spatial reasoning</td></tr>
+        <tr><td>🤖 AI CORE</td><td>Neural networks, transformers, alignment, machine reasoning</td></tr>
+      </tbody>
+    </table>
+    <p>
+      A seventh set, <strong>CHAOS</strong>, is not a scored knowledge dimension. It is a four-question
+      interlude of absurd scenario questions ("you are slipping past the event horizon — what is your
+      instant reaction?"). Every option is accepted, so CHAOS can never cost you points; it exists to
+      break the tension and to make the shared result card more fun.
+    </p>
+
+    <h2>2. What one run contains</h2>
+    <ol>
+      <li>CHAOS always appears, contributing 4 questions.</li>
+      <li>Five of the six knowledge dimensions are drawn at random, contributing 4 questions each.</li>
+      <li>That makes 24 questions in total, shuffled so the difficulty is mixed.</li>
+      <li>Each question has a 15-second clock. If the clock runs out the question is scored as unanswered, and the answer is revealed anyway.</li>
+      <li>Every question ends with a short hard-science explanation — so a wrong answer still teaches you something.</li>
+    </ol>
+    <p>
+      Because the dimensions and the questions inside them are drawn fresh each time, two runs are
+      never identical. The bank currently holds 38 questions; it grows over time.
+    </p>
+
+    <h2>3. How the power score is calculated</h2>
+    <div class="card">
+      <p><strong>Power = round(correct ÷ 24 × 6000)</strong></p>
+      <p>
+        One correct answer is worth 250 power. Answered questions count; timeouts and wrong answers do
+        not. The maximum possible is 6,000.
+      </p>
+    </div>
+    <p>Answers are checked on the server, so the correct option is never present in the page source. That is also why the browser cannot show you the answers in advance.</p>
+
+    <h2>4. The three ranks</h2>
+    <table>
+      <thead>
+        <tr><th>Power</th><th>Rank</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0 – 2,000</td><td>🥉 NEO WHITEHAT</td></tr>
+        <tr><td>2,001 – 4,000</td><td>🥈 FISSION WALKER</td></tr>
+        <tr><td>4,001 – 6,000</td><td>🥇 OMNI OVERLORD</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The result screen also adds a title derived from your strongest dimension — for example
+      ABYSSAL IRONCLAD for DEEP SEA or MATRIX PHANTOM for AI CORE — plus the radar chart and a
+      screenshot-ready result card you can post anywhere.
+    </p>
+
+    <h2>5. Frequently asked</h2>
+    <details><summary>Is hex.coach free?</summary>
+      <p>Yes. No account, no email, no download. The quiz runs in your browser.</p>
+    </details>
+    <details><summary>How long does a run take?</summary>
+      <p>24 questions with a 15-second clock each — typically five to six minutes if you answer without pausing.</p>
+    </details>
+    <details><summary>Do you store my answers or my score?</summary>
+      <p>No. The score is computed inside your browser session. Individual answers are sent to the API only to be checked, and the result is not stored against you. See the <a href="/privacy.html">privacy policy</a>.</p>
+    </details>
+    <details><summary>Can I retake it?</summary>
+      <p>As often as you like. A retake draws different dimensions and different questions.</p>
+    </details>
+    <details><summary>Does it work on a phone?</summary>
+      <p>Yes — the whole flow is mobile-first, and the result card is generated as an image you can save straight to your camera roll.</p>
+    </details>
+
+    <p class="footer">
+      ← <a href="/">Back to the arena</a> · <a href="/privacy.html">Privacy policy</a> · hex.coach
+    </p>
+  </main>
+</body>
+</html>

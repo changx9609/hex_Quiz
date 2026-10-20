@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hex.coach/sitemap.xml
+# Canonical host: https://www.hex.coach (apex redirects here)
+Sitemap: https://www.hex.coach/sitemap.xml

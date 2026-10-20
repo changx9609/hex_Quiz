@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- ── 主页 ─────────────────────────────────────────────── -->
+  <!-- Canonical host is www.hex.coach. The apex hex.coach 301-redirects here,
+       so every <loc> must use https://www.hex.coach/ to avoid redirect chains. -->
+
   <url>
-    <loc>https://hex.coach/</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>https://www.hex.coach/</loc>
+    <lastmod>2026-10-20</lastmod>
   </url>
 
-  <!-- ── 隐私政策 ─────────────────────────────────────────── -->
   <url>
-    <loc>https://hex.coach/privacy.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://www.hex.coach/how-it-works.html</loc>
+    <lastmod>2026-10-20</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.hex.coach/privacy.html</loc>
+    <lastmod>2026-10-20</lastmod>
   </url>
 
 </urlset>

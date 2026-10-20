@@ -3,7 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>hex.coach — 6D Cognitive Arena</title>
+  <title>hex.coach — 6D Cognitive Arena | Free Science &amp; Logic Quiz</title>
+
+  <!-- ─── SEO: canonical host is www.hex.coach (apex 301s here) ─── -->
+  <link rel="canonical" href="https://www.hex.coach/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="description" content="Free 6-dimension knowledge quiz: deep-sea science, astronomy, world records, ancient civilisations, logic patterns and AI. 24 timed questions per run, no signup — get a radar chart, rank and shareable result card.">
+  <meta name="theme-color" content="#08080e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 29,9 29,23 16,30 3,23 3,9' fill='%236366f1'/%3E%3C/svg%3E">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="hex.coach">
+  <meta property="og:url" content="https://www.hex.coach/">
+  <meta property="og:title" content="hex.coach — 6D Cognitive Arena">
+  <meta property="og:description" content="Free 6-dimension knowledge quiz: deep sea, cosmos, world records, ancient civilisations, IQ patterns and AI. 24 timed questions, no signup, shareable radar result card.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="hex.coach — 6D Cognitive Arena">
+  <meta name="twitter:description" content="Free 6-dimension knowledge quiz: deep sea, cosmos, world records, ancient civilisations, IQ patterns and AI. 24 timed questions, no signup.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.hex.coach/#website",
+        "url": "https://www.hex.coach/",
+        "name": "hex.coach",
+        "alternateName": "HEX.COACH — 6D Cognitive Arena",
+        "description": "A free browser-based knowledge arena scoring you across six scientific dimensions.",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://www.hex.coach/#app",
+        "name": "hex.coach — 6D Cognitive Arena",
+        "url": "https://www.hex.coach/",
+        "description": "A 24-question timed quiz across deep-sea science, astronomy, world records, ancient civilisations, logic patterns and AI, with a six-axis radar result.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any modern web browser",
+        "browserRequirements": "Requires JavaScript",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": { "@id": "https://www.hex.coach/#website" }
+      }
+    ]
+  }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -224,6 +271,101 @@
     }
     .go-inline:active { transform: scale(0.94); }
     .go-inline.disabled { opacity: 0.4; cursor: default; transform: none; }
+
+    /* ─── Intro / SEO hero card (stays in the chat flow) ─── */
+    #seoHero {
+      align-self: stretch;
+      background: linear-gradient(145deg, #14142a, #0f0f1e);
+      border: 1px solid #2a2a4a;
+      border-radius: 1rem;
+      padding: 0.95rem 1rem 0.9rem;
+      animation: fadeUp 0.3s ease;
+    }
+    #seoHero .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: #6366f1;
+      margin-bottom: 0.45rem;
+    }
+    #seoHero h1 {
+      font-size: 1rem;
+      line-height: 1.4;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.45rem;
+    }
+    #seoHero .hero-lead {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: #94a3b8;
+      margin-bottom: 0.7rem;
+    }
+    #seoHero .hero-dims {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem 0.6rem;
+      margin: 0 0 0.7rem;
+    }
+    #seoHero .hero-dims li {
+      font-size: 0.68rem;
+      line-height: 1.45;
+      color: #94a3b8;
+    }
+    #seoHero .hero-dims b {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      color: #c4b5fd;
+      margin-right: 0.15rem;
+    }
+    #seoHero .hero-steps {
+      list-style: none;
+      counter-reset: herostep;
+      margin: 0 0 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+    }
+    #seoHero .hero-steps li {
+      font-size: 0.7rem;
+      line-height: 1.5;
+      color: #94a3b8;
+      padding-left: 1.15rem;
+      position: relative;
+      counter-increment: herostep;
+    }
+    #seoHero .hero-steps li::before {
+      content: counter(herostep) ".";
+      position: absolute;
+      left: 0;
+      font-family: 'JetBrains Mono', monospace;
+      color: #6366f1;
+      font-weight: 700;
+    }
+    #seoHero .hero-foot {
+      font-size: 0.62rem;
+      color: #475569;
+      border-top: 1px solid #1e1e3a;
+      padding-top: 0.55rem;
+      line-height: 1.6;
+    }
+    #seoHero .hero-foot a {
+      color: #818cf8;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+    }
+    @media (max-width: 420px) {
+      #seoHero { padding: 0.85rem 0.85rem 0.8rem; }
+      #seoHero h1 { font-size: 0.92rem; }
+      #seoHero .hero-lead { font-size: 0.74rem; }
+      #seoHero .hero-dims { gap: 0.25rem 0.45rem; }
+      #seoHero .hero-dims li { font-size: 0.62rem; }
+      #seoHero .hero-steps li { font-size: 0.66rem; }
+    }
 
     /* ─── Fixed bottom timer bar ─────────────── */
     #bottomTimer {
@@ -580,9 +722,38 @@
 
 <!-- ─── Chat (scrollable) ──────────────────── -->
 <div id="chatContainer">
-  <div id="chatInner"></div>
+  <div id="chatInner">
+    <!-- ─── Static intro card: real, server-sent copy so crawlers get substance ─── -->
+    <section id="seoHero" aria-labelledby="seoHeroTitle">
+      <p class="hero-eyebrow">⚙ FREE · NO SIGNUP · ~6 MIN</p>
+      <h1 id="seoHeroTitle">Six dimensions. Twenty-four questions. One cognitive profile.</h1>
+      <p class="hero-lead">
+        hex.coach is a free browser-based knowledge arena. Each run draws 24 timed questions across the
+        six dimensions below, then maps your accuracy onto a six-axis radar and ranks the run.
+      </p>
+      <ul class="hero-dims">
+        <li><span aria-hidden="true">🌊</span> <b>DEEP SEA</b> abyssal biology</li>
+        <li><span aria-hidden="true">⭐</span> <b>COSMOS</b> black holes, relativity</li>
+        <li><span aria-hidden="true">🏆</span> <b>WORLD RECORDS</b> physical extremes</li>
+        <li><span aria-hidden="true">🏛️</span> <b>ANCIENT CIV</b> Sumer to Qin</li>
+        <li><span aria-hidden="true">🧠</span> <b>IQ MATRIX</b> logic &amp; sequences</li>
+        <li><span aria-hidden="true">🤖</span> <b>AI CORE</b> transformers, alignment</li>
+      </ul>
+      <ol class="hero-steps">
+        <li>Hit GO! — no account, nothing to install.</li>
+        <li>15 seconds per question; every answer comes with a short science explanation.</li>
+        <li>Get your power score, rank, radar and a shareable result card.</li>
+      </ol>
+      <p class="hero-foot">
+        Runs entirely in your browser · <a href="/how-it-works.html">How scoring &amp; ranks work</a> ·
+        <a href="/privacy.html">Privacy policy</a> ·
+        <a href="https://discord.gg/SaXXqkqr6" target="_blank" rel="noopener noreferrer">Discord arena</a>
+      </p>
+    </section>
+  </div>
   <div id="scrollAnchor"></div>
 </div>
+
 
 <!-- ─── Fixed bottom timer bar ────────────── -->
 <div id="bottomTimer"><div id="timerFill"></div></div>
@@ -757,6 +928,17 @@ function stopTimer() {
 }
 
 // ═══════════════════════════════════════════════
+//  Reset helper — wipes the dynamic chat stream but
+//  keeps the static intro card (#seoHero) in the DOM,
+//  so the page always ships readable, indexable copy.
+// ═══════════════════════════════════════════════
+function clearChat() {
+  const hero = document.getElementById('seoHero');
+  chatInner.innerHTML = '';
+  if (hero) chatInner.appendChild(hero);
+}
+
+// ═══════════════════════════════════════════════
 //  PHASE 1: Init → "准备好了吗？" + GO! inline
 // ═══════════════════════════════════════════════
 function initGame() {
@@ -765,7 +947,7 @@ function initGame() {
   currentIndex = 0;
   initialGo = true;
   buildQuiz();
-  chatInner.innerHTML = '';
+  clearChat();
   stopTimer();
   resultHeaderRow.style.display = 'none';
   headerProgress.textContent = `0/${quiz.length}`;
@@ -1319,11 +1501,11 @@ function restartGame() {
   try {
     await loadData();
     // Remove loading indicator and start game
-    chatInner.innerHTML = '';
+    clearChat();
     initGame();
   } catch (err) {
     // Show error state
-    chatInner.innerHTML = '';
+    clearChat();
     addAiBubble(`
       <div style="font-weight:700;margin-bottom:0.25rem;color:#ef4444;">⚠️ SYSTEM ERROR</div>
       <div style="color:#94a3b8;font-size:0.82rem;line-height:1.6;">
