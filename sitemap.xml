@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Canonical host is www.hex.coach. The apex hex.coach 301-redirects here,
-       so every <loc> must use https://www.hex.coach/ to avoid redirect chains. -->
+       so every URL entry below must use https://www.hex.coach/ to avoid redirect chains. -->
 
   <url>
     <loc>https://www.hex.coach/</loc>
